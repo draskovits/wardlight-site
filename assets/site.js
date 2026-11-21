@@ -56,7 +56,7 @@
   };
 
   // Loops play only while they can be seen.
-  const vids = [...document.querySelectorAll("main video")].filter((v) => !v.closest(".tint"));
+  const vids = [...document.querySelectorAll("main video")].filter((v) => !v.closest(".tint, .tile, dialog"));
   if ("IntersectionObserver" in window) {
     const vo = new IntersectionObserver((es) => es.forEach((e) => {
       const v = e.target;
@@ -97,6 +97,63 @@
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
   if (!reduce) { addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); update(); }
   else beats.forEach((b) => { b.el.style.opacity = 1; });
+
+  // Sheets: "Explore …" opens a glass panel from below; its loops play only while it is open.
+  const openSheet = (d, from) => {
+    if (!d || d.open) return;
+    const r = from ? (from.querySelector(".gem") || from).getBoundingClientRect() : null;
+    d.style.setProperty("--ox", r ? (r.left + r.width / 2) + "px" : "50%");
+    d.style.setProperty("--oy", r ? (r.top + r.height / 2) + "px" : "50%");
+    d.showModal(); d.scrollTop = 0; document.documentElement.classList.add("sheet-open");
+    d.querySelectorAll("video").forEach((v) => { v.preload = "auto"; v.play().catch(() => {}); });
+  };
+  const closeSheet = (d) => {
+    if (!d.open || d.classList.contains("closing")) return;
+    d.classList.add("closing");
+    setTimeout(() => { d.classList.remove("closing"); d.close(); }, reduce ? 0 : 430);
+  };
+  document.querySelectorAll("dialog.sheet").forEach((d) => {
+    d.addEventListener("click", (e) => { if (e.target === d || e.target.closest("[data-close]")) closeSheet(d); });
+    d.addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(d); });
+    d.addEventListener("close", () => { document.documentElement.classList.remove("sheet-open"); d.querySelectorAll("video").forEach((v) => v.pause()); });
+  });
+  document.querySelectorAll("[data-open]").forEach((b) => b.addEventListener("click", () => openSheet(document.getElementById(b.dataset.open), b)));
+
+  // The land sheet: one land at a time from its template, tabs on top, previous and next below.
+  const landSheet = document.getElementById("sheet-land");
+  if (landSheet) {
+    const tpls = [...landSheet.querySelectorAll("template[data-land-id]")];
+    const names = tpls.map((t) => t.content.querySelector("h3").textContent);
+    const body = landSheet.querySelector(".land-body"), tabs = [...landSheet.querySelectorAll("[data-go]")];
+    const [prev, next] = landSheet.querySelectorAll("[data-step]");
+    let at = 0;
+    const show = (i) => {
+      at = (i + tpls.length) % tpls.length;
+      body.replaceChildren(tpls[at].content.cloneNode(true));
+      body.style.animation = "none"; void body.offsetWidth; body.style.animation = "";
+      tabs.forEach((t, j) => t.setAttribute("aria-current", String(j === at)));
+      const bar = tabs[at].parentElement; bar.scrollLeft = tabs[at].offsetLeft - bar.clientWidth / 2 + tabs[at].offsetWidth / 2;
+      prev.querySelector("span").textContent = names[(at - 1 + tpls.length) % tpls.length];
+      next.querySelector("span").textContent = names[(at + 1) % tpls.length];
+      landSheet.scrollTop = 0;
+    };
+    tabs.forEach((t) => t.addEventListener("click", () => show(+t.dataset.go)));
+    prev.addEventListener("click", () => show(at - 1)); next.addEventListener("click", () => show(at + 1));
+    document.querySelectorAll("[data-land]").forEach((b) => b.addEventListener("click", () => { show(+b.dataset.land); openSheet(landSheet, b); }));
+  }
+
+  // The element tiles: play on hover with a mouse; on a phone, the tile in view plays.
+  const tiles = [...document.querySelectorAll(".tile")];
+  const playTile = (t, on) => { const v = t.querySelector("video"); t.classList.toggle("on", on); if (on) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); };
+  tiles.forEach((t) => {
+    t.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") playTile(t, true); });
+    t.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") playTile(t, false); });
+    t.addEventListener("click", () => playTile(t, !t.classList.contains("on")));
+  });
+  if ("IntersectionObserver" in window && matchMedia("(hover: none)").matches && !reduce) {
+    const to = new IntersectionObserver((es) => es.forEach((e) => playTile(e.target, e.intersectionRatio > 0.7)), { threshold: [0, 0.7, 1] });
+    tiles.forEach((t) => to.observe(t));
+  }
 
   // Things that rise into place the first time they are seen.
   const risers = document.querySelectorAll(".rise");

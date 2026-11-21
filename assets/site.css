@@ -462,7 +462,7 @@ figure.wide .shot { border-radius: 6px; }
 .film, .grow-in, .dusk, .year, .tint { position: relative; --p: 0; }
 .film .pin, .grow-in .pin, .dusk .pin, .year .pin, .tint .pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 
-.film { height: 460svh; background: #000; }
+.film { height: 340svh; background: #000; }
 .film .poster img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
 .film .poster, .film canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
   transform: scale(calc(1.06 - .06 * var(--p))); transform-origin: 50% 50%; will-change: transform; }
@@ -572,3 +572,153 @@ figure.wide .shot { border-radius: 6px; }
   .grow-in { --g: 1; --o: 1; } .dusk { --n: 0; } .year .track { width: auto; overflow-x: auto; transform: none; } .tint { --b: 0; --c: 0; }
   .rise { opacity: 1; transform: none; }
 }
+
+/* ================================================================ topics: an intro, and more behind a button (third pass)
+   Only the opening film holds the scroll. Every other topic is a short intro with one picture, and "Explore …" opens a
+   sheet with the detail. */
+.topic { padding: clamp(5rem, 12vw, 10rem) 0 0; }
+.topic .intro { text-align: center; max-width: 44rem; margin: 0 auto; }
+.topic .intro h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); margin: 0 auto; max-width: 16ch; }
+.topic .intro p { color: var(--ink-2); font-size: clamp(1.1rem, 1.9vw, 1.35rem); margin: 1.1rem auto 0; max-width: 34rem; }
+.more { margin-top: 1.6rem; display: inline-flex; align-items: center; gap: .7rem; padding: .75rem .8rem .75rem 1.3rem; border-radius: 999px;
+  font: 500 1rem/1 var(--sans); color: var(--ink); background: rgba(236,226,204,.08); border: 1px solid var(--rule-2); cursor: pointer;
+  transition: background .25s, transform .25s; }
+.more span { display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--lantern); color: #1a1408; font-size: 1.2rem; line-height: 1; }
+.more:hover { background: rgba(236,226,204,.14); transform: translateY(-1px); }
+.topic .big { margin: clamp(2.5rem, 5vw, 4rem) 0 0; }
+.topic .big img { width: 100%; border-radius: 22px; box-shadow: 0 50px 120px -40px rgba(0,0,0,.95); }
+@media (max-width: 620px) { .topic .big { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); } .topic .big img { border-radius: 0; aspect-ratio: 4 / 3; object-fit: cover; } }
+
+/* the three elements: tiles that play on hover or tap */
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.8rem, 1.6vw, 1.4rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
+.tile { position: relative; padding: 0; border: 0; border-radius: 20px; overflow: hidden; aspect-ratio: 3 / 4; background: #000; cursor: pointer; text-align: left; color: var(--ink); }
+.tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.3,.7,.2,1); }
+.tile:hover video, .tile.on video { transform: scale(1.05); }
+.tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(7,8,12,.9) 0%, rgba(7,8,12,0) 55%); }
+.tile span { position: absolute; z-index: 1; left: 1.2rem; right: 1.2rem; bottom: 1.1rem; font-size: .98rem; color: var(--ink-2); }
+.tile b { display: block; font: 600 clamp(1.5rem, 2.6vw, 2rem)/1.1 var(--serif); margin-bottom: .25rem; }
+.tile.ember b { color: var(--ember); } .tile.verdant b { color: var(--verdant); } .tile.dawn b { color: var(--dawn); }
+@media (max-width: 700px) {
+  .tiles { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter); scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+  .tiles::-webkit-scrollbar { display: none; }
+  .tile { flex: 0 0 72vw; scroll-snap-align: start; }
+}
+
+/* the lands: three teasers */
+.teasers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.8rem, 1.6vw, 1.4rem); margin-top: clamp(2.5rem, 5vw, 4rem); }
+.land-tease { padding: 0; border: 1px solid var(--rule); border-radius: 20px; overflow: hidden; background: var(--night-2); color: var(--ink); text-align: left; cursor: pointer;
+  transition: transform .35s cubic-bezier(.3,.7,.2,1), border-color .35s; }
+.land-tease:hover { transform: translateY(-6px); border-color: var(--rule-2); }
+.land-tease .ph { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.land-tease img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.3,.7,.2,1); }
+.land-tease:hover img { transform: scale(1.05); }
+.land-tease .txt { display: block; padding: 1rem 1.2rem 1.2rem; color: var(--ink-2); font-size: .98rem; }
+.land-tease .txt b { display: block; font: 600 1.5rem/1.15 var(--serif); color: var(--ink); margin-bottom: .2rem; }
+@media (max-width: 700px) {
+  .teasers { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1);
+    padding: 0 var(--gutter) .3rem; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+  .teasers::-webkit-scrollbar { display: none; }
+  .land-tease { flex: 0 0 78vw; scroll-snap-align: start; }
+}
+
+/* sheets: a glass panel that rises from below */
+.sheet { padding: 0; border: 0; background: transparent; color: var(--ink); max-width: none; max-height: none; width: 100%; height: 100%; margin: 0; }
+.sheet::backdrop { background: rgba(3,4,8,.72); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.sheet[open] { display: flex; align-items: flex-end; justify-content: center; }
+.sheet-in { position: relative; width: min(960px, 100%); max-height: 92svh; overflow-y: auto; overscroll-behavior: contain;
+  margin-top: auto; padding: clamp(1.4rem, 4vw, 3rem) clamp(1.1rem, 4vw, 3rem) clamp(2rem, 5vw, 3.5rem);
+  background: rgba(16,16,24,.92); border: 1px solid var(--rule-2); border-bottom: 0; border-radius: 26px 26px 0 0;
+  box-shadow: 0 -30px 90px -20px rgba(0,0,0,.9); animation: sheet-up .45s cubic-bezier(.2,.8,.2,1); }
+@media (min-width: 900px) { .sheet[open] { align-items: center; } .sheet-in { border-radius: 26px; border-bottom: 1px solid var(--rule-2); max-height: 88svh; } }
+@keyframes sheet-up { from { transform: translateY(60px); opacity: 0; } }
+.sheet.closing .sheet-in { animation: sheet-down .25s ease-in forwards; }
+@keyframes sheet-down { to { transform: translateY(60px); opacity: 0; } }
+.sheet .x { position: sticky; top: 0; float: right; z-index: 3; width: 2.4rem; height: 2.4rem; margin: -.4rem -.4rem 0 0; border-radius: 50%; border: 1px solid var(--rule-2);
+  background: rgba(30,30,40,.9); color: var(--ink); font: 300 1.5rem/1 var(--sans); cursor: pointer; }
+.sheet h3 { font-size: clamp(2rem, 4.6vw, 3.2rem); margin: .2rem 0 0; }
+.sheet .lead { color: var(--ink-2); font-size: clamp(1.05rem, 1.7vw, 1.2rem); margin-top: .9rem; max-width: 40rem; }
+.sheet figure { margin: 0; }
+.sheet figure img, .sheet figure video { width: 100%; border-radius: 16px; display: block; }
+.sheet figcaption { margin-top: .7rem; font: 400 .98rem/1.45 var(--sans); font-style: normal; color: var(--ink-2); max-width: none; }
+.sheet figcaption b { display: block; font: 600 1.25rem/1.2 var(--serif); color: var(--ink); margin-bottom: .15rem; }
+.sheet figcaption i { display: block; font: 500 .7rem/1.4 var(--mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase; color: var(--lantern); margin-bottom: .3rem; }
+.sheet .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.8rem; }
+.sheet .pair video { aspect-ratio: 16 / 10; object-fit: cover; }
+.sheet .quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+.sheet .quad img { aspect-ratio: 1; object-fit: cover; }
+.sheet .foot-note { color: var(--dim); margin-top: 1.6rem; }
+.sheet .land-hero { margin-top: 1.2rem; }
+.sheet .land-hero img { aspect-ratio: 16 / 8; object-fit: cover; }
+@media (max-width: 700px) { .sheet .pair { grid-template-columns: 1fr; } .sheet .quad { grid-template-columns: 1fr 1fr; } }
+
+/* the land sheet */
+.land-tabs { display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: none; margin-right: 2.6rem; padding-bottom: .2rem; }
+.land-tabs::-webkit-scrollbar { display: none; }
+.land-tabs button { flex: none; font: 500 .9rem/1 var(--sans); color: var(--ink-2); background: none; border: 1px solid transparent; border-radius: 999px; padding: .55rem .9rem; cursor: pointer; }
+.land-tabs button[aria-current=true] { color: var(--ink); background: rgba(236,226,204,.1); border-color: var(--rule-2); }
+.land-body { animation: rise .35s ease-out; }
+.land-body h3 { margin-top: 1.4rem; }
+.land-body .pair img { aspect-ratio: 4 / 5; object-fit: cover; }
+.land-body .blight { margin-top: 1.6rem; padding: 1rem 1.2rem; border-radius: 14px; background: rgba(155,123,208,.1); border: 1px solid rgba(155,123,208,.25); color: var(--ink-2); }
+.land-body .blight i { display: block; font: 500 .7rem/1.4 var(--mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase; color: #cbb6f2; margin-bottom: .3rem; }
+.land-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.8rem; border-top: 1px solid var(--rule); padding-top: 1.2rem; }
+.land-nav button { background: none; border: 0; color: var(--lantern-hot); font: 500 1rem var(--sans); cursor: pointer; padding: .4rem 0; }
+html.sheet-open { overflow: hidden; }
+@media (max-width: 700px) { .land-body .pair { grid-template-columns: 1fr 1fr; gap: .8rem; } .land-body .pair figcaption { font-size: .88rem; } .land-body .pair figcaption b { font-size: 1.05rem; } }
+
+/* ================================================================ Wardlight's own "look closer" (fourth pass)
+   The game's rule is that only what the light reaches can be seen, so detail is revealed the same way: the button is
+   the Wardlight's crystal, and the detail opens as a circle of light growing from it over the night, then shrinks
+   back into it. The lands sit on a path of light, one opening the next, as they do in the game. */
+.more { gap: .8rem; padding: .55rem 0; border: 0; border-radius: 0; background: none; font: italic 500 1.15rem/1.2 var(--serif); color: var(--lantern-hot); }
+.more:hover { background: none; transform: none; color: #fff1cf; }
+.more .gem { position: relative; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 50%; background: none; }
+.more .gem::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(242,182,90,.45);
+  box-shadow: 0 0 18px rgba(242,182,90,.35), inset 0 0 14px rgba(242,182,90,.2); animation: halo 3s ease-in-out infinite; }
+.more .gem::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; background: radial-gradient(circle, rgba(255,215,140,.28), transparent 65%); opacity: .6; transition: opacity .3s, transform .3s; }
+.more .gem img { position: relative; z-index: 1; width: 14px; height: auto; filter: drop-shadow(0 0 6px rgba(255,200,120,.9)); transition: transform .4s cubic-bezier(.3,.7,.2,1); }
+.more:hover .gem img { transform: translateY(-2px) scale(1.15); }
+.more:hover .gem::after { opacity: 1; transform: scale(1.25); }
+.more .lbl { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .4s; padding-bottom: 2px; }
+.more:hover .lbl { background-size: 100% 1px; }
+@keyframes halo { 0%, 100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.12); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .more .gem::before { animation: none; } }
+
+/* the reveal: a circle of light from the crystal */
+.sheet::backdrop { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.sheet[open] { display: block; overflow-y: auto; overscroll-behavior: contain; --ox: 50%; --oy: 50%;
+  background: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(242,182,90,.10), transparent 70%), radial-gradient(circle at var(--ox) var(--oy), rgba(242,182,90,.16), transparent 40%), var(--night);
+  clip-path: circle(150% at var(--ox) var(--oy)); animation: light-in .7s cubic-bezier(.5,0,.2,1); }
+@keyframes light-in { from { clip-path: circle(0 at var(--ox) var(--oy)); } }
+.sheet.closing { animation: light-out .45s cubic-bezier(.6,0,.8,.4) forwards; }
+@keyframes light-out { to { clip-path: circle(0 at var(--ox) var(--oy)); } }
+.sheet-in { position: relative; width: min(1040px, 100%); max-height: none; overflow: visible; margin: 0 auto; padding: clamp(4.5rem, 10vh, 7rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+  background: none; border: 0; border-radius: 0; box-shadow: none; animation: none; }
+.sheet.closing .sheet-in { animation: none; }
+.sheet-in > * { animation: rise .6s cubic-bezier(.2,.7,.2,1) both; }
+.sheet-in > :nth-child(2) { animation-delay: .15s; } .sheet-in > :nth-child(3) { animation-delay: .22s; } .sheet-in > :nth-child(4) { animation-delay: .3s; }
+.sheet-in > :nth-child(n+5) { animation-delay: .38s; }
+@media (min-width: 900px) { .sheet[open] { align-items: initial; } .sheet-in { border: 0; max-height: none; } }
+.sheet .x { position: fixed; top: max(1rem, env(safe-area-inset-top)); right: max(1rem, env(safe-area-inset-right)); float: none; margin: 0; width: 2.8rem; height: 2.8rem;
+  border: 1px solid rgba(242,182,90,.4); background: rgba(7,8,12,.6); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 0 18px rgba(242,182,90,.2); }
+.sheet .x span, .sheet .x span::before { position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; background: var(--lantern-hot); border-radius: 1px; transform: translate(-50%, -50%) rotate(45deg); }
+.sheet .x span::before { content: ""; transform: translate(-50%, -50%) rotate(90deg); }
+.sheet .x:hover { box-shadow: 0 0 26px rgba(242,182,90,.45); }
+.sheet h3 { font-size: clamp(2.4rem, 6vw, 4.4rem); }
+.sheet figure img, .sheet figure video { border-radius: 14px; box-shadow: 0 30px 80px -30px rgba(0,0,0,.95); }
+
+/* the lands on a path of light */
+.land-tabs { position: relative; display: flex; justify-content: space-between; gap: 0; margin: 0 3.4rem 0 0; padding: 1.2rem .4rem 0; overflow-x: auto; }
+.land-tabs::before { content: ""; position: absolute; left: 1.6rem; right: 1.6rem; top: calc(1.2rem + 7px); height: 1px;
+  background: linear-gradient(90deg, rgba(242,182,90,.7), rgba(242,182,90,.25)); box-shadow: 0 0 8px rgba(242,182,90,.5); }
+.land-tabs button { position: relative; display: grid; justify-items: center; gap: .55rem; padding: 0 .35rem; border: 0; border-radius: 0; background: none;
+  font: 500 .72rem/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+.land-tabs button::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--night); border: 1.5px solid rgba(242,182,90,.6); transition: all .35s; }
+.land-tabs button:hover { color: var(--ink-2); }
+.land-tabs button[aria-current=true] { color: var(--lantern-hot); background: none; border: 0; }
+.land-tabs button[aria-current=true]::before { background: var(--lantern-hot); border-color: var(--lantern-hot); box-shadow: 0 0 0 5px rgba(242,182,90,.15), 0 0 20px 4px rgba(255,215,140,.7); }
+@media (max-width: 620px) { .land-tabs { justify-content: flex-start; gap: .9rem; } .land-tabs::before { right: auto; width: 520px; } }
+.land-nav { border-top: 1px solid rgba(242,182,90,.18); }
+.more .lbl { display: inline; width: auto; height: auto; border-radius: 0; background-color: transparent; color: inherit; font-size: inherit; line-height: inherit; }
+html.sheet-open .clock { opacity: 0; pointer-events: none; }

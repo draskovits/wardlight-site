@@ -133,83 +133,159 @@
     </ul>
   </div>
 
-  <!-- The light: a picture that opens from a card to the whole screen. -->
-  <section class="grow-in" id="the-game" aria-labelledby="c1" data-scene>
-    <div class="pin">
-      <div class="head"><span class="num">The rule</span><h2 id="c1">Light is land.</h2></div>
-      <figure class="frame"><img src="/assets/shots/day-light-ring-close-2000.webp" srcset="/assets/shots/day-light-ring-close-1100.webp 1100w, /assets/shots/day-light-ring-close-2000.webp 2000w" sizes="100vw" alt="A young village by day inside the ring of its light, the land outside it dim" width="2000" height="920" loading="lazy" decoding="async"></figure>
-      <p class="over">Build only where your light reaches. The brighter you burn, the more of them come.</p>
-    </div>
-  </section>
-
-  <!-- Day into night: one frame, the scroll turns the hour. -->
-  <section class="dusk" aria-labelledby="c2" data-scene>
-    <div class="pin">
-      <video class="d" src="/assets/loops/day-village-life.mp4" poster="/assets/loops/day-village-life.webp" muted loop playsinline preload="none" aria-label="Villagers at work by day"></video>
-      <video class="n" src="/assets/loops/night-horde-at-wall.mp4" poster="/assets/loops/night-horde-at-wall.webp" muted loop playsinline preload="none" aria-label="The Blight at the wall by night"></video>
-      <div class="say d"><h2 id="c2">The day waits for you.</h2><p>Build. Read where they'll come from. Call the night when you're ready.</p></div>
-      <div class="say n"><h2>The night does not.</h2><p>Your towers fight what the light shows. Your mana patches the rest.</p></div>
-    </div>
-  </section>
-
-  <!-- The year: four seasons slide past sideways while you scroll down. -->
-  <section class="year" aria-labelledby="c3" data-scene>
-    <div class="pin">
-      <div class="head"><span class="num">The year</span><h2 id="c3">Four seasons. Three nights each.</h2></div>
-      <div class="track">
-        <figure class="card"><div class="ph"><img src="/assets/shots/season-spring-1100.webp" srcset="/assets/shots/season-spring-1100.webp 1100w, /assets/shots/season-spring-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in spring" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Spring</b>Rain and thaw. Fire burns half as long.</figcaption></figure>
-        <figure class="card"><div class="ph"><img src="/assets/shots/season-summer-1100.webp" srcset="/assets/shots/season-summer-1100.webp 1100w, /assets/shots/season-summer-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in summer" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Summer</b>Wind. Arrows lose range shooting into it.</figcaption></figure>
-        <figure class="card"><div class="ph"><img src="/assets/shots/season-autumn-1100.webp" srcset="/assets/shots/season-autumn-1100.webp 1100w, /assets/shots/season-autumn-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in autumn" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Autumn</b>The full harvest, and fog that hides them.</figcaption></figure>
-        <figure class="card"><div class="ph"><img src="/assets/shots/season-winter-1100.webp" srcset="/assets/shots/season-winter-1100.webp 1100w, /assets/shots/season-winter-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in winter" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Winter</b>Hard frost. The lakes freeze over.</figcaption></figure>
+  <!-- The rule: an intro, and the year behind a button. -->
+  <section class="topic" id="the-game" aria-labelledby="c1">
+    <div class="wrap">
+      <div class="intro rise">
+        <span class="num">The rule</span>
+        <h2 id="c1">Light is land.</h2>
+        <p>Build only where your light reaches. The brighter you burn, the more of them come.</p>
+        <button class="more" type="button" data-open="sheet-year"><span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span><span class="lbl">Light up the year</span></button>
       </div>
+      <figure class="big rise"><img src="/assets/shots/day-light-ring-close-2000.webp" srcset="/assets/shots/day-light-ring-close-1100.webp 1100w, /assets/shots/day-light-ring-close-2000.webp 2000w" sizes="(max-width: 1260px) 100vw, 1216px" alt="A young village by day inside the ring of its light, the land outside it dim" width="2000" height="920" loading="lazy" decoding="async"></figure>
     </div>
   </section>
 
-  <!-- Growth: the tree, the picture drifting in as the text arrives. -->
-  <section class="chapter" aria-labelledby="c4">
-    <div class="wrap split flip">
-      <div class="rise">
+  <dialog class="sheet" id="sheet-year" aria-labelledby="sy">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label="Close"><span aria-hidden="true"></span></button>
+      <span class="num">A run is one year</span>
+      <h3 id="sy">Twelve nights, four seasons.</h3>
+      <div class="pair">
+        <figure><video src="/assets/loops/day-village-life.mp4" poster="/assets/loops/day-village-life.webp" muted loop playsinline preload="none"></video><figcaption><b>The day waits for you.</b>Build, read where they'll come from, call the night when you're ready.</figcaption></figure>
+        <figure><video src="/assets/loops/night-horde-at-wall.mp4" poster="/assets/loops/night-horde-at-wall.webp" muted loop playsinline preload="none"></video><figcaption><b>The night does not.</b>Your towers fight what the light shows. Your mana patches the rest.</figcaption></figure>
+      </div>
+      <div class="quad">
+        <figure><img src="/assets/shots/season-spring-1100.webp" alt="The village in spring" width="1100" height="506" loading="lazy"><figcaption><b>Spring</b>Rain and thaw. Fire burns half as long.</figcaption></figure>
+        <figure><img src="/assets/shots/season-summer-1100.webp" alt="The village in summer" width="1100" height="506" loading="lazy"><figcaption><b>Summer</b>Wind. Arrows lose range shooting into it.</figcaption></figure>
+        <figure><img src="/assets/shots/season-autumn-1100.webp" alt="The village in autumn" width="1100" height="506" loading="lazy"><figcaption><b>Autumn</b>The full harvest, and fog that hides them.</figcaption></figure>
+        <figure><img src="/assets/shots/season-winter-1100.webp" alt="The village in winter" width="1100" height="506" loading="lazy"><figcaption><b>Winter</b>Hard frost. The lakes freeze over.</figcaption></figure>
+      </div>
+      <p class="foot-note">Three nights a season. Each season, pick one of two boons.</p>
+    </div>
+  </dialog>
+
+  <!-- Growth and the element: an intro, three colours you can play. -->
+  <section class="topic" aria-labelledby="c4">
+    <div class="wrap">
+      <div class="intro rise">
         <span class="num">Growth</span>
         <h2 id="c4">Every building has its own tree.</h2>
-        <p class="lede">The night pays Knowledge. Knowledge buys talents. Every tree ends in a keystone.</p>
+        <p>The night pays Knowledge. Knowledge buys talents. At level four, your light takes a colour.</p>
+        <button class="more" type="button" data-open="sheet-tree"><span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span><span class="lbl">Light up a tree</span></button>
       </div>
-      <figure class="bleed-l rise"><div class="shot"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 58vw" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="728" loading="lazy" decoding="async"></div></figure>
+      <div class="tiles rise" role="group" aria-label="The three elements">
+        <button class="tile ember" type="button"><video src="/assets/loops/attune-ember.mp4" poster="/assets/loops/attune-ember.webp" muted loop playsinline preload="none"></video><span><b>Ember</b>Every hit leaves fire behind it.</span></button>
+        <button class="tile verdant" type="button"><video src="/assets/loops/attune-verdant.mp4" poster="/assets/loops/attune-verdant.webp" muted loop playsinline preload="none"></video><span><b>Verdant</b>Rot spreads from one to the next.</span></button>
+        <button class="tile dawn" type="button"><video src="/assets/loops/attune-dawn.mp4" poster="/assets/loops/attune-dawn.webp" muted loop playsinline preload="none"></video><span><b>Dawn</b>Lightning leaps and stuns.</span></button>
+      </div>
     </div>
   </section>
 
-  <!-- The element: the village takes one colour after the other as you scroll. -->
-  <section class="tint" aria-labelledby="c5" data-scene>
-    <div class="pin">
-      <div class="layers">
-        <div class="l ember"><video src="/assets/loops/attune-ember.mp4" poster="/assets/loops/attune-ember.webp" muted loop playsinline preload="none" aria-label="The night fight in Ember's red fire"></video></div>
-        <div class="l verdant"><video src="/assets/loops/attune-verdant.mp4" poster="/assets/loops/attune-verdant.webp" muted loop playsinline preload="none" aria-label="The night fight in Verdant's green rot"></video></div>
-        <div class="l dawn"><video src="/assets/loops/attune-dawn.mp4" poster="/assets/loops/attune-dawn.webp" muted loop playsinline preload="none" aria-label="The night fight in Dawn's golden lightning"></video></div>
+  <dialog class="sheet" id="sheet-tree" aria-labelledby="st">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label="Close"><span aria-hidden="true"></span></button>
+      <span class="num">Growth</span>
+      <h3 id="st">A tree for every building.</h3>
+      <figure class="land-hero"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 900px" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="728" loading="lazy"></figure>
+      <p class="lead">A house grows into a longhouse, a watchtower into a volley tower. Every tree ends in a keystone that changes how the building plays. Each run, two trees are kindled at half the price.</p>
+    </div>
+  </dialog>
+
+  <!-- The lands: a teaser of three, all six one tap away. -->
+  <section class="topic" id="lands" aria-labelledby="c6">
+    <div class="wrap">
+      <div class="intro rise">
+        <span class="num">The lands</span>
+        <h2 id="c6">Six lands. Hold one to open the next.</h2>
+        <p>Each its own ground, its own Blight, its own building and its own last night.</p>
+        <button class="more" type="button" data-land="0"><span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span><span class="lbl">Walk all six lands</span></button>
       </div>
-      <div class="head"><span class="num">The element</span><h2 id="c5">At level four, your light takes a colour.</h2></div>
-      <ul class="names">
-        <li class="ember"><b>Ember</b>Every hit leaves fire behind it.</li>
-        <li class="verdant"><b>Verdant</b>Rot spreads from one to the next.</li>
-        <li class="dawn"><b>Dawn</b>Lightning leaps and stuns.</li>
-      </ul>
+      <div class="teasers">
+        <button class="land-tease rise" type="button" data-land="0">
+          <span class="ph"><img src="/assets/lands/witchwood/landscape-1100.webp" alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
+          <span class="txt"><b>Witchwood</b><span>The old wood and its lake.</span></span>
+        </button>
+        <button class="land-tease rise" type="button" data-land="1">
+          <span class="ph"><img src="/assets/lands/fenlands/landscape-1100.webp" alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
+          <span class="txt"><b>Fenlands</b><span>An island in a deep mere, reached by a few fords.</span></span>
+        </button>
+        <button class="land-tease rise" type="button" data-land="2">
+          <span class="ph"><img src="/assets/lands/highlands/landscape-1100.webp" alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
+          <span class="txt"><b>Highlands</b><span>A shelf of high ground ringed by cliffs.</span></span>
+        </button>
+      </div>
     </div>
   </section>
 
-  <!-- The lands: six cards to swipe, each with its last night. -->
-  <section class="chapter" id="lands" aria-labelledby="c6">
-    <div class="wrap rise">
-      <span class="num">The lands</span>
-      <h2 id="c6">Six lands. Hold one to open the next.</h2>
+  <dialog class="sheet lands-sheet" id="sheet-land" aria-label="The lands">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label="Close"><span aria-hidden="true"></span></button>
+      <nav class="land-tabs" aria-label="Lands"><button type="button" data-go="0">Witchwood</button><button type="button" data-go="1">Fenlands</button><button type="button" data-go="2">Highlands</button><button type="button" data-go="3">Ashwood</button><button type="button" data-go="4">Stonehold</button><button type="button" data-go="5">Rosegarth</button></nav>
+      <div class="land-body" aria-live="polite"></div>
+      <div class="land-nav"><button type="button" data-step="-1">‹ <span></span></button><button type="button" data-step="1"><span></span> ›</button></div>
+      <template data-land-id="witchwood">
+        <figure class="land-hero"><img src="/assets/lands/witchwood/landscape-2000.webp" srcset="/assets/lands/witchwood/landscape-1100.webp 1100w, /assets/lands/witchwood/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Witchwood by day" width="2000" height="920"></figure>
+        <h3>Witchwood</h3>
+        <p class="lead">The old wood and its lake. The water keeps them out until winter freezes it.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/witchwood/boss.webp" alt="The Mother Below" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Mother Below</b>Once Nan, her nurse.</figcaption></figure>
+          <figure><img src="/assets/lands/witchwood/building.webp" alt="The hunting lodge" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Hunting lodge</b>Its hunters bring twice as much in autumn and winter.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>Crown Wisps dive from the treetops; Wood Shades hide under the trees.</p>
+      </template>
+      <template data-land-id="fenlands">
+        <figure class="land-hero"><img src="/assets/lands/fenlands/landscape-2000.webp" srcset="/assets/lands/fenlands/landscape-1100.webp 1100w, /assets/lands/fenlands/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Fenlands by day" width="2000" height="920"></figure>
+        <h3>Fenlands</h3>
+        <p class="lead">An island in a deep mere, reached by a few fords. The water guards you until it freezes.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/fenlands/boss.webp" alt="The Drowned King" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Drowned King</b>Once King Ferran of the Fens, her betrothed.</figcaption></figure>
+          <figure><img src="/assets/lands/fenlands/building.webp" alt="The fisher's hut" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Fisher's hut</b>Stands on posts in the reeds and pays by the open water around it.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>Marsh Bloaters drift straight over the water; Burrowers come up on your shore.</p>
+      </template>
+      <template data-land-id="highlands">
+        <figure class="land-hero"><img src="/assets/lands/highlands/landscape-2000.webp" srcset="/assets/lands/highlands/landscape-1100.webp 1100w, /assets/lands/highlands/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Highlands by day" width="2000" height="920"></figure>
+        <h3>Highlands</h3>
+        <p class="lead">A shelf of high ground ringed by cliffs. You see them coming through the passes.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/highlands/boss.webp" alt="The Mountain's Fist" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Mountain's Fist</b>Once Master Tavin, her sculptor.</figcaption></figure>
+          <figure><img src="/assets/lands/highlands/building.webp" alt="The quarry" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Quarry</b>Feeds the village from stone, and its noise draws the night to its side.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>Rock-breakers smash wooden walls; Spitters shoot from further back.</p>
+      </template>
+      <template data-land-id="ashwood">
+        <figure class="land-hero"><img src="/assets/lands/ashwood/landscape-2000.webp" srcset="/assets/lands/ashwood/landscape-1100.webp 1100w, /assets/lands/ashwood/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Ashwood by day" width="2000" height="920"></figure>
+        <h3>Ashwood</h3>
+        <p class="lead">A burnt forest, open on every side and dark from the first night. Fire is your friend.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/ashwood/boss.webp" alt="The Cinder Stag" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Cinder Stag</b>Once her white hunting stag.</figcaption></figure>
+          <figure><img src="/assets/lands/ashwood/building.webp" alt="The field" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Field</b>Pays double at the harvest dawn, and nothing in winter.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>The ash swarm comes twice as many, each half as strong.</p>
+      </template>
+      <template data-land-id="stonehold">
+        <figure class="land-hero"><img src="/assets/lands/stonehold/landscape-2000.webp" srcset="/assets/lands/stonehold/landscape-1100.webp 1100w, /assets/lands/stonehold/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Stonehold by day" width="2000" height="920"></figure>
+        <h3>Stonehold</h3>
+        <p class="lead">A court cut into the angle of two cliffs. Everything comes at one wall, and ground is scarce.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/stonehold/boss.webp" alt="The Glass Bearer" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Glass Bearer</b>Once Grim, the lampwright's brother, who held her glass.</figcaption></figure>
+          <figure><img src="/assets/lands/stonehold/building.webp" alt="The silver mine" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Silver mine</b>Stands only on an old shaft at the cliff foot, and pays the same all year.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>Brutes at the gate; Burrowers come up the old shafts.</p>
+      </template>
+      <template data-land-id="rosegarth">
+        <figure class="land-hero"><img src="/assets/lands/rosegarth/landscape-2000.webp" srcset="/assets/lands/rosegarth/landscape-1100.webp 1100w, /assets/lands/rosegarth/landscape-2000.webp 2000w" sizes="(max-width: 900px) 100vw, 900px" alt="Rosegarth by day" width="2000" height="920"></figure>
+        <h3>Rosegarth</h3>
+        <p class="lead">Her garden. The hedges choose the roads, you choose the gates. From above, they draw her face.</p>
+        <div class="pair">
+          <figure><img src="/assets/lands/rosegarth/boss.webp" alt="The Thornless" width="640" height="800" loading="lazy"><figcaption><i>Night 12</i><b>The Thornless</b>Once Hob, her gardener.</figcaption></figure>
+          <figure><img src="/assets/lands/rosegarth/building.webp" alt="The orchard" width="640" height="800" loading="lazy"><figcaption><i>Only here</i><b>Orchard</b>Stands against a hedge, and bears more every season it survives.</figcaption></figure>
+        </div>
+        <p class="blight"><i>Its Blight</i>Nothing passes a hedge, so the hedges decide where they come.</p>
+      </template>
     </div>
-    <div class="deck" tabindex="0" aria-label="The six lands">
-      <article class="land-card"><div class="ph"><img src="/assets/shots/card-witchwood-broodmother.webp" alt="The Mother Below" width="640" height="800" loading="lazy" decoding="async"></div><h3>Witchwood</h3><p>The old wood and its lake, safe until winter freezes it.</p><i>Night 12 · the Mother Below</i></article>
-      <article class="land-card"><div class="ph"><img src="/assets/shots/card-fenlands-drowned-king.webp" alt="The Drowned King" width="640" height="800" loading="lazy" decoding="async"></div><h3>Fenlands</h3><p>An island in a mere, reached by a few fords.</p><i>Night 12 · the Drowned King</i></article>
-      <article class="land-card"><div class="ph"><img src="/assets/shots/card-highlands-mountains-fist.webp" alt="The Mountain's Fist" width="640" height="800" loading="lazy" decoding="async"></div><h3>Highlands</h3><p>High ground ringed by cliffs. They come through the passes.</p><i>Night 12 · the Mountain's Fist</i></article>
-      <article class="land-card"><div class="ph"><img src="/assets/shots/card-ashwood-cinder-stag.webp" alt="The Cinder Stag" width="640" height="800" loading="lazy" decoding="async"></div><h3>Ashwood</h3><p>A burnt forest, open on every side. Fire is your friend.</p><i>Night 12 · the Cinder Stag</i></article>
-      <article class="land-card"><div class="ph"><img src="/assets/shots/card-stonehold-glass-bearer.webp" alt="The Glass Bearer" width="640" height="800" loading="lazy" decoding="async"></div><h3>Stonehold</h3><p>A court cut into two cliffs. Everything comes at one wall.</p><i>Night 12 · the Glass Bearer</i></article>
-      <article class="land-card veiled"><div class="ph"></div><h3>Rosegarth</h3><p>Her garden. The hedges choose the roads, you choose the gates.</p><i>Night 12 · the Thornless</i></article>
-    </div>
-    <div class="wrap"><p class="lede rise">Too easy? Raise the Darkness. Every level adds a hardship and pays more.</p></div>
-  </section>
+  </dialog>
 
   <section class="chapter" aria-labelledby="c6s">
     <div class="wrap">
