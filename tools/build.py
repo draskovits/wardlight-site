@@ -70,7 +70,7 @@ def slugify(text: str) -> str:
 
 
 def markdown(src: str) -> tuple[str, list[tuple[str, str]]]:
-    """Returns (html, headings). Supports headings, paragraphs, lists, quotes, fenced code, figures, rules, tables."""
+    """Returns (html, headings). Supports headings, paragraphs, lists, quotes, fenced code, figures, sound clips, rules, tables."""
     lines = src.replace("\r\n", "\n").split("\n")
     out: list[str] = []
     heads: list[tuple[str, str]] = []
@@ -107,6 +107,10 @@ def markdown(src: str) -> tuple[str, list[tuple[str, str]]]:
         elif re.fullmatch(r"(-{3,}|\*{3,})", s):
             flush()
             out.append("<hr>")
+        elif m := re.fullmatch(r'!audio\[([^\]]*)\]\(([^)\s]+)\)', s):
+            flush()   # a sound clip: !audio[Caption](/assets/audio/x.m4a)
+            out.append(f'<figure class="clip"><figcaption>{inline(m.group(1))}</figcaption>'
+                       f'<audio controls preload="none" src="{m.group(2)}"></audio></figure>')
         elif m := re.fullmatch(r'!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)', s):
             flush()
             alt, src_, cap = m.group(1), m.group(2), m.group(3)

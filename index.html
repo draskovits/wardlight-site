@@ -100,59 +100,93 @@
 
 <main id="main">
 
-  <section class="hero" aria-labelledby="hero-title" data-light>
+  <section class="hero" aria-labelledby="hero-title" data-light data-map>
     <div class="plate dark" aria-hidden="true"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="" width="2600" height="1219" fetchpriority="high"></div>
     <div class="plate lit"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="A walled village at night in Wardlight, the Blight pouring out of the violet Mist against its palisade" width="2600" height="1219"></div>
+    <div class="spots" role="group" aria-label="What you see on the map">
+      <button class="spot" data-x="70" data-y="9" aria-expanded="false"><span class="sr">The Wardlight</span></button>
+      <button class="spot" data-x="49" data-y="32" aria-expanded="false"><span class="sr">Towers</span></button>
+      <button class="spot" data-x="74" data-y="52" aria-expanded="false"><span class="sr">The wall</span></button>
+      <button class="spot" data-x="31" data-y="36" aria-expanded="false"><span class="sr">A spell</span></button>
+      <button class="spot blight" data-x="40" data-y="68" aria-expanded="false"><span class="sr">The Blight</span></button>
+      <button class="spot blight" data-x="9" data-y="30" aria-expanded="false"><span class="sr">The Mist</span></button>
+    </div>
+    <div class="card" role="status" aria-live="polite" hidden>
+      <b></b><span></span>
+    </div>
+    <template id="spot-text">
+      <p>The Wardlight|Your flame. You can build only where it reaches.</p>
+      <p>Towers|They shoot only at what the light shows them.</p>
+      <p>The wall|Holds the Blight where your towers can reach them.</p>
+      <p>A spell|Paid with mana, which your light makes all night.</p>
+      <p>The Blight|Up to 2,500 at once, all walking toward the brightest light.</p>
+      <p>The Mist|Where they come from. Nothing out there is lit.</p>
+    </template>
     <div class="copy">
       <h1 id="hero-title">Keep the village lit <em>until morning.</em></h1>
-      <p class="what">Wardlight is a city builder and tower defence for iPhone and iPad. By day you build inside your light. By night the Blight crawl out of the Mist, thousands of them, toward whatever burns brightest.</p>
+      <p class="what">A city builder and tower defence for iPhone and iPad.</p>
       <div class="act">
         <a class="badge" href="https://apps.apple.com/app/id6826542922"><img src="/assets/brand/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
         <span class="when" data-release="2026-12-03" data-after="Out now · free to play">Out 3 December 2026 · pre-order free</span>
       </div>
     </div>
-    <p class="hint" aria-hidden="true">Move your light over the village. Only what it reaches can be seen.</p>
+    <p class="hint" aria-hidden="true"><span class="fine">Move your light. Tap a glow to see what it is.</span><span class="coarse">Swipe across the village. Tap a glow.</span></p>
   </section>
 
   <div class="wrap">
     <ul class="facts" aria-label="At a glance">
-      <li><b>12 nights</b>a run, about forty minutes, saved every dawn</li>
-      <li><b>2,500</b>Blight alive at once on the hardest nights</li>
-      <li><b>6 lands</b>each with its own Blight, seasons and boss</li>
-      <li><b>No ads</b>no account, no network, one purchase</li>
+      <li><b>12 nights</b>one run, about 40 min</li>
+      <li><b data-count="2500">2,500</b>Blight at once</li>
+      <li><b>6 lands</b>six bosses</li>
+      <li><b>No ads</b>one purchase</li>
     </ul>
   </div>
 
   <section class="chapter" id="the-game" aria-labelledby="c1">
-    <div class="wrap split">
-      <div>
-        <span class="num">I · The rule</span>
-        <h2 id="c1">Light is land.</h2>
-        <p class="lede">You are the Wardlight, the flame at the heart of a village on the edge of an endless Mist. You can only build where your light reaches, and your towers only see lit ground.</p>
-        <p class="lede">A bigger light means a bigger village. A brighter village draws more of the Blight. Where you grow decides where they come.</p>
+    <div class="wrap">
+      <span class="num">I · Day and night</span>
+      <h2 id="c1">Light is land.</h2>
+      <p class="lede">You can only build where your light reaches. The brighter you burn, the more of them come.</p>
+      <div class="toggle" data-toggle>
+        <div class="seg" role="tablist" aria-label="Day or night">
+          <button role="tab" aria-selected="true" data-i="0">Day</button>
+          <button role="tab" aria-selected="false" data-i="1">Night</button>
+        </div>
+        <div class="stage shot">
+          <img class="on" src="/assets/img/light-1600.jpg" srcset="/assets/img/light-1000.jpg 1000w, /assets/img/light-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="A village by day inside the ring of its light, the land outside it dim" width="1600" height="808" loading="lazy" decoding="async">
+          <img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1000.jpg 1000w, /assets/img/hero-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="A village at night, the Blight pouring out of the violet Mist against its wall" width="1600" height="750" loading="lazy" decoding="async">
+        </div>
+        <p class="say" aria-live="polite"><b>The day waits for you.</b> Build, read where tonight's Blight will come from, then call the night.</p>
+        <template>
+          <p><b>The day waits for you.</b> Build, read where tonight's Blight will come from, then call the night.</p>
+          <p><b>The night does not.</b> Your towers fight what the light shows. Your mana patches the rest.</p>
+        </template>
       </div>
-      <figure class="bleed-r">
-        <div class="shot"><img src="/assets/img/light-1600.jpg" srcset="/assets/img/light-1000.jpg 1000w, /assets/img/light-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 62vw" alt="A village by day inside the ring of its light, the land outside it dim" width="1600" height="808" loading="lazy" decoding="async"></div>
-        <figcaption>The edge of the light is the edge of what you may build on, and of what your towers can see.</figcaption>
-      </figure>
     </div>
 
-    <div class="wrap daynight">
+    <div class="wrap block">
       <span class="num">II · The year</span>
-      <figure class="wide">
-        <div class="shot"><img src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="The same village through spring, summer, autumn and winter" width="1600" height="645" loading="lazy" decoding="async"></div>
-        <figcaption>Four seasons of three nights each. Every season has its own rule and two boons to choose from.</figcaption>
-      </figure>
-      <div class="pair">
-        <div class="d">
-          <h3>The day waits for you.</h3>
-          <p>Spend the village's supplies on houses, fields, walls and towers. Read where tonight's Blight will come from. Then call the night when you are ready, not a second before.</p>
+      <h2>Four seasons, three nights each.</h2>
+      <div class="slices" data-slices style="--ar: 1000 / 403">
+        <div class="frame shot"><div class="strip">
+          <img class="base" src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="The same village through spring, summer, autumn and winter" width="1600" height="645" loading="lazy" decoding="async">
+          <img class="lit" src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="645" loading="lazy" decoding="async">
+        </div></div>
+        <div class="seg" role="tablist" aria-label="Season">
+          <button role="tab" aria-selected="true" data-clip="0 0, 26.5% 0, 23.5% 100%, 0 100%" data-pos="0">Spring</button>
+          <button role="tab" aria-selected="false" data-clip="26.5% 0, 52% 0, 48.5% 100%, 23.5% 100%" data-pos="33">Summer</button>
+          <button role="tab" aria-selected="false" data-clip="52% 0, 77% 0, 73.5% 100%, 48.5% 100%" data-pos="67">Autumn</button>
+          <button role="tab" aria-selected="false" data-clip="77% 0, 100% 0, 100% 100%, 73.5% 100%" data-pos="100">Winter</button>
         </div>
-        <div class="n">
-          <h3>The night does not.</h3>
-          <p>The Blight come in surges. Your towers fight what the light shows them, and your light makes mana, which you spend on spells and mage towers wherever the wall is about to break.</p>
-        </div>
+        <p class="say" aria-live="polite"></p>
+        <template>
+          <p>Rain and thaw. Fire burns half as long, and the fields give half.</p>
+          <p>Wind. Arrows lose range shooting into it.</p>
+          <p>The full harvest, and fog that hides the Blight.</p>
+          <p>Hard frost. The lakes freeze and the Blight walk over the ice.</p>
+        </template>
       </div>
+      <p class="lede">Each season, pick one of two boons.</p>
     </div>
   </section>
 
@@ -161,8 +195,8 @@
       <img src="/assets/img/horde-1600.jpg" srcset="/assets/img/horde-1000.jpg 1000w, /assets/img/horde-1600.jpg 1600w, /assets/img/horde-2600.jpg 2600w" sizes="100vw" alt="A village at night in firelight, the Blight swarming through its walls" width="2600" height="926" loading="lazy" decoding="async">
     </div>
     <div class="wrap over">
-      <p class="big" id="c3">2,500<small>Blight alive at once</small></p>
-      <p>Each one is simulated on your phone, twenty times a second, and drawn by a renderer written for this game in Apple's Metal. Nothing runs on a server. Every crawler you see is walking toward your wall.</p>
+      <p class="big" id="c3"><span data-count="2500">2,500</span><small>Blight alive at once</small></p>
+      <p>Every one simulated on your phone, twenty times a second. No server.</p>
     </div>
   </section>
 
@@ -171,109 +205,85 @@
       <div>
         <span class="num">III · Growth</span>
         <h2 id="c4">Every building has its own tree.</h2>
-        <p class="lede">Knowledge from the night buys talents on each building's tree. A house grows into a longhouse, a watchtower into a volley tower, and every tree ends in a keystone that changes how the building plays.</p>
-        <p class="lede">Each run is a new year with new spells to choose, and two trees kindled at half the price.</p>
+        <p class="lede">The night pays Knowledge. Knowledge buys talents. Every tree ends in a keystone.</p>
       </div>
       <figure class="bleed-l">
         <div class="shot"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 58vw" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="728" loading="lazy" decoding="async"></div>
-        <figcaption>Talents are bought with Knowledge, and only the night pays it out.</figcaption>
       </figure>
     </div>
 
-    <div class="wrap">
-      <figure class="wide attune-art">
-        <div class="shot"><img src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="One village in three colours: red fire for Ember, green rot for Verdant, golden lightning for Dawn" width="1600" height="733" loading="lazy" decoding="async"></div>
-      </figure>
-      <div class="attune" aria-label="The three Attunements">
-        <div class="ember">
-          <h3>Ember</h3>
+    <div class="wrap block">
+      <h2>Pick an element.</h2>
+      <p class="lede">At level four the Wardlight takes one. Every tower and spell follows.</p>
+      <div class="slices attunes" data-slices style="--ar: 1000 / 458">
+        <div class="frame shot"><div class="strip">
+          <img class="base" src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 700px) 200vw, (max-width: 1260px) 100vw, 1216px" alt="One village in three colours: red fire for Ember, green rot for Verdant, golden lightning for Dawn" width="1600" height="733" loading="lazy" decoding="async">
+          <img class="lit" src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 700px) 200vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="733" loading="lazy" decoding="async">
+        </div></div>
+        <div class="seg" role="tablist" aria-label="Attunement">
+          <button role="tab" class="ember" aria-selected="true" data-clip="0 0, 36% 0, 30.5% 100%, 0 100%" data-pos="0">Ember</button>
+          <button role="tab" class="verdant" aria-selected="false" data-clip="36% 0, 69.5% 0, 64.5% 100%, 30.5% 100%" data-pos="50">Verdant</button>
+          <button role="tab" class="dawn" aria-selected="false" data-clip="69.5% 0, 100% 0, 100% 100%, 64.5% 100%" data-pos="100">Dawn</button>
+        </div>
+        <p class="say" aria-live="polite"></p>
+        <template>
           <p>Every hit leaves fire behind it. Free for everyone.</p>
-        </div>
-        <div class="verdant">
-          <h3>Verdant</h3>
-          <p>Rot spreads from one Blight to the next, through the whole crowd.</p>
-        </div>
-        <div class="dawn">
-          <h3>Dawn</h3>
-          <p>Lightning leaps from one to the next and stuns where it lands.</p>
-        </div>
+          <p>Rot spreads from one Blight to the next.</p>
+          <p>Lightning leaps between them and stuns where it lands.</p>
+        </template>
       </div>
-      <p class="lede">At its fourth level the Wardlight takes an element. Every tower, spell and light in the village takes its colour for the rest of the year.</p>
     </div>
   </section>
 
   <section class="chapter" id="lands" aria-labelledby="c5">
     <div class="wrap">
       <span class="num">IV · The lands</span>
-      <h2 id="c5">Six lands, one after another.</h2>
-      <p class="lede">Each land has its own ground, its own Blight and its own boss on the twelfth night. You open the next by holding the one before. When a land gets easy, raise the Darkness: every level adds a hardship and pays more Echoes.</p>
-      <figure class="wide bosses">
-        <div class="shot"><img src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="Four bosses side by side: the Mother Below, the Drowned King, the Mountain's Fist and the Cinder Stag" width="1600" height="651" loading="lazy" decoding="async"></div>
-        <figcaption>Every land saves the worst for the twelfth night.</figcaption>
-      </figure>
-      <div class="lands">
-        <article class="land">
-          <h3>Witchwood</h3>
-          <p>The old wood and its lake. The water keeps the walkers out until winter turns it to ice.</p>
-          <p class="boss">Night 12: the Mother Below</p>
-        </article>
-        <article class="land">
-          <h3>Fenlands</h3>
-          <p>An island of fen soil in a deep mere, reached by a few fords. The water guards you until it freezes.</p>
-          <p class="boss">Night 12: the Drowned King</p>
-        </article>
-        <article class="land">
-          <h3>Highlands</h3>
-          <p>A shelf of high ground ringed by cliffs. You see them coming through the passes, and you feed the village from stone.</p>
-          <p class="boss">Night 12: the Mountain's Fist</p>
-        </article>
-        <article class="land">
-          <h3>Ashwood</h3>
-          <p>A burnt forest, open on every side and dark from the first night. Ember pits glow like lanterns, and fire is your friend.</p>
-          <p class="boss">Night 12: the Cinder Stag</p>
-        </article>
-        <article class="land">
-          <h3>Stonehold</h3>
-          <p>A court cut into the angle of two cliffs, the rock at your back. Everything comes at one wall, and ground is scarce.</p>
-          <p class="boss">Night 12: the Glass Bearer</p>
-        </article>
-        <article class="land">
-          <h3>Rosegarth</h3>
-          <p>Her garden. The Blight cannot pass a hedge, so the hedges choose the roads and you choose the gates. Seen from above, they draw her face.</p>
-          <p class="boss">Night 12: the Thornless</p>
-        </article>
+      <h2 id="c5">Six lands, six bosses.</h2>
+      <p class="lede">Hold a land to open the next.</p>
+      <div class="slices lands-pick" data-slices style="--ar: 1000 / 407">
+        <div class="frame shot"><div class="strip">
+          <img class="base" src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="Four bosses side by side: the Mother Below, the Drowned King, the Mountain's Fist and the Cinder Stag" width="1600" height="651" loading="lazy" decoding="async">
+          <img class="lit" src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="651" loading="lazy" decoding="async">
+        </div><p class="veil">Not seen yet.</p></div>
+        <div class="seg wrapish" role="tablist" aria-label="Land">
+          <button role="tab" aria-selected="true" data-clip="0 0, 27% 0, 24% 100%, 0 100%" data-pos="0">Witchwood</button>
+          <button role="tab" aria-selected="false" data-clip="27% 0, 51% 0, 49% 100%, 24% 100%" data-pos="33">Fenlands</button>
+          <button role="tab" aria-selected="false" data-clip="51% 0, 77.5% 0, 74% 100%, 49% 100%" data-pos="67">Highlands</button>
+          <button role="tab" aria-selected="false" data-clip="77.5% 0, 100% 0, 100% 100%, 74% 100%" data-pos="100">Ashwood</button>
+          <button role="tab" aria-selected="false" data-clip="none" data-pos="50">Stonehold</button>
+          <button role="tab" aria-selected="false" data-clip="none" data-pos="50">Rosegarth</button>
+        </div>
+        <p class="say" aria-live="polite"></p>
+        <template>
+          <p>The old wood and its lake, safe until winter freezes it.<i>Night 12: the Mother Below</i></p>
+          <p>An island in a mere, reached by a few fords.<i>Night 12: the Drowned King</i></p>
+          <p>High ground ringed by cliffs. They come through the passes.<i>Night 12: the Mountain's Fist</i></p>
+          <p>A burnt forest, open on every side. Fire is your friend.<i>Night 12: the Cinder Stag</i></p>
+          <p>A court cut into two cliffs. Everything comes at one wall.<i>Night 12: the Glass Bearer</i></p>
+          <p>Her garden. The hedges choose the roads, you choose the gates.<i>Night 12: the Thornless</i></p>
+        </template>
       </div>
+      <p class="lede">Too easy? Raise the Darkness. Every level adds a hardship and pays more.</p>
     </div>
   </section>
 
   <section class="chapter" aria-labelledby="c6">
     <div class="wrap">
       <span class="num">V · The story</span>
-      <h2 id="c6">A dwarf who wants to retire, and an elf who wants the dark.</h2>
-      <div class="cast">
-        <div class="people">
-          <div class="person">
-            <img src="/assets/img/dwarf.png" alt="Portrait of the old dwarf lampwright" width="192" height="192" loading="lazy" decoding="async">
-            <div><h3>The lampwright</h3><p>An old dwarf who carries your ember from village to village and would much rather be fishing. Forty years of her war, thirty of her halls, and still not one fish.</p></div>
-          </div>
-          <div class="person">
-            <img src="/assets/img/vaelith.jpg" alt="Portrait of Lady Vaelith" width="192" height="192" loading="lazy" decoding="async">
-            <div><h3>Lady Vaelith</h3><p>She spreads the Mist so that no light can ever fall on the tiny scar on her cheek. She has something to say about every night you survive.</p></div>
-          </div>
+      <h2 id="c6">A dwarf who wants to retire. An elf who wants the dark.</h2>
+      <div class="talk" data-talk>
+        <div class="faces">
+          <figure class="face v"><img src="/assets/img/vaelith.jpg" alt="Lady Vaelith" width="192" height="192" loading="lazy" decoding="async"><figcaption>Lady Vaelith</figcaption></figure>
+          <figure class="face w"><img src="/assets/img/dwarf.png" alt="The old dwarf lampwright" width="192" height="192" loading="lazy" decoding="async"><figcaption>The lampwright</figcaption></figure>
         </div>
-        <div>
-          <dl class="script">
-            <div class="v"><dt>Vaelith</dt><dd>Lampwright. There is a light on in my wood.</dd></div>
-            <div class="w"><dt>Lampwright</dt><dd>Evening, my lady. That'll be the Wardlight. It's new.</dd></div>
-            <div class="v"><dt>Vaelith</dt><dd>Put it out. It is on my bad side.</dd></div>
-            <div class="w"><dt>Lampwright</dt><dd>Everything's on your bad side lately, my lady. And I can't. I've retired, I only advise.</dd></div>
-          </dl>
-          <p class="script-note">From the game. The story is told in all thirteen of its languages; the German was written, not translated.</p>
-          <figure class="panel">
-            <div class="shot"><img src="/assets/img/vaelith-panel-1000.jpg" srcset="/assets/img/vaelith-panel-1000.jpg 1000w, /assets/img/vaelith-panel-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 640px" alt="Vaelith introduces a new Blight, the Spitter, with a remark and the towers that counter it" width="1000" height="500" loading="lazy" decoding="async"></div>
-            <figcaption>She introduces every new Blight herself, with a remark and the towers that answer it.</figcaption>
-          </figure>
-        </div>
+        <button class="line" type="button" aria-live="polite"><span class="who"></span><span class="said"></span><span class="next">Tap</span></button>
+        <template>
+          <p class="v">Lampwright. There is a light on in my wood.</p>
+          <p class="w">Evening, my lady. That'll be the Wardlight. It's new.</p>
+          <p class="v">Put it out. It is on my bad side.</p>
+          <p class="w">Everything's on your bad side lately, my lady. And I can't. I've retired, I only advise.</p>
+        </template>
+        <noscript><p class="lede">Vaelith: Lampwright. There is a light on in my wood. Lampwright: Evening, my lady. That'll be the Wardlight. It's new.</p></noscript>
       </div>
     </div>
   </section>
@@ -281,30 +291,26 @@
   <section class="chapter" id="price" aria-labelledby="c7">
     <div class="wrap">
       <span class="num">VI · What it costs</span>
-      <h2 id="c7">Free to play. One purchase. Nothing else.</h2>
-      <figure class="wide memory">
-        <div class="shot"><img src="/assets/img/memory-1600.jpg" srcset="/assets/img/memory-1000.jpg 1000w, /assets/img/memory-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="The Memory, a sky of stars bought with Echoes between runs" width="1600" height="728" loading="lazy" decoding="async"></div>
-        <figcaption>The Memory: lose the village, keep the lesson. Echoes from every run light stars that stay lit.</figcaption>
-      </figure>
+      <h2 id="c7">Free to play. One purchase.</h2>
       <div class="price">
         <div>
           <h3>Free <span>€0</span></h3>
           <ul>
-            <li>Whole runs, as many as you like</li>
+            <li>Every run, as often as you like</li>
             <li>The Ember Attunement</li>
-            <li>The Memory, the upgrades between runs, for your first three runs</li>
+            <li>Upgrades between runs for three runs</li>
           </ul>
         </div>
         <div>
           <h3>Full Game <span>€4.99 once</span></h3>
           <ul>
-            <li>The Verdant and Dawn Attunements</li>
-            <li>The Memory stays open, run after run</li>
-            <li>Shared with your family through Family Sharing</li>
+            <li>Verdant and Dawn</li>
+            <li>Upgrades between runs, for good</li>
+            <li>Family Sharing</li>
           </ul>
-          <p class="none">No ads, no energy, no timers, no account. Prices differ a little by country.</p>
         </div>
       </div>
+      <p class="none">No ads, no energy, no timers, no account.</p>
     </div>
   </section>
 
@@ -317,6 +323,7 @@
         <details><summary>How long is a run?</summary><div><p>Twelve nights, each with an untimed day before it: about forty minutes. The game saves at every dawn, so a run fits an evening or a few train rides.</p></div></details>
         <details><summary>Which devices does it run on?</summary><div><p>iPhone and iPad with iOS or iPadOS 26 or later. It isn't on Android, PC or consoles.</p></div></details>
         <details><summary>Is my run saved?</summary><div><p>Yes, at every dawn, on your device. If you close the game during a night, you continue from that night's dawn.</p></div></details>
+        <details><summary>What does the Full Game add?</summary><div><p>The Verdant and Dawn Attunements, and the Memory, the upgrades between runs, stays open after your third run. It is shared through Family Sharing. Prices differ a little by country.</p></div></details>
         <details><summary>Does the game collect data?</summary><div><p>Only anonymous play data: which lands are played, on which night runs end, which talents are picked. Nothing that tells me who you are. You can turn it off in Settings → Apps → Wardlight → Share play data. Details are in the <a href="/datenschutz.html">privacy policy</a>.</p></div></details>
         <details><summary>I bought the full game on another device.</summary><div><p>Purchases go through the App Store. Open the ••• menu, then Full game, then Restore purchase, with the same Apple Account.</p></div></details>
         <details><summary>I found a bug, or I have an idea.</summary><div><p>Write to <a href="mailto:hello@playwardlight.com">hello@playwardlight.com</a> or open an issue on <a href="https://github.com/draskovits/wardlight-site/issues/new">GitHub</a>. It helps to say which device you play on, which land and night you were on, and what happened.</p></div></details>
@@ -328,7 +335,6 @@
     <div class="wrap">
       <span class="num">VIII · From the workshop</span>
       <h2 id="c9">How it gets made</h2>
-      <p class="lede">Notes from building Wardlight alone: the renderer, the balance, the words, and the mistakes.</p>
       <!--LATEST-->
       <p class="more"><a href="/blog/">All posts</a> · <a href="/blog/feed.xml">RSS</a></p>
     </div>

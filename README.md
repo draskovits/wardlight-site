@@ -12,7 +12,7 @@ Plain HTML and CSS, one small Python build script without dependencies, publishe
 | `support.html`, `datenschutz.html`, `impressum.html` | Support, privacy policy (App Store links point here), legal notice |
 | `posts/*.md` | Blog posts, one Markdown file each |
 | `templates/page.html` | The shell for blog pages |
-| `assets/` | `site.css`, `site.js`, images (`img/`), logos (`brand/`), icons (`icon/`) |
+| `assets/` | `site.css`, `site.js`, images (`img/`), sound clips (`audio/`), logos (`brand/`), icons (`icon/`) |
 | `llms.txt` | A plain summary for AI assistants; `{{posts}}` becomes the post list. The build also writes `llms-full.txt` with every post as text |
 | `robots.txt`, `CNAME` | Crawlers welcome; the custom domain |
 | `tools/build.py` | Builds everything into `_site/` |
@@ -32,7 +32,8 @@ Plain HTML and CSS, one small Python build script without dependencies, publishe
    ---
 
    The text, in Markdown: ## headings, lists, `code`, ```fenced code```, > quotes, tables,
-   and images on their own line: ![alt text](/assets/img/x.jpg "Caption")
+   images on their own line: ![alt text](/assets/img/x.jpg "Caption")
+   and sound clips on their own line: !audio[Caption](/assets/audio/x.m4a)
    ```
 
 2. Push to `main`. A post dated today or earlier goes live with that push; a post dated in the future goes live on
