@@ -455,3 +455,120 @@ figure.wide .shot { border-radius: 6px; }
 .prose figure.clip { margin: 1.4em 0; padding: .9rem 1rem 1rem; border: 1px solid var(--rule-2); border-radius: 14px; background: rgba(236, 226, 204, .04); }
 .prose figure.clip figcaption { padding: 0; margin: 0 0 .6rem; font: italic 1rem/1.4 var(--serif); color: var(--ink-2); }
 .prose figure.clip audio { width: 100%; height: 40px; color-scheme: dark; }
+
+/* ================================================================ scroll scenes (2026-11-21, second pass)
+   Each [data-film]/[data-scene] section is taller than the screen; its .pin sticks while the page scrolls past, and
+   site.js writes the section's progress 0…1 to --p. Everything below is a function of --p. */
+.film, .grow-in, .dusk, .year, .tint { position: relative; --p: 0; }
+.film .pin, .grow-in .pin, .dusk .pin, .year .pin, .tint .pin { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+
+.film { height: 460svh; background: #000; }
+.film .poster img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.film .poster, .film canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%;
+  transform: scale(calc(1.06 - .06 * var(--p))); transform-origin: 50% 50%; will-change: transform; }
+.film canvas { opacity: 0; transition: opacity .4s; }
+.film.has-frames canvas { opacity: 1; }
+.film .shade { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(0deg, rgba(7,8,12,.95) 0%, rgba(7,8,12,.55) 28%, rgba(7,8,12,0) 58%),
+              linear-gradient(90deg, rgba(7,8,12,.6) 0%, rgba(7,8,12,0) 55%); }
+.film .beat { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 10svh, 6rem); margin: 0;
+  opacity: 0; transform: translateY(24px); will-change: opacity, transform; }
+.film .beat.first { max-width: 46rem; display: grid; gap: 1.1rem; }
+.film h1 { font-size: clamp(2.7rem, 7.4vw, 5.6rem); }
+.film h1 em { font-style: italic; color: var(--lantern-hot); font-weight: 500; }
+.film .what { font-size: clamp(1.05rem, 1.9vw, 1.25rem); color: var(--ink-2); }
+.film .act { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.4rem; margin-top: .3rem; }
+.film .when { font-family: var(--mono); font-size: .82rem; color: var(--lantern); }
+.film .line { font: 500 clamp(2.2rem, 6.2vw, 4.8rem)/1.05 var(--serif); letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+.film .line.night { color: #d9c8ff; text-shadow: 0 0 40px rgba(155,123,208,.6); }
+.scrollcue { position: absolute; left: 50%; bottom: 1.1rem; width: 22px; height: 34px; margin-left: -11px; border: 1.5px solid rgba(236,226,204,.45); border-radius: 12px;
+  opacity: calc(1 - var(--p) * 12); }
+.scrollcue span { position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--ink-2); animation: cue 1.8s ease-in-out infinite; }
+@keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(10px); opacity: 0; } 100% { opacity: 0; } }
+.film + .wrap .facts { margin-top: 0; }
+
+/* the light: a card that opens to the whole screen */
+.grow-in { height: 280svh; --g: clamp(0, calc(var(--p) / .5), 1); --o: clamp(0, calc((var(--p) - .58) / .18), 1); }
+.grow-in .pin { display: grid; place-items: center; }
+.grow-in .head { position: absolute; top: clamp(4.5rem, 12svh, 8rem); left: 0; right: 0; text-align: center; z-index: 2;
+  opacity: calc(1 - var(--g) * 1.6); transform: translateY(calc(var(--g) * -40px)); }
+.grow-in .head h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); margin: 0 auto; }
+.grow-in .frame { position: relative; margin: 0; overflow: hidden;
+  width: calc(min(72vw, 980px) + (100vw - min(72vw, 980px)) * var(--g));
+  height: calc(min(48svh, 560px) + (100svh - min(48svh, 560px)) * var(--g));
+  border-radius: calc(28px * (1 - var(--g))); margin-top: calc(18svh * (1 - var(--g)));
+  box-shadow: 0 40px 120px -30px rgba(0,0,0,.9); }
+.grow-in .frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(calc(1.25 - .25 * var(--g))); }
+.grow-in .over { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 12svh, 7rem); margin: 0 auto; max-width: 30ch; text-align: center;
+  font: 500 clamp(1.6rem, 3.6vw, 2.8rem)/1.2 var(--serif); color: var(--ink); text-shadow: 0 2px 30px rgba(0,0,0,.9);
+  opacity: var(--o); transform: translateY(calc((1 - var(--o)) * 30px)); }
+.grow-in .pin::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgba(7,8,12,.95), rgba(7,8,12,.6) 30%, rgba(7,8,12,0) 60%); opacity: var(--o); }
+
+/* day into night */
+.dusk { height: 300svh; --n: clamp(0, calc((var(--p) - .3) / .3), 1); }
+.dusk video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dusk video.d { transform: scale(calc(1 + .08 * var(--p))); filter: brightness(calc(1 - .5 * var(--n))) saturate(calc(1 - .4 * var(--n))); }
+.dusk video.n { opacity: var(--n); transform: scale(calc(1.12 - .08 * var(--p))); }
+.dusk .pin::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgba(7,8,12,.9) 0%, rgba(7,8,12,.3) 35%, rgba(7,8,12,0) 60%); }
+.dusk .say { position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 11svh, 6.5rem); max-width: 34rem; }
+.dusk .say h2 { font-size: clamp(2.2rem, 5.6vw, 4.2rem); }
+.dusk .say p { color: var(--ink-2); font-size: clamp(1.05rem, 1.8vw, 1.3rem); margin-top: .7rem; }
+.dusk .say.d { opacity: clamp(0, calc(1 - var(--n) * 2.2), 1); transform: translateY(calc(var(--n) * -30px)); }
+.dusk .say.n { opacity: clamp(0, calc((var(--n) - .55) * 2.2), 1); transform: translateY(calc((1 - var(--n)) * 30px)); }
+.dusk .say.n h2 { color: #d9c8ff; }
+
+/* the year, sideways */
+.year { height: 420svh; }
+.year .pin { display: flex; flex-direction: column; justify-content: center; gap: clamp(1.5rem, 4svh, 3rem); }
+.year .head { padding: 0 var(--gutter); }
+.year .head h2 { font-size: clamp(2rem, 4.6vw, 3.4rem); }
+.year .track { display: flex; gap: clamp(1rem, 2.5vw, 2rem); padding: 0 var(--gutter); width: max-content;
+  transform: translateX(calc(var(--p) * (100vw - 100%))); will-change: transform; }
+.year .card { margin: 0; width: min(78vw, 860px); }
+.year .ph { aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px -30px rgba(0,0,0,.9); }
+.year .ph img { width: 100%; height: 100%; object-fit: cover; }
+.year figcaption { margin-top: 1rem; font: 400 1.05rem/1.45 var(--sans); font-style: normal; color: var(--ink-2); max-width: none; }
+.year figcaption b { display: block; font: 600 1.6rem/1.2 var(--serif); color: var(--ink); margin-bottom: .2rem; }
+
+/* the element */
+.tint { height: 380svh; --b: 0; --c: 0; }
+.tint .layers .l { position: absolute; inset: 0; }
+.tint .layers video { width: 100%; height: 100%; object-fit: cover; object-position: var(--x) 50%; transform: scale(calc(1.06 + .04 * var(--p))); }
+.tint .l.ember { opacity: 1; } .tint .l.verdant { opacity: var(--b); } .tint .l.dawn { opacity: var(--c); }
+.tint .pin::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgba(7,8,12,.96) 0%, rgba(7,8,12,.75) 28%, rgba(7,8,12,.1) 55%, rgba(7,8,12,.7) 100%); }
+.tint .head { position: absolute; z-index: 2; top: clamp(4.5rem, 12svh, 8rem); left: var(--gutter); right: var(--gutter); }
+.tint .head h2 { font-size: clamp(2rem, 4.8vw, 3.6rem); max-width: 16ch; }
+.tint .names { position: absolute; z-index: 2; left: var(--gutter); right: var(--gutter); bottom: clamp(3rem, 10svh, 6rem); margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+.tint .names li { opacity: .35; transition: opacity .4s, transform .4s; color: var(--ink-2); font-size: .98rem; }
+.tint .names li.on { opacity: 1; transform: translateY(-6px); }
+.tint .names b { display: block; font: 600 clamp(1.5rem, 3.4vw, 2.4rem)/1.1 var(--serif); margin-bottom: .3rem; }
+.tint .names .ember b { color: var(--ember); } .tint .names .verdant b { color: var(--verdant); } .tint .names .dawn b { color: var(--dawn); }
+@media (max-width: 620px) { .tint .names { grid-template-columns: 1fr; gap: .6rem; } .tint .names li { font-size: .92rem; } }
+
+/* the lands: a deck to swipe */
+.deck { display: flex; gap: 1.2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 2.2rem var(--gutter) 1rem;
+  scroll-padding-inline: var(--gutter); scrollbar-width: none; overscroll-behavior-x: contain; }
+.deck::-webkit-scrollbar { display: none; }
+.land-card { flex: 0 0 min(80vw, 380px); scroll-snap-align: start; border-radius: 20px; overflow: hidden; background: var(--night-2);
+  border: 1px solid var(--rule); padding-bottom: 1.3rem; transition: transform .35s cubic-bezier(.3,.7,.2,1), border-color .35s; }
+.land-card:hover { transform: translateY(-6px); border-color: var(--rule-2); }
+.land-card .ph { aspect-ratio: 4 / 5; overflow: hidden; background: radial-gradient(circle at 50% 40%, #1c1a26, #07080c 70%); }
+.land-card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.3,.7,.2,1); }
+.land-card:hover .ph img { transform: scale(1.05); }
+.land-card.veiled .ph::after { content: "Not seen yet."; display: grid; place-items: center; height: 100%; font: italic 1.2rem var(--serif); color: var(--dim); }
+.land-card h3 { font-size: 1.6rem; padding: 1.1rem 1.3rem 0; }
+.land-card p { color: var(--ink-2); padding: .4rem 1.3rem 0; font-size: 1rem; }
+.land-card i { display: block; padding: .7rem 1.3rem 0; font: 500 .74rem/1.4 var(--mono); font-style: normal; letter-spacing: .06em; text-transform: uppercase; color: var(--blight); }
+
+/* things that rise into place once */
+.rise { opacity: 0; transform: translateY(48px); transition: opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1); }
+.rise.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .film, .grow-in, .dusk, .year, .tint { height: auto; }
+  .film .pin, .grow-in .pin, .dusk .pin, .year .pin, .tint .pin { position: relative; }
+  .film .beat.first { opacity: 1; transform: none; } .film .beat.line { display: none; }
+  .grow-in { --g: 1; --o: 1; } .dusk { --n: 0; } .year .track { width: auto; overflow-x: auto; transform: none; } .tint { --b: 0; --c: 0; }
+  .rise { opacity: 1; transform: none; }
+}

@@ -2,119 +2,108 @@
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // The hero: only what the light reaches can be seen. It follows the pointer or a finger, and drifts when left alone.
-  // On a narrow screen the village is wider than the phone: a sideways swipe pans it. Glowing spots on the map open a
-  // one-line card about what is there.
-  const hero = document.querySelector("[data-light]");
-  if (hero) {
-    let tx = 62, ty = 46, x = tx, y = ty, idle = 0, last = performance.now(), visible = true;
-    const plate = hero.querySelector(".plate.lit");
-    const set = (cx, cy) => {
-      const r = plate.getBoundingClientRect();
-      tx = ((cx - r.left) / r.width) * 100;
-      ty = ((cy - r.top) / r.height) * 100;
-      idle = 0;
-    };
-    hero.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") set(e.clientX, e.clientY); });
+  // Scroll scenes: each [data-film]/[data-scene] section is taller than the screen and its .pin sticks; the section's
+  // progress through the screen (0 when its top reaches the top, 1 when its bottom reaches the bottom) goes to --p.
+  const scenes = [...document.querySelectorAll("[data-film], [data-scene]")];
+  const film = document.querySelector("[data-film]");
+  const tint = document.querySelector(".tint"), tintNames = tint ? [...tint.querySelectorAll(".names li")] : [], tintVids = tint ? [...tint.querySelectorAll("video")] : [];
+  const beats = film ? [...film.querySelectorAll("[data-beat]")].map((el) => ({ el, r: el.dataset.beat.split(" ").map(Number) })) : [];
+  const ease = (t) => t * t * (3 - 2 * t);
+  const fade = 0.045;
 
-    // The map: where an image point lands in the hero, with object-fit: cover and the current pan.
-    const img = hero.querySelector(".plate.lit img"), ar = 2600 / 1219;
-    const spots = [...hero.querySelectorAll(".spot")], copy = hero.querySelector(".copy");
-    const card = hero.querySelector(".card"), texts = [...hero.querySelector("#spot-text").content.querySelectorAll("p")].map((p) => p.textContent.split("|"));
-    const narrow = matchMedia("(max-width: 760px)");
-    let px = null, open = -1;
-    const geo = () => {
-      const w = plate.clientWidth, h = plate.clientHeight;
-      const cs = getComputedStyle(hero);
-      const fx = px ?? parseFloat(cs.getPropertyValue("--px") || "58") / 100, fy = parseFloat(cs.getPropertyValue("--py") || "50") / 100;
-      let rw = w, rh = w / ar; if (rh < h) { rh = h; rw = h * ar; }
-      return { w, h, rw, rh, ox: (w - rw) * fx, oy: (h - rh) * fy };
-    };
-    const place = () => {
-      const g = geo(), h1 = copy.querySelector("h1"), limit = copy.offsetTop + h1.offsetTop - 16;
-      const textRight = narrow.matches ? Infinity : copy.offsetLeft + h1.offsetLeft + h1.offsetWidth + 30;
-      spots.forEach((s, i) => {
-        const sx = g.ox + (s.dataset.x / 100) * g.rw, sy = g.oy + (s.dataset.y / 100) * g.rh;
-        s.style.setProperty("--sx", sx + "px"); s.style.setProperty("--sy", sy + "px");
-        s.hidden = sx < 18 || sx > g.w - 18 || sy < 70 || sy > g.h - 30 || (sy > limit && sx < textRight);
-        s._p = [sx, sy];
-        if (i === open && s.hidden) close();
-      });
-      if (open >= 0) aim();
-    };
-    const aim = () => {
-      const [sx, sy] = spots[open]._p, w = hero.clientWidth, cw = card.offsetWidth, ch = card.offsetHeight;
-      let cx = sx > w / 2 ? sx - cw - 26 : sx + 26, cy = sy - ch / 2;
-      if (cx < 12 || cx + cw > w - 12) { cx = Math.min(Math.max(12, sx - cw / 2), w - cw - 12); cy = sy + 30; }
-      cy = Math.max(70, cy);
-      card.style.setProperty("--cx", cx + "px"); card.style.setProperty("--cy", cy + "px");
-    };
-    const close = () => { if (open >= 0) spots[open].setAttribute("aria-expanded", "false"); open = -1; card.hidden = true; };
-    spots.forEach((s, i) => s.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (open === i) return close();
-      close(); open = i; s.setAttribute("aria-expanded", "true");
-      card.querySelector("b").textContent = texts[i][0]; card.querySelector("span").textContent = texts[i][1];
-      card.classList.toggle("blight", s.classList.contains("blight"));
-      card.hidden = false; aim();
-      const r = hero.getBoundingClientRect(); set(r.left + s._p[0], r.top + s._p[1]); idle = -6000;
-    }));
-    hero.addEventListener("click", (e) => { if (!card.contains(e.target)) close(); });
-    addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
-
-    // A sideways swipe pans the village on a phone; a finger also carries the light.
-    let drag = null;
-    hero.addEventListener("pointerdown", (e) => {
-      if (e.pointerType === "mouse") return;
-      const g = geo(); glide = null;
-      drag = { x: e.clientX, px: px ?? g.ox / Math.min(-1, g.w - g.rw) };
-    });
-    hero.addEventListener("pointermove", (e) => {
-      if (!drag) return;
-      set(e.clientX, e.clientY);
-      const g = geo(), span = g.rw - g.w;
-      if (narrow.matches && span > 4) {
-        px = Math.min(1, Math.max(0, drag.px - (e.clientX - drag.x) / span));
-        hero.style.setProperty("--px", (px * 100).toFixed(2) + "%");
-        place();
-      }
-    });
-    const end = () => { drag = null; };
-    hero.addEventListener("pointerup", end); hero.addEventListener("pointercancel", end);
-    // On a phone, glide once toward the Mist and back, so it is plain the village goes on past the edge.
-    let glide = null;
-    if (narrow.matches && !reduce) setTimeout(() => {
-      if (drag || px !== null) return;
-      const t0 = performance.now(), from = 0.64, to = 0.22;
-      glide = (now) => {
-        if (!glide) return;
-        const p = Math.min(1, (now - t0) / 3600), e = (1 - Math.cos(p * Math.PI * 2)) / 2;
-        px = from + (to - from) * e;
-        hero.style.setProperty("--px", (px * 100).toFixed(2) + "%"); place();
-        if (p < 1) requestAnimationFrame(glide); else glide = null;
-      };
-      requestAnimationFrame(glide);
-    }, 900);
-    if (img.complete) place(); else img.addEventListener("load", place);
-    addEventListener("resize", () => { px = null; hero.style.removeProperty("--px"); place(); });
-    narrow.addEventListener("change", place);
-    place();
-
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) requestAnimationFrame(tick); }).observe(hero);
-    function tick(now) {
-      const dt = Math.min(64, now - last); last = now; idle += dt;
-      if (idle > 2600 && !reduce) {           // drift in a slow figure of eight when nobody holds the light
-        const t = now / 5200;
-        tx = 60 + Math.sin(t) * 16; ty = 48 + Math.sin(t * 2) * 9;
-      }
-      const k = reduce ? 1 : 1 - Math.pow(0.0025, dt / 1000);
-      x += (tx - x) * k; y += (ty - y) * k;
-      hero.style.setProperty("--lx", x.toFixed(2) + "%");
-      hero.style.setProperty("--ly", y.toFixed(2) + "%");
-      if (visible && !reduce) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+  // The film's frames: drawn to a canvas, cover-fitted; a tall set for portrait screens, a wide one otherwise. Between
+  // two frames the next is laid over the last by the fraction, so a stage change dissolves instead of cutting.
+  let frames = [], canvas, ctx, drawn = "", want = () => {};
+  if (film && +film.dataset.frames > 0 && !reduce) {
+    const n = +film.dataset.frames, tall = innerWidth / innerHeight < 1;
+    const path = tall ? film.dataset.tall : film.dataset.wide;
+    canvas = film.querySelector("canvas"); ctx = canvas.getContext("2d");
+    want = (i) => { if (!frames[i]) { const im = load(i); frames[i] = im; im.onload = () => { drawn = ""; onScroll(); }; } };
+    const load = (i) => { const im = new Image(); im.decoding = "async"; im.src = path + String(i + 1).padStart(3, "0") + ".webp"; return im; };
+    frames = new Array(n);
+    // the first frames first, then every 8th, 4th, 2nd and the rest, so a fast scroll always has something near
+    const order = []; const seen = new Set();
+    for (const step of [1e9, 8, 4, 2, 1]) for (let i = 0; i < n; i += Math.min(step, n)) if (!seen.has(i)) { seen.add(i); order.push(i); }
+    let k = 0; const next = () => { const batch = order.slice(k, k + 6); k += 6; let left = batch.length; if (!left) return;
+      batch.forEach((i) => { if (frames[i]) { if (--left === 0) next(); return; } const im = load(i); frames[i] = im; const done = () => { if (--left === 0) next(); if (i === 0) film.classList.add("has-frames"); drawn = ""; onScroll(); }; im.onload = done; im.onerror = done; }); };
+    next();
+    const size = () => { const r = Math.min(2, devicePixelRatio || 1); canvas.width = canvas.clientWidth * r; canvas.height = canvas.clientHeight * r; drawn = ""; };
+    addEventListener("resize", size); size();
   }
+  const ready = (i) => frames[i] && frames[i].complete && frames[i].naturalWidth;
+  const paint = (im, alpha) => {
+    const cw = canvas.width, ch = canvas.height, s = Math.max(cw / im.naturalWidth, ch / im.naturalHeight);
+    const w = im.naturalWidth * s, h = im.naturalHeight * s;
+    ctx.globalAlpha = alpha; ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h); ctx.globalAlpha = 1;
+  };
+  const draw = (p) => {
+    if (!frames.length) return;
+    // the scroll's place → a frame: the bare heart while "Day one" reads, the growth under "You build only…", winter
+    // under "By winter", and the night's frames under "Then night comes" (knots fit the 105-frame take)
+    const knots = [[0, 0], [0.18, 0], [0.36, 9], [0.58, 39], [0.76, 50], [1, frames.length - 1]];
+    let f = 0;
+    for (let j = 1; j < knots.length; j++) if (p <= knots[j][0]) { const [p0, f0] = knots[j - 1], [p1, f1] = knots[j]; f = f0 + (f1 - f0) * ((p - p0) / Math.max(1e-6, p1 - p0)); break; }
+    let a = Math.floor(f), b = Math.min(frames.length - 1, a + 1), t = f - a;
+    want(a); want(b);
+    let up = a; while (up < frames.length - 1 && !ready(up) && up - a < 6) up++;
+    while (a > 0 && !ready(a)) a--;
+    if (ready(up) && Math.abs(up - f) < Math.abs(a - f)) { a = up; t = 0; }
+    if (!ready(a)) return;
+    if (!ready(b)) { b = a; t = 0; }
+    const key = a + ":" + b + ":" + t.toFixed(2);
+    if (key === drawn) return;
+    paint(frames[a], 1); if (t > 0.02 && b !== a) paint(frames[b], t); drawn = key;
+  };
+
+  // Loops play only while they can be seen.
+  const vids = [...document.querySelectorAll("main video")].filter((v) => !v.closest(".tint"));
+  if ("IntersectionObserver" in window) {
+    const vo = new IntersectionObserver((es) => es.forEach((e) => {
+      const v = e.target;
+      if (e.isIntersecting && !reduce) { if (v.preload === "none") v.preload = "auto"; v.play().catch(() => {}); } else v.pause();
+    }), { rootMargin: "200px 0px" });
+    vids.forEach((v) => vo.observe(v));
+  }
+
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = innerHeight;
+    for (const sc of scenes) {
+      const r = sc.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > 2 * vh) continue;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      sc.style.setProperty("--p", p.toFixed(4));
+      if (sc === film) {
+        draw(p);
+        for (const b of beats) {
+          const [a, z] = b.r;
+          const o = Math.min(ease(Math.min(1, Math.max(0, (p - a) / fade + (a === 0 ? 1 : 0)))), ease(Math.min(1, Math.max(0, (z - p) / fade))));
+          b.el.style.opacity = o.toFixed(3);
+          b.el.style.transform = "translateY(" + ((1 - o) * (p < a + fade ? 24 : -24)).toFixed(1) + "px)";
+          b.el.style.pointerEvents = o > 0.5 ? "auto" : "none";
+        }
+      }
+      if (sc === tint) {
+        const on = p < 0.36 ? 0 : p < 0.68 ? 1 : 2;
+        sc.style.setProperty("--b", Math.min(1, Math.max(0, (p - 0.26) / 0.14)).toFixed(3));
+        sc.style.setProperty("--c", Math.min(1, Math.max(0, (p - 0.58) / 0.14)).toFixed(3));
+        tintNames.forEach((li, j) => li.classList.toggle("on", j === on));
+        const live = r.top < vh && r.bottom > 0;
+        tintVids.forEach((v, j) => { if (live && j === on) { if (v.preload === "none") v.preload = "auto"; if (v.paused) v.play().catch(() => {}); } else if (!v.paused) v.pause(); });
+      }
+    }
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  if (!reduce) { addEventListener("scroll", onScroll, { passive: true }); addEventListener("resize", onScroll); update(); }
+  else beats.forEach((b) => { b.el.style.opacity = 1; });
+
+  // Things that rise into place the first time they are seen.
+  const risers = document.querySelectorAll(".rise");
+  if ("IntersectionObserver" in window && !reduce) {
+    const ro = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); } }), { rootMargin: "0px 0px -12% 0px" });
+    risers.forEach((r) => ro.observe(r));
+  } else risers.forEach((r) => r.classList.add("in"));
 
   // Tabs over a picture: day and night, the seasons, the Attunements, the lands. One line of text for the chosen one.
   const tabs = (root, pick) => {

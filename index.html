@@ -21,7 +21,8 @@
 <link rel="icon" href="/assets/icon/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Wardlight: from the workshop" href="/blog/feed.xml">
-<link rel="preload" as="image" href="/assets/img/hero-1600.jpg" imagesrcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" imagesizes="100vw">
+<link rel="preload" as="image" href="/assets/seq/tall-001.webp" media="(max-aspect-ratio: 1/1)">
+<link rel="preload" as="image" href="/assets/seq/grow-001.webp" media="(min-aspect-ratio: 1/1)">
 <script async src="https://cdn.telemetrydeck.com/websdk/telemetrydeck.min.js" data-app-id="478692B9-F1F4-41C4-B43A-EE0E2AD8ABBF"></script>
 <link rel="stylesheet" href="/assets/site.css">
 <script type="application/ld+json">
@@ -101,37 +102,26 @@
 
 <main id="main">
 
-  <section class="hero" aria-labelledby="hero-title" data-light data-map>
-    <div class="plate dark" aria-hidden="true"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="" width="2600" height="1219" fetchpriority="high"></div>
-    <div class="plate lit"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="A walled village at night in Wardlight, the Blight pouring out of the violet Mist against its palisade" width="2600" height="1219"></div>
-    <div class="spots" role="group" aria-label="What you see on the map">
-      <button class="spot" data-x="70" data-y="9" aria-expanded="false"><span class="sr">The Wardlight</span></button>
-      <button class="spot" data-x="49" data-y="32" aria-expanded="false"><span class="sr">Towers</span></button>
-      <button class="spot" data-x="74" data-y="52" aria-expanded="false"><span class="sr">The wall</span></button>
-      <button class="spot" data-x="31" data-y="36" aria-expanded="false"><span class="sr">A spell</span></button>
-      <button class="spot blight" data-x="40" data-y="68" aria-expanded="false"><span class="sr">The Blight</span></button>
-      <button class="spot blight" data-x="9" data-y="30" aria-expanded="false"><span class="sr">The Mist</span></button>
-    </div>
-    <div class="card" role="status" aria-live="polite" hidden>
-      <b></b><span></span>
-    </div>
-    <template id="spot-text">
-      <p>The Wardlight|Your flame. You can build only where it reaches.</p>
-      <p>Towers|They shoot only at what the light shows them.</p>
-      <p>The wall|Holds the Blight where your towers can reach them.</p>
-      <p>A spell|Paid with mana, which your light makes all night.</p>
-      <p>The Blight|They crawl out every night, toward the brightest light.</p>
-      <p>The Mist|Where they come from. Nothing out there is lit.</p>
-    </template>
-    <div class="copy">
-      <h1 id="hero-title">Keep the village lit <em>until morning.</em></h1>
-      <p class="what">A city builder and tower defence for iPhone and iPad.</p>
-      <div class="act">
-        <a class="badge" href="https://apps.apple.com/app/id6826542922"><img src="/assets/brand/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
-        <span class="when" data-release="2026-12-03" data-after="Out now · free to play">Out 3 December 2026 · pre-order free</span>
+  <!-- The film: one village from its first day to its first breach, played by the scroll. -->
+  <section class="film" id="top" aria-labelledby="hero-title" data-film data-frames="105" data-wide="/assets/seq/grow-" data-tall="/assets/seq/tall-">
+    <div class="pin">
+      <picture class="poster"><source media="(max-aspect-ratio: 1/1)" srcset="/assets/seq/tall-001.webp"><img src="/assets/seq/grow-001.webp" alt="A village in Wardlight on its first day: the Wardlight's crystal in a ring of light, the forest dim around it" width="1600" height="736" fetchpriority="high"></picture>
+      <canvas aria-hidden="true"></canvas>
+      <div class="shade" aria-hidden="true"></div>
+      <div class="beat first" data-beat="0 .16">
+        <h1 id="hero-title">Keep the village lit <em>until morning.</em></h1>
+        <p class="what">A city builder and tower defence for iPhone and iPad.</p>
+        <div class="act">
+          <a class="badge" href="https://apps.apple.com/app/id6826542922"><img src="/assets/brand/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
+          <span class="when" data-release="2026-12-03" data-after="Out now · free to play">Out 3 December 2026 · pre-order free</span>
+        </div>
       </div>
+      <p class="beat line" data-beat=".2 .36">Day one. A flame,<br>and a ring of light.</p>
+      <p class="beat line" data-beat=".4 .56">You build only<br>where it reaches.</p>
+      <p class="beat line" data-beat=".6 .76">By winter,<br>a wall.</p>
+      <p class="beat line night" data-beat=".8 1.01">Then night comes.</p>
+      <div class="scrollcue" aria-hidden="true"><span></span></div>
     </div>
-    <p class="hint" aria-hidden="true"><span class="fine">Move your light. Tap a glow to see what it is.</span><span class="coarse">Swipe across the village. Tap a glow.</span></p>
   </section>
 
   <div class="wrap">
@@ -143,125 +133,88 @@
     </ul>
   </div>
 
-  <section class="chapter" id="the-game" aria-labelledby="c1">
-    <div class="wrap">
-      <span class="num">Day and night</span>
-      <h2 id="c1">Light is land.</h2>
-      <p class="lede">You can only build where your light reaches. The brighter you burn, the more of them come.</p>
-      <div class="toggle" data-toggle>
-        <div class="seg" role="tablist" aria-label="Day or night">
-          <button role="tab" aria-selected="true" data-i="0">Day</button>
-          <button role="tab" aria-selected="false" data-i="1">Night</button>
-        </div>
-        <div class="stage shot">
-          <img class="on" src="/assets/img/light-1600.jpg" srcset="/assets/img/light-1000.jpg 1000w, /assets/img/light-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="A village by day inside the ring of its light, the land outside it dim" width="1600" height="808" loading="lazy" decoding="async">
-          <img src="/assets/img/horde-1600.jpg" srcset="/assets/img/horde-1000.jpg 1000w, /assets/img/horde-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="A village at night in firelight, the Blight swarming through its walls" width="1600" height="570" loading="lazy" decoding="async">
-        </div>
-        <p class="say" aria-live="polite"><b>The day waits for you.</b> Build, read where tonight's Blight will come from, then call the night.</p>
-        <template>
-          <p><b>The day waits for you.</b> Build, read where tonight's Blight will come from, then call the night.</p>
-          <p><b>The night does not.</b> Your towers fight what the light shows. Your mana patches the rest.</p>
-        </template>
-      </div>
-    </div>
-
-    <div class="wrap block">
-      <span class="num">The year</span>
-      <h2>Four seasons, three nights each.</h2>
-      <div class="slices" data-slices style="--ar: 1000 / 403">
-        <div class="frame shot"><div class="strip">
-          <img class="base" src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="The same village through spring, summer, autumn and winter" width="1600" height="645" loading="lazy" decoding="async">
-          <img class="lit" src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="645" loading="lazy" decoding="async">
-        </div></div>
-        <div class="seg" role="tablist" aria-label="Season">
-          <button role="tab" aria-selected="true" data-clip="0 0, 26.5% 0, 23.5% 100%, 0 100%" data-pos="0">Spring</button>
-          <button role="tab" aria-selected="false" data-clip="26.5% 0, 52% 0, 48.5% 100%, 23.5% 100%" data-pos="33">Summer</button>
-          <button role="tab" aria-selected="false" data-clip="52% 0, 77% 0, 73.5% 100%, 48.5% 100%" data-pos="67">Autumn</button>
-          <button role="tab" aria-selected="false" data-clip="77% 0, 100% 0, 100% 100%, 73.5% 100%" data-pos="100">Winter</button>
-        </div>
-        <p class="say" aria-live="polite"></p>
-        <template>
-          <p>Rain and thaw. Fire burns half as long, and the fields give half.</p>
-          <p>Wind. Arrows lose range shooting into it.</p>
-          <p>The full harvest, and fog that hides the Blight.</p>
-          <p>Hard frost. The lakes freeze and the Blight walk over the ice.</p>
-        </template>
-      </div>
-      <p class="lede">Each season, pick one of two boons.</p>
+  <!-- The light: a picture that opens from a card to the whole screen. -->
+  <section class="grow-in" id="the-game" aria-labelledby="c1" data-scene>
+    <div class="pin">
+      <div class="head"><span class="num">The rule</span><h2 id="c1">Light is land.</h2></div>
+      <figure class="frame"><img src="/assets/shots/day-light-ring-close-2000.webp" srcset="/assets/shots/day-light-ring-close-1100.webp 1100w, /assets/shots/day-light-ring-close-2000.webp 2000w" sizes="100vw" alt="A young village by day inside the ring of its light, the land outside it dim" width="2000" height="920" loading="lazy" decoding="async"></figure>
+      <p class="over">Build only where your light reaches. The brighter you burn, the more of them come.</p>
     </div>
   </section>
 
+  <!-- Day into night: one frame, the scroll turns the hour. -->
+  <section class="dusk" aria-labelledby="c2" data-scene>
+    <div class="pin">
+      <video class="d" src="/assets/loops/day-village-life.mp4" poster="/assets/loops/day-village-life.webp" muted loop playsinline preload="none" aria-label="Villagers at work by day"></video>
+      <video class="n" src="/assets/loops/night-horde-at-wall.mp4" poster="/assets/loops/night-horde-at-wall.webp" muted loop playsinline preload="none" aria-label="The Blight at the wall by night"></video>
+      <div class="say d"><h2 id="c2">The day waits for you.</h2><p>Build. Read where they'll come from. Call the night when you're ready.</p></div>
+      <div class="say n"><h2>The night does not.</h2><p>Your towers fight what the light shows. Your mana patches the rest.</p></div>
+    </div>
+  </section>
+
+  <!-- The year: four seasons slide past sideways while you scroll down. -->
+  <section class="year" aria-labelledby="c3" data-scene>
+    <div class="pin">
+      <div class="head"><span class="num">The year</span><h2 id="c3">Four seasons. Three nights each.</h2></div>
+      <div class="track">
+        <figure class="card"><div class="ph"><img src="/assets/shots/season-spring-1100.webp" srcset="/assets/shots/season-spring-1100.webp 1100w, /assets/shots/season-spring-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in spring" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Spring</b>Rain and thaw. Fire burns half as long.</figcaption></figure>
+        <figure class="card"><div class="ph"><img src="/assets/shots/season-summer-1100.webp" srcset="/assets/shots/season-summer-1100.webp 1100w, /assets/shots/season-summer-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in summer" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Summer</b>Wind. Arrows lose range shooting into it.</figcaption></figure>
+        <figure class="card"><div class="ph"><img src="/assets/shots/season-autumn-1100.webp" srcset="/assets/shots/season-autumn-1100.webp 1100w, /assets/shots/season-autumn-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in autumn" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Autumn</b>The full harvest, and fog that hides them.</figcaption></figure>
+        <figure class="card"><div class="ph"><img src="/assets/shots/season-winter-1100.webp" srcset="/assets/shots/season-winter-1100.webp 1100w, /assets/shots/season-winter-2000.webp 2000w" sizes="(max-width: 700px) 78vw, 860px" alt="The village in winter" width="1100" height="506" loading="lazy" decoding="async"></div><figcaption><b>Winter</b>Hard frost. The lakes freeze over.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Growth: the tree, the picture drifting in as the text arrives. -->
   <section class="chapter" aria-labelledby="c4">
     <div class="wrap split flip">
-      <div>
+      <div class="rise">
         <span class="num">Growth</span>
         <h2 id="c4">Every building has its own tree.</h2>
         <p class="lede">The night pays Knowledge. Knowledge buys talents. Every tree ends in a keystone.</p>
       </div>
-      <figure class="bleed-l">
-        <div class="shot"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 58vw" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="728" loading="lazy" decoding="async"></div>
-      </figure>
-    </div>
-
-    <div class="wrap block">
-      <h2>Pick an element.</h2>
-      <p class="lede">At level four the Wardlight takes one. Every tower and spell follows.</p>
-      <div class="slices attunes" data-slices style="--ar: 1000 / 458">
-        <div class="frame shot"><div class="strip">
-          <img class="base" src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 700px) 200vw, (max-width: 1260px) 100vw, 1216px" alt="One village in three colours: red fire for Ember, green rot for Verdant, golden lightning for Dawn" width="1600" height="733" loading="lazy" decoding="async">
-          <img class="lit" src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 700px) 200vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="733" loading="lazy" decoding="async">
-        </div></div>
-        <div class="seg" role="tablist" aria-label="Attunement">
-          <button role="tab" class="ember" aria-selected="true" data-clip="0 0, 36% 0, 30.5% 100%, 0 100%" data-pos="0">Ember</button>
-          <button role="tab" class="verdant" aria-selected="false" data-clip="36% 0, 69.5% 0, 64.5% 100%, 30.5% 100%" data-pos="50">Verdant</button>
-          <button role="tab" class="dawn" aria-selected="false" data-clip="69.5% 0, 100% 0, 100% 100%, 64.5% 100%" data-pos="100">Dawn</button>
-        </div>
-        <p class="say" aria-live="polite"></p>
-        <template>
-          <p>Every hit leaves fire behind it. Free for everyone.</p>
-          <p>Rot spreads from one Blight to the next.</p>
-          <p>Lightning leaps between them and stuns where it lands.</p>
-        </template>
-      </div>
+      <figure class="bleed-l rise"><div class="shot"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 58vw" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="728" loading="lazy" decoding="async"></div></figure>
     </div>
   </section>
 
-  <section class="chapter" id="lands" aria-labelledby="c5">
-    <div class="wrap">
+  <!-- The element: the village takes one colour after the other as you scroll. -->
+  <section class="tint" aria-labelledby="c5" data-scene>
+    <div class="pin">
+      <div class="layers">
+        <div class="l ember"><video src="/assets/loops/attune-ember.mp4" poster="/assets/loops/attune-ember.webp" muted loop playsinline preload="none" aria-label="The night fight in Ember's red fire"></video></div>
+        <div class="l verdant"><video src="/assets/loops/attune-verdant.mp4" poster="/assets/loops/attune-verdant.webp" muted loop playsinline preload="none" aria-label="The night fight in Verdant's green rot"></video></div>
+        <div class="l dawn"><video src="/assets/loops/attune-dawn.mp4" poster="/assets/loops/attune-dawn.webp" muted loop playsinline preload="none" aria-label="The night fight in Dawn's golden lightning"></video></div>
+      </div>
+      <div class="head"><span class="num">The element</span><h2 id="c5">At level four, your light takes a colour.</h2></div>
+      <ul class="names">
+        <li class="ember"><b>Ember</b>Every hit leaves fire behind it.</li>
+        <li class="verdant"><b>Verdant</b>Rot spreads from one to the next.</li>
+        <li class="dawn"><b>Dawn</b>Lightning leaps and stuns.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- The lands: six cards to swipe, each with its last night. -->
+  <section class="chapter" id="lands" aria-labelledby="c6">
+    <div class="wrap rise">
       <span class="num">The lands</span>
-      <h2 id="c5">Six lands.</h2>
-      <p class="lede">Hold a land to open the next.</p>
-      <div class="slices lands-pick" data-slices style="--ar: 1000 / 407">
-        <div class="frame shot"><div class="strip">
-          <img class="base" src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="Four bosses side by side: the Mother Below, the Drowned King, the Mountain's Fist and the Cinder Stag" width="1600" height="651" loading="lazy" decoding="async">
-          <img class="lit" src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 700px) 250vw, (max-width: 1260px) 100vw, 1216px" alt="" width="1600" height="651" loading="lazy" decoding="async">
-        </div><p class="veil">Not seen yet.</p></div>
-        <div class="seg wrapish" role="tablist" aria-label="Land">
-          <button role="tab" aria-selected="true" data-clip="0 0, 27% 0, 24% 100%, 0 100%" data-pos="0">Witchwood</button>
-          <button role="tab" aria-selected="false" data-clip="27% 0, 51% 0, 49% 100%, 24% 100%" data-pos="33">Fenlands</button>
-          <button role="tab" aria-selected="false" data-clip="51% 0, 77.5% 0, 74% 100%, 49% 100%" data-pos="67">Highlands</button>
-          <button role="tab" aria-selected="false" data-clip="77.5% 0, 100% 0, 100% 100%, 74% 100%" data-pos="100">Ashwood</button>
-          <button role="tab" aria-selected="false" data-clip="none" data-pos="50">Stonehold</button>
-          <button role="tab" aria-selected="false" data-clip="none" data-pos="50">Rosegarth</button>
-        </div>
-        <p class="say" aria-live="polite"></p>
-        <template>
-          <p>The old wood and its lake, safe until winter freezes it.<i>Night 12: the Mother Below</i></p>
-          <p>An island in a mere, reached by a few fords.<i>Night 12: the Drowned King</i></p>
-          <p>High ground ringed by cliffs. They come through the passes.<i>Night 12: the Mountain's Fist</i></p>
-          <p>A burnt forest, open on every side. Fire is your friend.<i>Night 12: the Cinder Stag</i></p>
-          <p>A court cut into two cliffs. Everything comes at one wall.<i>Night 12: the Glass Bearer</i></p>
-          <p>Her garden. The hedges choose the roads, you choose the gates.<i>Night 12: the Thornless</i></p>
-        </template>
-      </div>
-      <p class="lede">Too easy? Raise the Darkness. Every level adds a hardship and pays more.</p>
+      <h2 id="c6">Six lands. Hold one to open the next.</h2>
     </div>
+    <div class="deck" tabindex="0" aria-label="The six lands">
+      <article class="land-card"><div class="ph"><img src="/assets/shots/card-witchwood-broodmother.webp" alt="The Mother Below" width="640" height="800" loading="lazy" decoding="async"></div><h3>Witchwood</h3><p>The old wood and its lake, safe until winter freezes it.</p><i>Night 12 · the Mother Below</i></article>
+      <article class="land-card"><div class="ph"><img src="/assets/shots/card-fenlands-drowned-king.webp" alt="The Drowned King" width="640" height="800" loading="lazy" decoding="async"></div><h3>Fenlands</h3><p>An island in a mere, reached by a few fords.</p><i>Night 12 · the Drowned King</i></article>
+      <article class="land-card"><div class="ph"><img src="/assets/shots/card-highlands-mountains-fist.webp" alt="The Mountain's Fist" width="640" height="800" loading="lazy" decoding="async"></div><h3>Highlands</h3><p>High ground ringed by cliffs. They come through the passes.</p><i>Night 12 · the Mountain's Fist</i></article>
+      <article class="land-card"><div class="ph"><img src="/assets/shots/card-ashwood-cinder-stag.webp" alt="The Cinder Stag" width="640" height="800" loading="lazy" decoding="async"></div><h3>Ashwood</h3><p>A burnt forest, open on every side. Fire is your friend.</p><i>Night 12 · the Cinder Stag</i></article>
+      <article class="land-card"><div class="ph"><img src="/assets/shots/card-stonehold-glass-bearer.webp" alt="The Glass Bearer" width="640" height="800" loading="lazy" decoding="async"></div><h3>Stonehold</h3><p>A court cut into two cliffs. Everything comes at one wall.</p><i>Night 12 · the Glass Bearer</i></article>
+      <article class="land-card veiled"><div class="ph"></div><h3>Rosegarth</h3><p>Her garden. The hedges choose the roads, you choose the gates.</p><i>Night 12 · the Thornless</i></article>
+    </div>
+    <div class="wrap"><p class="lede rise">Too easy? Raise the Darkness. Every level adds a hardship and pays more.</p></div>
   </section>
 
-  <section class="chapter" aria-labelledby="c6">
+  <section class="chapter" aria-labelledby="c6s">
     <div class="wrap">
       <span class="num">The story</span>
-      <h2 id="c6">A dwarf who wants to retire. An elf who wants the dark.</h2>
+      <h2 id="c6s">A dwarf who wants to retire. An elf who wants the dark.</h2>
       <div class="talk" data-talk>
         <div class="faces">
           <figure class="face v"><img src="/assets/img/vaelith.jpg" alt="Lady Vaelith" width="192" height="192" loading="lazy" decoding="async"><figcaption>Lady Vaelith</figcaption></figure>
