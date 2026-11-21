@@ -1,0 +1,479 @@
+---
+// The one-pager, in either language (src/i18n/en.ts, de.ts). The scroll film on top is the only pinned scene; every
+// other topic is an intro with one picture and more behind the Wardlight's crystal.
+import Base from "../layouts/Base.astro";
+import Picture from "./Picture.astro";
+import Crystal from "./Crystal.astro";
+import type { HomeText } from "../i18n/en";
+import { getPosts, niceDate } from "../lib/posts";
+import { SITE, APP_STORE, AUTHOR, RELEASE, released } from "../lib/site";
+
+interface Props { t: HomeText }
+const { t } = Astro.props;
+const de = t.lang === "de";
+const posts = getPosts().filter((p) => !p.pending).slice(0, 3);
+const shot = (base: string, w: 1100 | 2000) => `/assets/shots/${base}-${w}.webp`;
+const isOut = released();
+
+// ---------------------------------------------------------------- structured data
+const gameId = SITE + "/#game";
+const ld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["VideoGame", "MobileApplication"],
+      "@id": gameId,
+      name: "Wardlight",
+      alternateName: "Wardlight: Tower Defense",
+      url: SITE + t.path,
+      sameAs: [APP_STORE],
+      description: t.meta.description,
+      image: { "@type": "ImageObject", url: SITE + "/assets/img/hero-2600.jpg", width: 2600, height: 1219 },
+      thumbnailUrl: SITE + "/assets/img/og.jpg",
+      screenshot: t.gallery.items.map((g) => ({ "@type": "ImageObject", url: SITE + shot(g.base, 2000), width: 2000, height: 920, caption: g.alt })),
+      genre: de ? ["Tower-Defense", "Aufbauspiel", "Roguelite", "Strategie"] : ["Tower defense", "City builder", "Roguelite", "Strategy"],
+      keywords: de ? "Tower-Defense, Aufbauspiel, Städtebau, Roguelite, iPhone, iPad, Offline-Spiel" : "tower defence, tower defense, city builder, roguelite, iPhone game, iPad game, offline game",
+      gamePlatform: ["iPhone", "iPad"],
+      operatingSystem: "iOS 26, iPadOS 26",
+      applicationCategory: "GameApplication",
+      applicationSubCategory: "StrategyGame",
+      playMode: "SinglePlayer",
+      numberOfPlayers: { "@type": "QuantitativeValue", value: 1 },
+      datePublished: RELEASE,
+      inLanguage: ["en", "de", "fr", "es", "it", "pt-BR", "ja", "ko", "zh-Hans", "zh-Hant", "ru", "tr", "nl"],
+      contentRating: "9+",
+      isAccessibleForFree: true,
+      installUrl: APP_STORE,
+      downloadUrl: APP_STORE,
+      offers: [
+        { "@type": "Offer", name: de ? "Download" : "Download", price: "0", priceCurrency: "EUR", url: APP_STORE,
+          availability: isOut ? "https://schema.org/InStock" : "https://schema.org/PreOrder", availabilityStarts: RELEASE },
+        { "@type": "Offer", name: de ? "Vollversion (In-App-Kauf)" : "Full Game (in-app purchase)", price: "4.99", priceCurrency: "EUR", url: APP_STORE,
+          availability: isOut ? "https://schema.org/InStock" : "https://schema.org/PreOrder" },
+      ],
+      author: { "@id": SITE + "/#developer" },
+      publisher: { "@id": SITE + "/#developer" },
+      countryOfOrigin: { "@type": "Country", name: "Austria" },
+    },
+    {
+      "@type": "Person",
+      "@id": SITE + "/#developer",
+      name: AUTHOR,
+      jobTitle: de ? "Unabhängiger Spieleentwickler" : "Independent game developer",
+      homeLocation: { "@type": "Place", name: de ? "Wien, Österreich" : "Vienna, Austria" },
+      url: SITE + "/",
+      email: "mailto:hello@playwardlight.com",
+    },
+    {
+      "@type": "WebSite",
+      "@id": SITE + "/#site",
+      name: "Wardlight",
+      url: SITE + "/",
+      inLanguage: ["en", "de"],
+      publisher: { "@id": SITE + "/#developer" },
+      about: { "@id": gameId },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": SITE + t.path + "#questions",
+      inLanguage: t.lang,
+      mainEntity: t.faq.items.map((f) => ({
+        "@type": "Question", name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") },
+      })),
+    },
+  ],
+};
+const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default", "/"]];
+---
+<Base title={t.meta.title} description={t.meta.description} path={t.path} lang={t.lang} ogTitle={t.meta.ogTitle}
+  ogDescription={t.meta.ogDescription} jsonld={ld} alternates={alternates}>
+  <Fragment slot="head">
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <link rel="preload" as="image" href="/assets/seq/tall-001.webp" media="(max-aspect-ratio: 1/1)" fetchpriority="high">
+    <link rel="preload" as="image" href="/assets/seq/grow-001.webp" media="(min-aspect-ratio: 1/1)" fetchpriority="high">
+  </Fragment>
+
+<a class="skip" href="#main">{t.ui.skip}</a>
+
+<header class="bar">
+  <a class="home" href={t.path} aria-label={t.ui.home}><img src="/assets/brand/wordmark.svg" alt="Wardlight" width="118" height="30"></a>
+  <nav aria-label={t.ui.navLabel}>
+    <a class="wide" href="#the-game">{t.ui.nav.game}</a>
+    <a class="wide" href="#lands">{t.ui.nav.lands}</a>
+    <a href="/blog/">{t.ui.nav.blog}</a>
+    <a href="/press/">{t.ui.nav.press}</a>
+    <a href={t.ui.other.href} hreflang={t.ui.other.hreflang} lang={t.ui.other.hreflang} title={t.ui.other.title}>{t.ui.other.label}</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- The film: one village from its first day to its first night, played by the scroll. -->
+  <section class="film" id="top" aria-labelledby="hero-title" data-film data-frames="105" data-wide="/assets/seq/grow-" data-tall="/assets/seq/tall-" data-ticks={JSON.stringify(t.hero.ticks)}>
+    <div class="pin">
+      <div class="stage">
+        <picture class="poster">
+          <source media="(max-aspect-ratio: 1/1)" srcset="/assets/seq/tall-001.webp" width="620" height="1028">
+          <img src="/assets/seq/grow-001.webp" alt={t.hero.posterAlt} width="1600" height="736" fetchpriority="high" decoding="sync">
+        </picture>
+        <canvas aria-hidden="true"></canvas>
+      </div>
+      <div class="shade" aria-hidden="true"></div>
+      <div class="beat first" data-beat="0 .16">
+        <h1 id="hero-title"><span set:html={t.hero.h1} /> <span class="genre">{t.hero.genre}</span></h1>
+        <div class="act">
+          <a class="badge" href={APP_STORE}><img src={t.ui.badge} alt={t.ui.badgeAlt} width="144" height="48"></a>
+          <span class="when" data-release={RELEASE} data-after={t.hero.whenAfter}>{isOut ? t.hero.whenAfter : t.hero.when}</span>
+        </div>
+      </div>
+      {t.hero.beats.map((b, i) => (
+        <p class={`beat line${i === 3 ? " night" : ""}`} data-beat={["0.2 0.36", "0.4 0.56", "0.6 0.76", "0.8 1.01"][i]} set:html={b} />
+      ))}
+      <div class="when-bar" aria-hidden="true">
+        <span class="tick">{t.hero.ticks[0]}</span>
+        <div class="year-line"><i style="--s:0"></i><i style="--s:1"></i><i style="--s:2"></i><i style="--s:3"></i><b></b></div>
+        <span class="hint-scroll">{t.hero.hint}</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <ul class="facts reveal-kids" aria-label={de ? "Auf einen Blick" : "At a glance"}>
+      {t.facts.map((f) => <li><b data-count={f.count}>{f.b}</b>{f.t}</li>)}
+    </ul>
+  </div>
+
+  <!-- Light is land: the year in four seasons. -->
+  <section class="topic" id="the-game" aria-labelledby="h-seasons">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.seasons.num}</span>
+        <h2 id="h-seasons">{t.seasons.h2}</h2>
+        <p>{t.seasons.p}</p>
+      </div>
+      <figure class="big parallax reveal">
+        <Picture base="/assets/img/seasons" widths={[1000, 1600, 2600]} width={1600} height={645} alt={t.seasons.alt} sizes="(max-width: 1260px) 100vw, 1216px" />
+      </figure>
+      <div class="more-row reveal"><Crystal open="sheet-year" label={t.seasons.more} /></div>
+    </div>
+  </section>
+
+  <dialog class="sheet" id="sheet-year" aria-labelledby="h-year">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
+      <span class="num">{t.seasons.sheet.num}</span>
+      <h3 id="h-year">{t.seasons.sheet.h3}</h3>
+      <p class="lead">{t.seasons.sheet.lead}</p>
+      <div class="seasons">
+        {t.seasons.sheet.rows.map((r) => (
+          <figure class="season-row">
+            <img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
+              sizes="(max-width: 700px) 100vw, 560px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async">
+            <figcaption><b>{r.name}</b><ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul></figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="boons">
+        <figure><img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" sizes="(max-width: 700px) 100vw, 560px" loading="lazy" decoding="async"></figure>
+        <div>
+          <span class="kick">{t.seasons.sheet.boons.kick}</span>
+          <h4>{t.seasons.sheet.boons.h4}</h4>
+          <p>{t.seasons.sheet.boons.p}</p>
+          <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b> · {x.t}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Day and night, both always in view. -->
+  <section class="topic" aria-labelledby="h-dn">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.dayNight.num}</span>
+        <h2 id="h-dn">{t.dayNight.h2}</h2>
+      </div>
+      <div class="dn-pair reveal-kids">
+        <figure class="day">
+          <video src="/assets/loops/day-village-life.mp4" data-poster="/assets/loops/day-village-life.webp" width="1600" height="736" muted loop playsinline preload="none" aria-label={t.dayNight.day.label} data-loop></video>
+          <figcaption><b>{t.dayNight.day.b}</b>{t.dayNight.day.t}</figcaption>
+        </figure>
+        <figure class="night">
+          <video src="/assets/loops/night-horde-at-wall.mp4" data-poster="/assets/loops/night-horde-at-wall.webp" width="1600" height="736" muted loop playsinline preload="none" aria-label={t.dayNight.night.label} data-loop></video>
+          <figcaption><b>{t.dayNight.night.b}</b>{t.dayNight.night.t}</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Growth. -->
+  <section class="topic" aria-labelledby="h-growth">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.growth.num}</span>
+        <h2 id="h-growth">{t.growth.h2}</h2>
+        <p>{t.growth.p}</p>
+      </div>
+      <figure class="big parallax reveal">
+        <Picture base="/assets/img/tree" widths={[1000, 1600]} width={1600} height={728} alt={t.growth.alt} sizes="(max-width: 1260px) 100vw, 1216px" />
+      </figure>
+      <div class="more-row reveal"><Crystal open="sheet-tree" label={t.growth.more} /></div>
+    </div>
+  </section>
+
+  <dialog class="sheet" id="sheet-tree" aria-labelledby="h-tree">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
+      <span class="num">{t.growth.sheet.num}</span>
+      <h3 id="h-tree">{t.growth.sheet.h3}</h3>
+      <figure class="wide-shot"><img src="/assets/ui/talent-tree.webp" alt={t.growth.sheet.treeAlt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+      <div class="facts3">
+        {t.growth.sheet.items.map((f) => <div><b>{f.b}</b>{f.t}</div>)}
+      </div>
+      <figure class="wide-shot"><img src="/assets/ui/memory.webp" alt={t.growth.sheet.memoryAlt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+      <div class="facts3 one"><div><b>{t.growth.sheet.memory.b}</b>{t.growth.sheet.memory.t}</div></div>
+    </div>
+  </dialog>
+
+  <!-- The elements. -->
+  <section class="topic" aria-labelledby="h-el">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.elements.num}</span>
+        <h2 id="h-el">{t.elements.h2}</h2>
+        <p>{t.elements.p}</p>
+      </div>
+      <div class="tiles strip-x reveal-kids" role="group" aria-label={t.elements.group}>
+        {t.elements.tiles.map((x) => (
+          <figure class={`tile ${x.key}`}>
+            <video src={`/assets/loops/attune-${x.key}.mp4`} data-poster={`/assets/loops/attune-${x.key}.webp`} width="1600" height="736" muted loop playsinline preload="none" aria-label={x.label} data-loop></video>
+            <figcaption><b>{x.b}</b>{x.t}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="more-row reveal"><Crystal open="sheet-element" label={t.elements.more} /></div>
+    </div>
+  </section>
+
+  <dialog class="sheet" id="sheet-element" aria-labelledby="h-attune">
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
+      <span class="num">{t.elements.sheet.num}</span>
+      <h3 id="h-attune">{t.elements.sheet.h3}</h3>
+      <figure class="wide-shot"><img src="/assets/ui/attunement-choice.webp" alt={t.elements.sheet.alt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+      <p class="lead">{t.elements.sheet.lead}</p>
+      <div class="facts3 el">
+        {t.elements.sheet.items.map((x) => <div class={x.key}><b>{x.b}</b><i>{x.i}</i>{x.t}<span class="spell"><i>{t.elements.sheet.spellKick}</i>{x.spell}</span></div>)}
+      </div>
+    </div>
+  </dialog>
+
+  <!-- The Blight and their masters. -->
+  <section class="topic" id="blight" aria-labelledby="h-blight">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.blight.num}</span>
+        <h2 id="h-blight">{t.blight.h2}</h2>
+        <p>{t.blight.p}</p>
+      </div>
+      <div class="mobs strip-x reveal-kids">
+        {t.blight.mobs.map((m) => (
+          <figure class="mob">
+            <img src={`/assets/blight/${m.file}.webp`} alt={m.name} width="960" height="640" loading="lazy" decoding="async">
+            <figcaption><b>{m.name}</b>{m.t}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <h3 class="sub reveal">{t.blight.sub}</h3>
+      <p class="sub-lead reveal">{t.blight.subLead}</p>
+      <div class="bosses strip-x reveal-kids">
+        {t.lands.list.map((l, i) => (
+          <button class="boss-link" type="button" data-land={i}>
+            <img src={`/assets/lands/${l.id}/boss.webp`} alt="" width="640" height="800" loading="lazy" decoding="async">
+            <span><b>{l.boss}</b>{l.name} · {t.blight.night12}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The lands: three teasers, all six one tap away. -->
+  <section class="topic" id="lands" aria-labelledby="h-lands">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.lands.num}</span>
+        <h2 id="h-lands">{t.lands.h2}</h2>
+        <p>{t.lands.p}</p>
+      </div>
+      <div class="teasers strip-x reveal-kids">
+        {t.lands.list.slice(0, 3).map((l, i) => (
+          <button class="land-tease" type="button" data-land={i}>
+            <span class="ph"><img src={`/assets/lands/${l.id}/landscape-1100.webp`} alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
+            <span class="txt"><b>{l.name}</b><span>{l.tease}</span></span>
+          </button>
+        ))}
+      </div>
+      <div class="more-row reveal"><Crystal land={0} label={t.lands.more} /></div>
+    </div>
+  </section>
+
+  <dialog class="sheet lands-sheet" id="sheet-land" aria-label={t.lands.sheetLabel}>
+    <div class="sheet-in">
+      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
+      <nav class="inner" aria-label={t.lands.pathLabel}>
+        <ol class="land-path">
+          {t.lands.list.map((l, i) => <li><button type="button" data-go={i} aria-current={i === 0 ? "true" : "false"}><span>{l.name}</span></button></li>)}
+        </ol>
+      </nav>
+      <div class="land-body" aria-live="polite">
+        {t.lands.list.map((l, i) => (
+          <article class="land" data-i={i} hidden={i !== 0}>
+            <figure class="land-hero">
+              <img src={`/assets/lands/${l.id}/landscape-2000.webp`} srcset={`/assets/lands/${l.id}/landscape-1100.webp 1100w, /assets/lands/${l.id}/landscape-2000.webp 2000w`}
+                sizes="100vw" alt={`${l.name} ${t.lands.dayAlt}`} width="2000" height="920" loading="lazy" decoding="async">
+              <figcaption class="inner"><h3>{l.name}</h3><p class="lead">{l.lead}</p></figcaption>
+            </figure>
+            <div class="pair inner">
+              <figure><img src={`/assets/lands/${l.id}/boss.webp`} alt={l.boss} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.bossKick}</i><b>{l.boss}</b>{l.post}</figcaption></figure>
+              <figure><img src={`/assets/lands/${l.id}/building.webp`} alt={l.buildingAlt} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.buildingKick}</i><b>{l.building}</b>{l.buildingText}</figcaption></figure>
+            </div>
+            <p class="blight inner"><i>{t.lands.blightKick}</i>{l.blight}</p>
+          </article>
+        ))}
+      </div>
+      <div class="land-nav inner"><button type="button" data-step="-1">‹ <span>{t.lands.list[5].name}</span></button><button type="button" data-step="1"><span>{t.lands.list[1].name}</span> ›</button></div>
+      <p class="land-hint inner">{t.lands.hint}</p>
+    </div>
+  </dialog>
+
+  <!-- Screenshots, with a lightbox. -->
+  <section class="topic" id="screenshots" aria-labelledby="h-shots">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <span class="num">{t.gallery.num}</span>
+        <h2 id="h-shots">{t.gallery.h2}</h2>
+        <p>{t.gallery.p}</p>
+      </div>
+      <ul class="gallery-grid strip-x reveal-kids" data-gallery>
+        {t.gallery.items.map((g, i) => (
+          <li>
+            <button class="shot-btn" type="button" data-shot={i} data-full={shot(g.base, 2000)} aria-label={`${t.gallery.label} ${i + 1}: ${g.alt}`}>
+              <img src={shot(g.base, 1100)} srcset={`${shot(g.base, 1100)} 1100w, ${shot(g.base, 2000)} 2000w`}
+                sizes={i === 0 ? "(max-width: 700px) 86vw, (max-width: 1023px) 100vw, 800px" : "(max-width: 700px) 86vw, (max-width: 1023px) 50vw, 400px"}
+                alt={g.alt} width="1100" height="506" loading="lazy" decoding="async">
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p class="swipe-hint" aria-hidden="true">{t.ui.swipe}</p>
+    </div>
+  </section>
+
+  <dialog class="lightbox" id="lightbox" aria-label={t.gallery.h2}>
+    <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
+    <div class="stage">
+      <img src={shot(t.gallery.items[0].base, 1100)} alt="" width="2000" height="920" loading="lazy" decoding="async">
+      <button class="nav prev" type="button" data-step="-1" aria-label={t.gallery.prev}>‹</button>
+      <button class="nav next" type="button" data-step="1" aria-label={t.gallery.next}>›</button>
+    </div>
+    <div class="cap"><p></p><span data-of={t.gallery.count}></span></div>
+  </dialog>
+
+  <!-- The story. -->
+  <section class="chapter" id="story" aria-labelledby="h-story">
+    <div class="wrap">
+      <span class="num reveal">{t.story.num}</span>
+      <h2 id="h-story" class="reveal">{t.story.h2}</h2>
+      <div class="talk reveal" data-talk data-who={JSON.stringify(t.story.who)} data-tap={t.story.tap} data-again={t.story.again} data-lang={t.lang}>
+        <div class="faces">
+          <figure class="face v">
+            <div class="frame" data-rive="/assets/rive/vaelith.riv" data-artboard="Elf">
+              <img src="/assets/rive/vaelith-450.webp" srcset="/assets/rive/vaelith-450.webp 450w, /assets/rive/vaelith.webp 900w" sizes="(max-width: 760px) 45vw, 340px" alt={t.story.names.v} width="900" height="1140" loading="lazy" decoding="async">
+            </div>
+            <figcaption>{t.story.names.v}</figcaption>
+          </figure>
+          <figure class="face w">
+            <div class="frame" data-rive="/assets/rive/dwarf-talking.riv" data-artboard="Dwarf">
+              <img src="/assets/rive/dwarf-450.webp" srcset="/assets/rive/dwarf-450.webp 450w, /assets/rive/dwarf.webp 900w" sizes="(max-width: 760px) 45vw, 340px" alt={t.story.names.w} width="900" height="1140" loading="lazy" decoding="async">
+            </div>
+            <figcaption>{t.story.names.w}</figcaption>
+          </figure>
+        </div>
+        <button class="line" type="button" aria-live="polite" hidden><span class="who"></span><span class="said"></span><span class="next"></span></button>
+        <ol class="script">
+          {t.story.lines.map((l) => <li class={l.k} data-mood={l.mood} data-light={l.light ? "1" : undefined}><b>{t.story.who[l.k as "v" | "w"]}</b>{l.t}</li>)}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="price" aria-labelledby="h-price">
+    <div class="wrap">
+      <span class="num reveal">{t.price.num}</span>
+      <h2 id="h-price" class="reveal">{t.price.h2}</h2>
+      <div class="price reveal-kids">
+        {[t.price.free, t.price.full].map((p) => (
+          <div>
+            <h3>{p.h} <span>{p.price}</span></h3>
+            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <p class="none">{t.price.none}</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="questions" aria-labelledby="h-faq">
+    <div class="wrap">
+      <span class="num reveal">{t.faq.num}</span>
+      <h2 id="h-faq" class="reveal">{t.faq.h2}</h2>
+      <div class="faq reveal-kids">
+        {t.faq.items.map((f) => <details><summary>{f.q}</summary><div><p set:html={f.a} /></div></details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter workshop" id="workshop" aria-labelledby="h-workshop">
+    <div class="wrap">
+      <span class="num reveal">{t.workshop.num}</span>
+      <h2 id="h-workshop" class="reveal">{t.workshop.h2}</h2>
+      {t.workshop.note && <p class="lede reveal">{t.workshop.note}</p>}
+      {posts.length ? (
+        <ol class="reveal-kids">
+          {posts.map((p) => (
+            <li><a href={p.url} hreflang="en"><time datetime={p.date}>{niceDate(p.date)}</time><span class="t">{p.title}</span><span class="d">{p.description}</span></a></li>
+          ))}
+        </ol>
+      ) : <p class="none">{t.workshop.none}</p>}
+      <p class="all"><a href="/blog/">{t.workshop.all}</a> · <a href="/blog/feed.xml">RSS</a></p>
+    </div>
+  </section>
+
+  <section class="dawnend" aria-labelledby="h-close">
+    <div class="wrap">
+      <div class="closing reveal-kids">
+        <h2 id="h-close">{t.closing.h2}</h2>
+        <p>{t.closing.p}</p>
+        <a class="badge" href={APP_STORE}><img src={t.ui.badge} alt={t.ui.badgeAlt} width="144" height="48" loading="lazy"></a>
+      </div>
+      <footer class="foot">
+        <span>{t.footer.made}</span>
+        <nav aria-label={t.footer.label}>
+          <a href="/press/">{t.footer.press}</a>
+          <a href="/support.html">{t.footer.support}</a>
+          <a href="/datenschutz.html">{t.footer.privacy}</a>
+          <a href="/impressum.html">{t.footer.impressum}</a>
+          <a href="/blog/feed.xml">{t.footer.rss}</a>
+          <a href={t.ui.other.href} hreflang={t.ui.other.hreflang} lang={t.ui.other.hreflang}>{t.ui.other.label}</a>
+        </nav>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<button class="clock" type="button" aria-label={t.ui.clockLabel} data-night={t.ui.night} data-dawn={t.ui.dawn}><svg viewBox="0 0 24 24" aria-hidden="true"><circle class="ring" cx="12" cy="12" r="9"/><circle class="arc" cx="12" cy="12" r="9" stroke-dasharray="56.55" stroke-dashoffset="56.55"/></svg><span>{t.ui.night} 1</span></button>
+
+<script>
+  import "../scripts/home";
+</script>
+</Base>

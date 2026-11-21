@@ -1,0 +1,32 @@
+---
+import Page from "../../layouts/Page.astro";
+import { getPosts, niceDate } from "../../lib/posts";
+import { SITE, AUTHOR } from "../../lib/site";
+
+const posts = getPosts();
+const ld = {
+  "@context": "https://schema.org", "@type": "Blog", name: "Wardlight: from the workshop", url: SITE + "/blog/",
+  inLanguage: "en", author: { "@type": "Person", name: AUTHOR, url: SITE + "/#developer" },
+  blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.title, url: SITE + p.url, datePublished: p.date })),
+};
+---
+<Page title="From the workshop · Wardlight" path="/blog/" current="blog" jsonld={ld}
+  description="Notes from building Wardlight, a city builder and tower defence for iPhone and iPad, alone in Vienna: rendering, balance, writing and mistakes.">
+<main class="blog" id="main">
+  <header class="post-head">
+    <p class="kicker">From the workshop</p>
+    <h1>How the game gets made</h1>
+    <p class="lede">Notes from building Wardlight alone: the renderer, the balance, the words, the mistakes.
+      A new post now and then, and an <a href="/blog/feed.xml">RSS feed</a> if you'd like to know when.</p>
+  </header>
+  <ol class="post-list">
+    {posts.length ? posts.map((p) => (
+      <li>
+        <time datetime={p.date}>{niceDate(p.date)}</time>
+        <h2><a href={p.url}>{p.title}</a></h2>
+        <p>{p.description}</p>
+      </li>
+    )) : <li><p>The first post is on its way.</p></li>}
+  </ol>
+</main>
+</Page>

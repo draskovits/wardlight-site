@@ -1,0 +1,13 @@
+---
+// Store art in AVIF, WebP and the original JPEG (tools/images.mjs writes the siblings): base "/assets/img/seasons"
+// with widths [1000, 1600] → seasons-1000.avif … seasons-1600.jpg.
+interface Props { base: string; widths: number[]; width: number; height: number; alt: string; sizes: string; eager?: boolean }
+const { base, widths, width, height, alt, sizes, eager = false } = Astro.props;
+const set = (ext: string) => widths.map((w) => `${base}-${w}.${ext} ${w}w`).join(", ");
+---
+<picture>
+  <source type="image/avif" srcset={set("avif")} sizes={sizes}>
+  <source type="image/webp" srcset={set("webp")} sizes={sizes}>
+  <img src={`${base}-${width}.jpg`} srcset={set("jpg")} sizes={sizes} alt={alt} width={width} height={height}
+    loading={eager ? "eager" : "lazy"} decoding="async">
+</picture>

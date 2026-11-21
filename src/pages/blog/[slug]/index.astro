@@ -1,0 +1,63 @@
+---
+import Page from "../../../layouts/Page.astro";
+import { getPosts, niceDate, type Post } from "../../../lib/posts";
+import { SITE, SITE_NAME, AUTHOR, APP_STORE, OG_IMAGE } from "../../../lib/site";
+
+export function getStaticPaths() {
+  const posts = getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.slug },
+    props: { post, newer: posts[i - 1] ?? null, older: posts[i + 1] ?? null },
+  }));
+}
+interface Props { post: Post; newer: Post | null; older: Post | null }
+const { post: p, newer, older } = Astro.props;
+const image = p.image || OG_IMAGE;
+const ld = [
+  {
+    "@context": "https://schema.org", "@type": "BlogPosting", headline: p.title,
+    description: p.description, datePublished: p.date, dateModified: p.date,
+    author: { "@type": "Person", name: AUTHOR, url: SITE + "/#developer" },
+    publisher: { "@type": "Person", name: AUTHOR, url: SITE + "/#developer" },
+    image: SITE + image, mainEntityOfPage: SITE + p.url, url: SITE + p.url, keywords: p.tags.join(", "),
+    about: { "@type": "VideoGame", name: SITE_NAME, url: SITE + "/" },
+    isPartOf: { "@type": "Blog", name: "Wardlight: from the workshop", url: SITE + "/blog/" },
+    wordCount: p.words, timeRequired: `PT${p.minutes}M`, inLanguage: "en",
+  },
+  {
+    "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Wardlight", item: SITE + "/" },
+      { "@type": "ListItem", position: 2, name: "From the workshop", item: SITE + "/blog/" },
+      { "@type": "ListItem", position: 3, name: p.title, item: SITE + p.url },
+    ],
+  },
+];
+---
+<Page title={`${p.title} · Wardlight`} description={p.description} path={p.url} image={image} ogType="article"
+  jsonld={ld} publishedTime={p.date} current="blog">
+<main class="post" id="main">
+  <article>
+    <header class="post-head">
+      <p class="kicker"><a href="/blog/">From the workshop</a></p>
+      <h1>{p.title}</h1>
+      <p class="byline"><time datetime={p.date}>{niceDate(p.date)}</time> · {p.minutes} min read · {AUTHOR}</p>
+      {p.pending && <p class="draft-flag">Not published yet: dated {p.date}{p.draft ? " (draft)" : ""}</p>}
+    </header>
+    {p.heads.length >= 3 && (
+      <nav class="toc" aria-label="In this post"><p>In this post</p><ol>
+        {p.heads.map((h) => <li><a href={`#${h.id}`} set:html={h.title} /></li>)}
+      </ol></nav>
+    )}
+    <div class="prose" set:html={p.html} />
+    <footer class="post-foot">
+      <p>Wardlight is a city builder and tower defence for iPhone and iPad, made by one developer in Vienna.
+        Free to play, one purchase for the full game, no ads.</p>
+      <p><a class="btn" href={APP_STORE}>Wardlight on the App Store</a> <a href="/blog/feed.xml">Follow by RSS</a></p>
+    </footer>
+  </article>
+  <nav class="post-nav" aria-label="More posts">
+    {older ? <a rel="prev" href={older.url}><span>Older</span>{older.title}</a> : <span></span>}
+    {newer ? <a rel="next" href={newer.url}><span>Newer</span>{newer.title}</a> : <span></span>}
+  </nav>
+</main>
+</Page>

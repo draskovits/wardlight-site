@@ -42,19 +42,19 @@ To tune that, I recorded a few professionally produced tracks I liked and measur
 
 The old wood by day, in D major at 88 beats a minute:
 
-!audio[Witchwood, day](/assets/audio/witchwood-day.m4a)
+<figure class="clip"><figcaption>Witchwood, day</figcaption><audio controls preload="none" src="/assets/audio/witchwood-day.m4a"></audio></figure>
 
 The same land by night, a march in low strings and choir:
 
-!audio[Witchwood, night](/assets/audio/witchwood-night.m4a)
+<figure class="clip"><figcaption>Witchwood, night</figcaption><audio controls preload="none" src="/assets/audio/witchwood-night.m4a"></audio></figure>
 
 Rosegarth is the elf's own garden, so her day is a minuet. Her night is the same minuet, spoiled:
 
-!audio[Rosegarth, day](/assets/audio/rosegarth-day.m4a)
+<figure class="clip"><figcaption>Rosegarth, day</figcaption><audio controls preload="none" src="/assets/audio/rosegarth-day.m4a"></audio></figure>
 
 And what plays when you hold the twelfth night:
 
-!audio[Victory](/assets/audio/victory.m4a)
+<figure class="clip"><figcaption>Victory</figcaption><audio controls preload="none" src="/assets/audio/victory.m4a"></audio></figure>
 
 ## Inside the game
 

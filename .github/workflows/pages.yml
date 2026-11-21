@@ -1,4 +1,4 @@
-# Builds playwardlight.com with tools/build.py and publishes it to GitHub Pages.
+# Builds playwardlight.com with Astro and publishes it to GitHub Pages.
 # Runs on every push to main and every morning at 05:00 UTC, so a post dated in the future goes live on its day.
 # One-time setup: repository Settings → Pages → Build and deployment → Source: "GitHub Actions".
 name: Site
@@ -24,13 +24,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
-      - run: python3 tools/build.py
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx astro build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest

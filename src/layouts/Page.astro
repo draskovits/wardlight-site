@@ -1,0 +1,47 @@
+---
+// Inner pages (blog, press, support, legal): a solid bar on top, the small footer below.
+import Base from "./Base.astro";
+import { APP_STORE } from "../lib/site";
+
+type BaseProps = Parameters<typeof Base>[0];
+interface Props extends BaseProps {
+  /** Which nav link is the current page. */
+  current?: "blog" | "press" | "support";
+}
+const { current, lang = "en", ...rest } = Astro.props;
+const de = lang === "de";
+---
+<Base {...rest} lang={lang}>
+  <slot name="head" slot="head" />
+  <a class="skip" href="#main">{de ? "Zum Inhalt" : "Skip to content"}</a>
+  <header class="bar solid">
+    <a class="home" href={de ? "/de/" : "/"} aria-label={de ? "Wardlight, Startseite" : "Wardlight, home"}><img src="/assets/brand/wordmark.svg" alt="Wardlight" width="118" height="30"></a>
+    <nav aria-label={de ? "Seite" : "Site"}>
+      {de ? (
+        <>
+          <a class="wide" href="/de/">Das Spiel</a>
+          <a href="/datenschutz.html">Datenschutz</a>
+          <a href="/">English</a>
+        </>
+      ) : (
+        <>
+          <a class="wide" href="/#the-game">The game</a>
+          <a href="/blog/" aria-current={current === "blog" ? "page" : undefined}>Blog</a>
+          <a class="wide" href="/press/" aria-current={current === "press" ? "page" : undefined}>Press</a>
+          <a href={APP_STORE}>App Store</a>
+        </>
+      )}
+    </nav>
+  </header>
+  <slot />
+  <footer class="site-foot">
+    <span>{de ? "Gemacht von einem Entwickler in Wien." : "Wardlight is made by one person in Vienna."}</span>
+    <nav aria-label={de ? "Fußzeile" : "Footer"}>
+      <a href="/press/">{de ? "Pressemappe" : "Press kit"}</a>
+      <a href="/support.html">Support</a>
+      <a href="/datenschutz.html">{de ? "Datenschutz" : "Privacy"}</a>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/blog/feed.xml">RSS</a>
+    </nav>
+  </footer>
+</Base>

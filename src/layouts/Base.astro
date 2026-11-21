@@ -1,0 +1,72 @@
+---
+// The shell of every page: the head (search, link previews, icons, the App Store banner, analytics) and the body.
+import "../styles/site.css";
+import { SITE, APP_ID, OG_IMAGE, TELEMETRY_APP_ID, abs } from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  /** The page's path, e.g. "/press/". */
+  path: string;
+  lang?: "en" | "de";
+  ogTitle?: string;
+  ogDescription?: string;
+  image?: string;
+  ogType?: "website" | "article";
+  /** JSON-LD objects for this page. */
+  jsonld?: object | object[];
+  /** hreflang alternates: [lang, path]. */
+  alternates?: [string, string][];
+  noindex?: boolean;
+  bodyClass?: string;
+  publishedTime?: string;
+}
+const {
+  title, description, path, lang = "en", ogTitle = title, ogDescription = description, image = OG_IMAGE,
+  ogType = "website", jsonld, alternates, noindex = false, bodyClass, publishedTime,
+} = Astro.props;
+const canonical = SITE + path;
+const ld = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
+const ogImage = abs(image);
+const isDefaultOg = image === OG_IMAGE;
+---
+<!doctype html>
+<html lang={lang} dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+{noindex && <meta name="robots" content="noindex">}
+{alternates?.map(([hl, p]) => <link rel="alternate" hreflang={hl} href={SITE + p}>)}
+<meta name="theme-color" content="#07080c">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content={ogType}>
+<meta property="og:site_name" content="Wardlight">
+<meta property="og:locale" content={lang === "de" ? "de_AT" : "en_GB"}>
+<meta property="og:title" content={ogTitle}>
+<meta property="og:description" content={ogDescription}>
+<meta property="og:url" content={canonical}>
+<meta property="og:image" content={ogImage}>
+{isDefaultOg && <meta property="og:image:width" content="1200">}
+{isDefaultOg && <meta property="og:image:height" content="630">}
+<meta property="og:image:alt" content="Wardlight: a village in its ring of light at the edge of the Mist">
+{publishedTime && <meta property="article:published_time" content={publishedTime}>}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={ogTitle}>
+<meta name="twitter:description" content={ogDescription}>
+<meta name="twitter:image" content={ogImage}>
+<meta name="apple-itunes-app" content={`app-id=${APP_ID}`}>
+<link rel="icon" href="/assets/icon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/icon/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Wardlight: from the workshop" href="/blog/feed.xml">
+<slot name="head" />
+<script is:inline async src="https://cdn.telemetrydeck.com/websdk/telemetrydeck.min.js" data-app-id={TELEMETRY_APP_ID}></script>
+{ld.map((o) => <script is:inline type="application/ld+json" set:html={JSON.stringify(o).replace(/</g, "\\u003c")} />)}
+</head>
+<body class={bodyClass}>
+<slot />
+</body>
+</html>

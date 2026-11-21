@@ -1,0 +1,10 @@
+---
+// The "explore" button: the Wardlight's crystal in a glowing pill. It opens a sheet (open = the dialog's id) or the
+// lands (land = which one); the sheet grows as a circle of light from the crystal.
+interface Props { label: string; open?: string; land?: number }
+const { label, open, land } = Astro.props;
+---
+<button class="more" type="button" data-open={open} data-land={land} aria-haspopup="dialog">
+  <span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span>
+  <span class="lbl">{label}</span>
+</button>
