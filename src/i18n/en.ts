@@ -41,24 +41,22 @@ export const en = {
     { b: "No ads", t: "one purchase" },
   ],
   seasons: {
-    num: "The rule",
     h2: "Light is land.",
     p: "Build only where your light reaches. A run is one year: four seasons, three nights each.",
     alt: "The same village in Wardlight through spring, summer, autumn and winter",
     more: "Explore the four seasons",
     sheet: {
-      num: "A run is one year",
       h3: "Four seasons, twelve nights.",
-      lead: "Every season has its own rules, and they change the fight. The year ends on the twelfth night with the land's boss.",
+      lead: "Three nights to a season, and each season changes the rules of the fight. The twelfth night brings the land's boss.",
+      boonsLabel: "Boons",
       rows: [
-        { key: "spring", name: "Spring", alt: "The village in spring", rules: ["The light reaches less far", "The Blight slows in the mud"] },
-        { key: "summer", name: "Summer", alt: "The village in summer", rules: ["Fires burn longer", "More Blight comes"] },
-        { key: "autumn", name: "Autumn", alt: "The village in autumn", rules: ["Fog every night", "Towers reach less far"] },
-        { key: "winter", name: "Winter", alt: "The village in winter", rules: ["The Blight slows", "It wears more armour"] },
+        { key: "spring", name: "Spring", nights: "Nights 1–3", alt: "The village in spring", rules: ["The light reaches less far", "The Blight slows in the mud"] },
+        { key: "summer", name: "Summer", nights: "Nights 4–6", alt: "The village in summer", rules: ["Fires burn longer", "More Blight comes"] },
+        { key: "autumn", name: "Autumn", nights: "Nights 7–9", alt: "The village in autumn", rules: ["Fog every night", "Towers reach less far"] },
+        { key: "winter", name: "Winter", nights: "Nights 10–12", alt: "The village in winter", rules: ["The Blight slows", "It wears more armour"] },
       ],
       boons: {
         alt: "The season's card in Wardlight: two boons, keep one",
-        kick: "Each season's first dawn",
         h4: "Two boons. Keep one.",
         p: "The season's first dawn deals you two boons, and you keep one for the season. A few of them:",
         list: [
@@ -76,20 +74,21 @@ export const en = {
     },
   },
   dayNight: {
-    num: "Every day, every night",
     h2: "Build by day. Hold by night.",
     day: { label: "Villagers at work by day in Wardlight", b: "The day waits for you.", t: "Build, read where they'll come from, call the night when you're ready." },
     night: { label: "The Blight at the wall by night in Wardlight", b: "The night does not.", t: "Your towers fight what the light shows. Your mana patches the rest." },
   },
   growth: {
-    num: "Growth",
     h2: "Every building has its own tree.",
     p: "The night pays Knowledge. Knowledge buys talents. Every tree ends in a keystone.",
     alt: "The ice tower's talent tree in Wardlight, with the Shatter talent open",
     more: "Explore growth",
     sheet: {
-      num: "Growth",
       h3: "A tree for every building.",
+      treeLabel: "Talent trees",
+      memoryLabel: "The Memory",
+      treeCloseAlt: "Close up on the hex tower's tree: the Ice tower learned, Shatter, Cold iron and Black ice above it",
+      memoryCloseAlt: "Close up on the Memory: the Attunement's stars around the Wardlight's crystal, Ember, Verdant and Dawn lit",
       treeAlt: "The hex tower's talent tree in Wardlight: the Ice tower learned, Shatter selected",
       items: [
         { b: "Knowledge", t: "Only the night pays it. Spend it on any building's tree between nights." },
@@ -101,7 +100,6 @@ export const en = {
     },
   },
   elements: {
-    num: "The element",
     h2: "At level four, your light takes a colour.",
     p: "Once a year the Wardlight takes an element, and every hit in the village carries it.",
     group: "The three elements",
@@ -112,20 +110,18 @@ export const en = {
     ],
     more: "Explore the elements",
     sheet: {
-      num: "Wardlight IV · the Attunement",
       h3: "One element, for the rest of the year.",
       alt: "The Attunement choice in Wardlight: Ember, Verdant and Dawn",
       lead: "Chosen once a run, at the Wardlight's fourth level. Every tower's arrows and stones carry it and pierce two fifths of the armour, and every spell and light in the village takes its colour.",
       spellKick: "Its spell",
       items: [
-        { key: "ember", b: "Ember", i: "Hits leave burning ground", spell: "Rain of Fire", t: "The ground keeps burning under the crowd. Free for everyone, and your first." },
-        { key: "verdant", b: "Verdant", i: "Hits leave Rot", spell: "Plague Wind", t: "Rot passes from Blight to Blight through the whole crowd. With the full game." },
-        { key: "dawn", b: "Dawn", i: "Hits jump and stun", spell: "Judgement", t: "Lightning leaps from hit to hit and leaves them Stunned. With the full game." },
+        { key: "ember", b: "Ember", i: "Hits leave burning ground", spell: "Rain of Fire", spellText: "Brings fire down on a whole side of the village.", t: "The ground keeps burning under the crowd. Free for everyone, and your first." },
+        { key: "verdant", b: "Verdant", i: "Hits leave Rot", spell: "Plague Wind", spellText: "Doubles the Rot and spreads it through the crowd.", t: "Rot passes from Blight to Blight through the whole crowd. With the full game." },
+        { key: "dawn", b: "Dawn", i: "Hits jump and stun", spell: "Judgement", spellText: "Strikes every Blight in your light.", t: "Lightning leaps from hit to hit and leaves them Stunned. With the full game." },
       ],
     },
   },
   blight: {
-    num: "Out of the Mist",
     h2: "The Blight.",
     p: "Every kind wants something different: your light, your gate, your towers, your mana. Each land sends its own.",
     mobs: [
@@ -142,12 +138,11 @@ export const en = {
     ],
     sub: "Their masters",
     subLead: "Once they were her household. Each land saves one for the twelfth night.",
-    night12: "night 12",
   },
   lands: {
-    num: "The lands",
     h2: "Six lands. Hold one to open the next.",
-    p: "Each its own ground, its own Blight, its own building and its own last night.",
+    p: "Each has a building found nowhere else, and keeps its worst for the twelfth night.",
+    all: "Explore all six lands",
     more: "Walk all six lands",
     sheetLabel: "The lands",
     pathLabel: "The six lands",
@@ -178,9 +173,8 @@ export const en = {
     ],
   },
   gallery: {
-    num: "Screenshots",
-    h2: "A village, a year, a night.",
-    p: "Captured in the game. Tap one to see it large.",
+    h2: "Straight from the game.",
+    p: "Tap one to see it large.",
     count: "of",
     prev: "Previous picture",
     next: "Next picture",
@@ -198,7 +192,6 @@ export const en = {
     ],
   },
   story: {
-    num: "The story",
     h2: "A dwarf who wants to retire. An elf who wants the dark.",
     names: { v: "Lady Vaelith", w: "The lampwright" },
     who: { v: "Vaelith", w: "Lampwright" },
@@ -212,14 +205,12 @@ export const en = {
     ],
   },
   price: {
-    num: "What it costs",
     h2: "Free to play. One purchase.",
     free: { h: "Free", price: "€0", items: ["Every run, as often as you like", "The Ember Attunement", "Upgrades between runs for three runs"] },
     full: { h: "Full Game", price: "€4.99 once", items: ["Verdant and Dawn", "Upgrades between runs, for good", "Family Sharing"] },
     none: "No ads, no energy, no timers, no account.",
   },
   faq: {
-    num: "Questions",
     h2: "Asked so far",
     items: [
       { q: "What kind of game is Wardlight?", a: "A city builder and tower defence with roguelite runs, for iPhone and iPad. You grow a village by day inside the reach of your light and defend it at night against hordes of up to 2,500 Blight at once. Every building has its own talent tree, and at its fourth level the Wardlight takes an element that colours every tower and spell." },
@@ -236,7 +227,6 @@ export const en = {
     ],
   },
   workshop: {
-    num: "From the workshop",
     h2: "How it gets made",
     none: "The first post goes up with the launch.",
     all: "All posts",

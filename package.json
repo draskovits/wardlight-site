@@ -8,7 +8,10 @@
     "build:drafts": "WARDLIGHT_DRAFTS=1 astro build",
     "preview": "astro preview --port 8660",
     "check:layout": "node tools/check-layout.mjs",
-    "images": "node tools/images.mjs"
+    "images": "node tools/images.mjs",
+    "check:sheets": "node tools/check-sheets.mjs",
+    "check:ios": "node tools/check-ios.mjs",
+    "shots": "tools/import-shots.sh"
   },
   "engines": {
     "node": ">=22.12"

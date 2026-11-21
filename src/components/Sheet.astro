@@ -1,0 +1,29 @@
+---
+// A detail view: an opaque night panel over the dimmed, blurred page. It grows out of whatever opened it (the
+// script in home.ts), follows the finger down to close, and pages sideways when it holds more than one thing: the
+// pages are a native scroll-snap row, the light path on top is their indicator. Each page is a <section class="leaf">
+// in the slot; `pages` names them (for the path and the screen reader).
+interface Props { id: string; label: string; pages?: string[]; pathLabel?: string; close: string }
+const { id, label, pages = [], pathLabel, close } = Astro.props;
+const many = pages.length > 1;
+---
+<dialog class="sheet" id={id} aria-label={label} data-sheet>
+  <div class="scrim" data-close aria-hidden="true"></div>
+  <div class="panel">
+    <div class="sheet-top">
+      <span class="grip" aria-hidden="true"></span>
+      {many ? (
+        <nav class="path" aria-label={pathLabel ?? label} style={`--n:${pages.length}`}>
+          <span class="rail" aria-hidden="true"><b></b></span>
+          <ol>
+            {pages.map((p, i) => <li><button type="button" data-go={i} aria-current={i === 0 ? "true" : "false"}><i aria-hidden="true"></i><span>{p}</span></button></li>)}
+          </ol>
+        </nav>
+      ) : <span class="path-none"></span>}
+      <button class="x" type="button" data-close aria-label={close}><span aria-hidden="true"></span></button>
+    </div>
+    <div class="pager" tabindex="-1">
+      <slot />
+    </div>
+  </div>
+</dialog>

@@ -1,9 +1,12 @@
 // playwardlight.com, the home page: the scroll film, reveals, the loops, the sheets of light, the lands, the
-// gallery, the story with its Rive characters, the night counter. Transforms and opacity only.
+// gallery, the story with its Rive characters, the night counter. The detail views live in sheet.ts. Transforms and opacity only.
 import { animate, inView, scroll, stagger } from "motion";
+import { sheets, lockScroll, unlockScroll } from "./sheet";
 
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+// Save-Data or a slow connection: the film keeps its poster, the Rive figures their stills
+const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+const saveData = conn?.saveData === true || /(^|-)2g|3g/.test(conn?.effectiveType ?? "");
 const root = document.documentElement;
 const $ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector(sel) as T | null;
 const $$ = <T extends Element = HTMLElement>(sel: string, el: ParentNode = document) => [...el.querySelectorAll(sel)] as T[];
@@ -189,80 +192,17 @@ function loops() {
   document.addEventListener("visibilitychange", () => { if (document.hidden) vids.forEach((v) => v.pause()); });
 }
 
-// ================================================================ sheets: a circle of light from the crystal
-const openSheet = (d: HTMLDialogElement | null, from?: Element | null) => {
-  if (!d || d.open) return;
-  const r = from ? (from.querySelector(".gem") ?? from).getBoundingClientRect() : null;
-  d.style.setProperty("--ox", r ? `${Math.min(innerWidth, Math.max(0, r.left + r.width / 2))}px` : "50%");
-  d.style.setProperty("--oy", r ? `${Math.min(innerHeight, Math.max(0, r.top + r.height / 2))}px` : "50%");
+// ================================================================ the lightbox: fades in and out over the page
+const openBox = (d: HTMLDialogElement) => {
+  if (d.open) return;
+  lockScroll();
   d.showModal();
-  d.scrollTop = 0;
-  root.classList.add("sheet-open");
 };
-const closeSheet = (d: HTMLDialogElement) => {
+const closeBox = (d: HTMLDialogElement) => {
   if (!d.open || d.classList.contains("closing")) return;
   d.classList.add("closing");
-  setTimeout(() => { d.classList.remove("closing"); d.close(); }, reduce ? 0 : 430);
+  setTimeout(() => { d.classList.remove("closing"); d.close(); unlockScroll(); }, reduce ? 0 : 250);
 };
-function sheets() {
-  $$<HTMLDialogElement>("dialog.sheet, dialog.lightbox").forEach((d) => {
-    d.addEventListener("click", (e) => { if ((e.target as Element).closest("[data-close]")) closeSheet(d); });
-    d.addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(d); });
-    d.addEventListener("close", () => { if (!$$<HTMLDialogElement>("dialog[open]").length) root.classList.remove("sheet-open"); });
-  });
-  $$("[data-open]").forEach((b) => b.addEventListener("click", () => openSheet(document.getElementById(b.dataset.open!) as HTMLDialogElement, b)));
-}
-
-// ================================================================ the lands: one at a time, on a path of light
-function lands() {
-  const sheet = $<HTMLDialogElement>("#sheet-land");
-  if (!sheet) return;
-  const body = $(".land-body", sheet)!;
-  const arts = $$("article.land", sheet);
-  const names = arts.map((a) => $("h3", a)!.textContent ?? "");
-  const path = $$<HTMLButtonElement>("[data-go]", sheet);
-  const [prev, next] = $$<HTMLButtonElement>("[data-step]", sheet);
-  let at = 0;
-  const show = (i: number) => {
-    at = (i + arts.length) % arts.length;
-    arts.forEach((a, j) => { a.hidden = j !== at; });
-    body.classList.remove("enter"); void body.offsetWidth; if (!reduce) body.classList.add("enter");
-    path.forEach((b, j) => b.setAttribute("aria-current", String(j === at)));
-    $("span", prev)!.textContent = names[(at - 1 + arts.length) % arts.length];
-    $("span", next)!.textContent = names[(at + 1) % arts.length];
-    sheet.scrollTop = 0;
-  };
-  path.forEach((b) => b.addEventListener("click", () => show(+b.dataset.go!)));
-  prev.addEventListener("click", () => show(at - 1));
-  next.addEventListener("click", () => show(at + 1));
-  $$("[data-land]").forEach((b) => b.addEventListener("click", () => { show(+b.dataset.land!); openSheet(sheet, b); }));
-  sheet.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") show(at + 1); else if (e.key === "ArrowLeft") show(at - 1); });
-  // swipe sideways for the next land; down from the top to put it away
-  const inner = $(".sheet-in", sheet)!;
-  let g: { x: number; y: number; top: number; axis: "" | "x" | "y" } | null = null;
-  sheet.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" || (e.target as Element).closest("button, a")) return;
-    g = { x: e.clientX, y: e.clientY, top: sheet.scrollTop, axis: "" };
-  });
-  sheet.addEventListener("pointermove", (e) => {
-    if (!g) return;
-    const dx = e.clientX - g.x, dy = e.clientY - g.y;
-    if (!g.axis && Math.hypot(dx, dy) > 10) g.axis = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    if (g.axis === "x") { body.style.transform = `translate3d(${dx * 0.6}px,0,0)`; body.style.opacity = String(1 - Math.min(0.5, Math.abs(dx) / 600)); }
-    else if (g.axis === "y" && g.top <= 0 && dy > 0) inner.style.transform = `translate3d(0,${dy * 0.5}px,0)`;
-  });
-  const end = (e: PointerEvent, cancel = false) => {
-    if (!g) return;
-    const dx = e.clientX - g.x, dy = e.clientY - g.y, { top, axis } = g;
-    g = null;
-    body.style.transform = ""; body.style.opacity = ""; inner.style.transform = "";
-    if (cancel) return;
-    if (axis === "x" && Math.abs(dx) > 60) show(at + (dx < 0 ? 1 : -1));
-    else if (axis === "y" && top <= 0 && dy > 110) closeSheet(sheet);
-  };
-  sheet.addEventListener("pointerup", (e) => end(e));
-  sheet.addEventListener("pointercancel", (e) => end(e, true));
-}
 
 // ================================================================ the gallery and its lightbox
 function gallery() {
@@ -285,7 +225,9 @@ function gallery() {
     count.textContent = `${at + 1} ${of} ${shots.length}`;
     preload(at + 1); preload(at - 1);
   };
-  shots.forEach((s, i) => s.addEventListener("click", () => { show(i); openSheet(box, s); }));
+  shots.forEach((s, i) => s.addEventListener("click", () => { show(i); openBox(box); }));
+  box.addEventListener("click", (e) => { if ((e.target as Element).closest("[data-close]")) closeBox(box); });
+  box.addEventListener("cancel", (e) => { e.preventDefault(); closeBox(box); });
   $$<HTMLButtonElement>(".nav", box).forEach((b) => b.addEventListener("click", () => show(at + +b.dataset.step!)));
   box.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") show(at + 1); else if (e.key === "ArrowLeft") show(at - 1); });
   const stage = $(".stage", box)!;
@@ -306,8 +248,8 @@ function gallery() {
     img.style.transform = ""; box.style.opacity = "";
     if (cancel) return;
     if (axis === "x" && Math.abs(dx) > 50) show(at + (dx < 0 ? 1 : -1));
-    else if (axis === "y" && dy > 100) closeSheet(box);
-    else if (!axis && e.pointerType !== "mouse" && e.target === stage) closeSheet(box);
+    else if (axis === "y" && dy > 100) closeBox(box);
+    else if (!axis && e.pointerType !== "mouse" && e.target === stage) closeBox(box);
   };
   stage.addEventListener("pointerup", (e) => end(e));
   stage.addEventListener("pointercancel", (e) => end(e, true));
@@ -391,8 +333,7 @@ function clock() {
 film();
 motion();
 loops();
-sheets();
-lands();
+sheets(reduce);
 gallery();
 story();
 release();

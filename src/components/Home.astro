@@ -4,6 +4,8 @@
 import Base from "../layouts/Base.astro";
 import Picture from "./Picture.astro";
 import Crystal from "./Crystal.astro";
+import Sheet from "./Sheet.astro";
+import fs from "node:fs";
 import type { HomeText } from "../i18n/en";
 import { getPosts, niceDate } from "../lib/posts";
 import { SITE, APP_STORE, AUTHOR, RELEASE, released } from "../lib/site";
@@ -14,6 +16,21 @@ const de = t.lang === "de";
 const posts = getPosts().filter((p) => !p.pending).slice(0, 3);
 const shot = (base: string, w: 1100 | 2000) => `/assets/shots/${base}-${w}.webp`;
 const isOut = released();
+// Optional captures (tools/import-shots.sh copies them in): used when present, the current stills otherwise.
+const has = (p: string) => fs.existsSync("public" + p);
+const pick = (p: string) => (has(p) ? p : undefined);
+const growth = {
+  treeWide: "/assets/growth/tree-wide.webp",
+  treeClose: has("/assets/growth/tree-keystone.webp") ? "/assets/growth/tree-keystone.webp" : "/assets/growth/tree-close.webp",
+  memorySky: "/assets/growth/memory-sky.webp",
+  memoryCore: "/assets/growth/memory-core.webp",
+  memoryPan: pick("/assets/growth/memory-pan.mp4"),
+};
+const attune = (k: string) => ({
+  hero: pick(`/assets/attune/${k}-hero.webp`),
+  spell: pick(`/assets/attune/${k}-spell.mp4`), spellPoster: pick(`/assets/attune/${k}-spell.webp`),
+  towers: pick(`/assets/attune/${k}-towers.mp4`), towersPoster: pick(`/assets/attune/${k}-towers.webp`),
+});
 
 // ---------------------------------------------------------------- structured data
 const gameId = SITE + "/#game";
@@ -102,7 +119,7 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
     <a class="wide" href="#the-game">{t.ui.nav.game}</a>
     <a class="wide" href="#lands">{t.ui.nav.lands}</a>
     <a href="/blog/">{t.ui.nav.blog}</a>
-    <a href="/press/">{t.ui.nav.press}</a>
+    <a class="narrow-hide" href="/press/">{t.ui.nav.press}</a>
     <a href={t.ui.other.href} hreflang={t.ui.other.hreflang} lang={t.ui.other.hreflang} title={t.ui.other.title}>{t.ui.other.label}</a>
   </nav>
 </header>
@@ -144,53 +161,10 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
     </ul>
   </div>
 
-  <!-- Light is land: the year in four seasons. -->
-  <section class="topic" id="the-game" aria-labelledby="h-seasons">
-    <div class="wrap">
-      <div class="intro reveal-kids">
-        <span class="num">{t.seasons.num}</span>
-        <h2 id="h-seasons">{t.seasons.h2}</h2>
-        <p>{t.seasons.p}</p>
-      </div>
-      <figure class="big parallax reveal">
-        <Picture base="/assets/img/seasons" widths={[1000, 1600, 2600]} width={1600} height={645} alt={t.seasons.alt} sizes="(max-width: 1260px) 100vw, 1216px" />
-      </figure>
-      <div class="more-row reveal"><Crystal open="sheet-year" label={t.seasons.more} /></div>
-    </div>
-  </section>
-
-  <dialog class="sheet" id="sheet-year" aria-labelledby="h-year">
-    <div class="sheet-in">
-      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
-      <span class="num">{t.seasons.sheet.num}</span>
-      <h3 id="h-year">{t.seasons.sheet.h3}</h3>
-      <p class="lead">{t.seasons.sheet.lead}</p>
-      <div class="seasons">
-        {t.seasons.sheet.rows.map((r) => (
-          <figure class="season-row">
-            <img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
-              sizes="(max-width: 700px) 100vw, 560px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async">
-            <figcaption><b>{r.name}</b><ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul></figcaption>
-          </figure>
-        ))}
-      </div>
-      <div class="boons">
-        <figure><img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" sizes="(max-width: 700px) 100vw, 560px" loading="lazy" decoding="async"></figure>
-        <div>
-          <span class="kick">{t.seasons.sheet.boons.kick}</span>
-          <h4>{t.seasons.sheet.boons.h4}</h4>
-          <p>{t.seasons.sheet.boons.p}</p>
-          <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b> · {x.t}</li>)}</ul>
-        </div>
-      </div>
-    </div>
-  </dialog>
-
   <!-- Day and night, both always in view. -->
-  <section class="topic" aria-labelledby="h-dn">
+  <section class="topic" id="the-game" aria-labelledby="h-dn">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.dayNight.num}</span>
         <h2 id="h-dn">{t.dayNight.h2}</h2>
       </div>
       <div class="dn-pair reveal-kids">
@@ -206,73 +180,140 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
     </div>
   </section>
 
+  <!-- Light is land: the year in four seasons. -->
+  <section class="topic" aria-labelledby="h-seasons">
+    <div class="wrap">
+      <div class="intro reveal-kids">
+        <h2 id="h-seasons">{t.seasons.h2}</h2>
+        <p>{t.seasons.p}</p>
+      </div>
+      <figure class="big parallax reveal">
+        <Picture base="/assets/img/seasons" widths={[1000, 1600, 2600]} width={1600} height={645} alt={t.seasons.alt} sizes="(max-width: 1260px) 100vw, 1216px" />
+      </figure>
+      <div class="more-row reveal"><Crystal open="sheet-year" label={t.seasons.more} /></div>
+    </div>
+  </section>
+
+  <Sheet id="sheet-year" label={t.seasons.sheet.h3} close={t.ui.close} pages={[...t.seasons.sheet.rows.map((r) => r.name), t.seasons.sheet.boonsLabel]}>
+    {t.seasons.sheet.rows.map((r, i) => (
+      <section class="leaf" aria-label={r.name}>
+        <figure class="page-hero">
+          <img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
+            sizes="(max-width: 1100px) 100vw, 1100px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async">
+        </figure>
+        <div class="page-in">
+          {i === 0 && <h3 class="sheet-title">{t.seasons.sheet.h3}</h3>}
+          {i === 0 && <p class="lead">{t.seasons.sheet.lead}</p>}
+          <h4 class="page-name">{r.name}</h4>
+          <p class="when">{r.nights}</p>
+          <ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </section>
+    ))}
+    <section class="leaf" aria-label={t.seasons.sheet.boonsLabel}>
+      <figure class="page-hero contain">
+        <img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" loading="lazy" decoding="async">
+      </figure>
+      <div class="page-in">
+        <h4 class="page-name">{t.seasons.sheet.boons.h4}</h4>
+        <p class="lead">{t.seasons.sheet.boons.p}</p>
+        <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b><span>{x.t}</span></li>)}</ul>
+      </div>
+    </section>
+  </Sheet>
+
   <!-- Growth. -->
   <section class="topic" aria-labelledby="h-growth">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.growth.num}</span>
         <h2 id="h-growth">{t.growth.h2}</h2>
         <p>{t.growth.p}</p>
       </div>
-      <figure class="big parallax reveal">
-        <Picture base="/assets/img/tree" widths={[1000, 1600]} width={1600} height={728} alt={t.growth.alt} sizes="(max-width: 1260px) 100vw, 1216px" />
+      <figure class="big deep reveal">
+        <img src={growth.treeWide} alt={t.growth.alt} width="1400" height="1110" loading="lazy" decoding="async">
       </figure>
       <div class="more-row reveal"><Crystal open="sheet-tree" label={t.growth.more} /></div>
     </div>
   </section>
 
-  <dialog class="sheet" id="sheet-tree" aria-labelledby="h-tree">
-    <div class="sheet-in">
-      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
-      <span class="num">{t.growth.sheet.num}</span>
-      <h3 id="h-tree">{t.growth.sheet.h3}</h3>
-      <figure class="wide-shot"><img src="/assets/ui/talent-tree.webp" alt={t.growth.sheet.treeAlt} width="1600" height="737" loading="lazy" decoding="async"></figure>
-      <div class="facts3">
-        {t.growth.sheet.items.map((f) => <div><b>{f.b}</b>{f.t}</div>)}
+  <Sheet id="sheet-tree" label={t.growth.sheet.h3} close={t.ui.close} pages={[t.growth.sheet.treeLabel, t.growth.sheet.memoryLabel]}>
+    <section class="leaf" aria-label={t.growth.sheet.treeLabel}>
+      <figure class="page-hero deep tall"><img src={growth.treeWide} alt={t.growth.sheet.treeAlt} width="1400" height="1110" loading="lazy" decoding="async"></figure>
+      <div class="page-in">
+        <h3 class="sheet-title">{t.growth.sheet.h3}</h3>
+        <div class="facts3">{t.growth.sheet.items.map((f) => <div><b>{f.b}</b>{f.t}</div>)}</div>
+        <figure class="close-up deep"><img src={growth.treeClose} alt={t.growth.sheet.treeCloseAlt} width="760" height="520" loading="lazy" decoding="async"></figure>
       </div>
-      <figure class="wide-shot"><img src="/assets/ui/memory.webp" alt={t.growth.sheet.memoryAlt} width="1600" height="737" loading="lazy" decoding="async"></figure>
-      <div class="facts3 one"><div><b>{t.growth.sheet.memory.b}</b>{t.growth.sheet.memory.t}</div></div>
-    </div>
-  </dialog>
+    </section>
+    <section class="leaf" aria-label={t.growth.sheet.memoryLabel}>
+      <figure class="page-hero deep tall">
+        {growth.memoryPan
+          ? <video src={growth.memoryPan} data-poster={growth.memorySky} muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
+          : <img src={growth.memorySky} alt={t.growth.sheet.memoryAlt} width="1800" height="1050" loading="lazy" decoding="async">}
+      </figure>
+      <div class="page-in">
+        <h3 class="sheet-title">{t.growth.sheet.memory.b}</h3>
+        <p class="lead">{t.growth.sheet.memory.t}</p>
+        <figure class="close-up deep"><img src={growth.memoryCore} alt={t.growth.sheet.memoryCloseAlt} width="1120" height="845" loading="lazy" decoding="async"></figure>
+      </div>
+    </section>
+  </Sheet>
 
   <!-- The elements. -->
   <section class="topic" aria-labelledby="h-el">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.elements.num}</span>
         <h2 id="h-el">{t.elements.h2}</h2>
         <p>{t.elements.p}</p>
       </div>
       <div class="tiles strip-x reveal-kids" role="group" aria-label={t.elements.group}>
-        {t.elements.tiles.map((x) => (
-          <figure class={`tile ${x.key}`}>
+        {t.elements.tiles.map((x, i) => (
+          <button class={`tile ${x.key}`} type="button" data-open="sheet-element" data-page={i} aria-haspopup="dialog">
             <video src={`/assets/loops/attune-${x.key}.mp4`} data-poster={`/assets/loops/attune-${x.key}.webp`} width="1600" height="736" muted loop playsinline preload="none" aria-label={x.label} data-loop></video>
-            <figcaption><b>{x.b}</b>{x.t}</figcaption>
-          </figure>
+            <span class="cap"><b>{x.b}</b>{x.t}</span>
+          </button>
         ))}
       </div>
       <div class="more-row reveal"><Crystal open="sheet-element" label={t.elements.more} /></div>
     </div>
   </section>
 
-  <dialog class="sheet" id="sheet-element" aria-labelledby="h-attune">
-    <div class="sheet-in">
-      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
-      <span class="num">{t.elements.sheet.num}</span>
-      <h3 id="h-attune">{t.elements.sheet.h3}</h3>
-      <figure class="wide-shot"><img src="/assets/ui/attunement-choice.webp" alt={t.elements.sheet.alt} width="1600" height="737" loading="lazy" decoding="async"></figure>
-      <p class="lead">{t.elements.sheet.lead}</p>
-      <div class="facts3 el">
-        {t.elements.sheet.items.map((x) => <div class={x.key}><b>{x.b}</b><i>{x.i}</i>{x.t}<span class="spell"><i>{t.elements.sheet.spellKick}</i>{x.spell}</span></div>)}
-      </div>
-    </div>
-  </dialog>
+  <Sheet id="sheet-element" label={t.elements.sheet.h3} close={t.ui.close} pages={t.elements.sheet.items.map((x) => x.b)}>
+    {t.elements.sheet.items.map((x) => {
+      const a = attune(x.key);
+      return (
+        <section class={`leaf el ${x.key}`} aria-label={x.b}>
+          <figure class="page-hero">
+            <video src={`/assets/loops/attune-${x.key}.mp4`} data-poster={`/assets/loops/attune-${x.key}.webp`} width="1600" height="736" muted loop playsinline preload="none" aria-label={t.elements.tiles.find((y) => y.key === x.key)?.label} data-loop></video>
+          </figure>
+          <div class="page-in">
+            <h3 class="sheet-title">{x.b}</h3>
+            <p class="when">{x.i}</p>
+            <p class="lead">{x.t}</p>
+            {a.hero && <figure class="clip"><img src={a.hero} alt={t.elements.tiles.find((y) => y.key === x.key)?.label} width="2000" height="920" loading="lazy" decoding="async"></figure>}
+            {a.towers && <figure class="clip"><video src={a.towers} data-poster={a.towersPoster} muted loop playsinline preload="none" aria-label={x.i} data-loop></video></figure>}
+            <div class="spell">
+              <span class="spell-kick">{t.elements.sheet.spellKick}</span>
+              <h4>{x.spell}</h4>
+              <p>{x.spellText}</p>
+            </div>
+            <figure class="clip">
+              {a.spell
+                ? <video src={a.spell} data-poster={a.spellPoster} muted loop playsinline preload="none" aria-label={`${x.spell}: ${x.spellText}`} data-loop></video>
+                : <img src={shot(`attune-${x.key}-wave`, 1100)} srcset={`${shot(`attune-${x.key}-wave`, 1100)} 1100w, ${shot(`attune-${x.key}-wave`, 2000)} 2000w`} sizes="(max-width: 1000px) 100vw, 960px" alt={`${x.spell}: ${x.spellText}`} width="1100" height="506" loading="lazy" decoding="async">}
+            </figure>
+            {!a.towers && <figure class="clip"><img src={shot(`attune-${x.key}-fight`, 1100)} srcset={`${shot(`attune-${x.key}-fight`, 1100)} 1100w, ${shot(`attune-${x.key}-fight`, 2000)} 2000w`} sizes="(max-width: 1000px) 100vw, 960px" alt={t.elements.tiles.find((y) => y.key === x.key)?.label} width="1100" height="506" loading="lazy" decoding="async"></figure>}
+            <p class="note">{t.elements.sheet.lead}</p>
+          </div>
+        </section>
+      );
+    })}
+  </Sheet>
 
   <!-- The Blight and their masters. -->
   <section class="topic" id="blight" aria-labelledby="h-blight">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.blight.num}</span>
         <h2 id="h-blight">{t.blight.h2}</h2>
         <p>{t.blight.p}</p>
       </div>
@@ -288,9 +329,9 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
       <p class="sub-lead reveal">{t.blight.subLead}</p>
       <div class="bosses strip-x reveal-kids">
         {t.lands.list.map((l, i) => (
-          <button class="boss-link" type="button" data-land={i}>
+          <button class="boss-link" type="button" data-open="sheet-land" data-page={i} aria-haspopup="dialog">
             <img src={`/assets/lands/${l.id}/boss.webp`} alt="" width="640" height="800" loading="lazy" decoding="async">
-            <span><b>{l.boss}</b>{l.name} · {t.blight.night12}</span>
+            <span><b>{l.boss}</b>{l.name}</span>
           </button>
         ))}
       </div>
@@ -301,56 +342,53 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
   <section class="topic" id="lands" aria-labelledby="h-lands">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.lands.num}</span>
         <h2 id="h-lands">{t.lands.h2}</h2>
         <p>{t.lands.p}</p>
       </div>
       <div class="teasers strip-x reveal-kids">
         {t.lands.list.slice(0, 3).map((l, i) => (
-          <button class="land-tease" type="button" data-land={i}>
+          <button class="land-tease" type="button" data-open="sheet-land" data-page={i} aria-haspopup="dialog">
             <span class="ph"><img src={`/assets/lands/${l.id}/landscape-1100.webp`} alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
             <span class="txt"><b>{l.name}</b><span>{l.tease}</span></span>
           </button>
         ))}
+        <button class="land-tease all" type="button" data-open="sheet-land" data-page="0" aria-haspopup="dialog">
+          <span class="stack" aria-hidden="true">
+            {t.lands.list.slice(3).map((l) => <img src={`/assets/lands/${l.id}/landscape-1100.webp`} alt="" width="1100" height="506" loading="lazy" decoding="async">)}
+          </span>
+          <span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span>
+          <span class="lbl">{t.lands.all}</span>
+          <span class="names" aria-hidden="true">{t.lands.list.slice(3).map((l) => l.name).join(" · ")}</span>
+        </button>
       </div>
-      <div class="more-row reveal"><Crystal land={0} label={t.lands.more} /></div>
+      <div class="more-row phone-only reveal"><Crystal open="sheet-land" page={0} label={t.lands.more} /></div>
     </div>
   </section>
 
-  <dialog class="sheet lands-sheet" id="sheet-land" aria-label={t.lands.sheetLabel}>
-    <div class="sheet-in">
-      <button class="x" type="button" data-close aria-label={t.ui.close}><span aria-hidden="true"></span></button>
-      <nav class="inner" aria-label={t.lands.pathLabel}>
-        <ol class="land-path">
-          {t.lands.list.map((l, i) => <li><button type="button" data-go={i} aria-current={i === 0 ? "true" : "false"}><span>{l.name}</span></button></li>)}
-        </ol>
-      </nav>
-      <div class="land-body" aria-live="polite">
-        {t.lands.list.map((l, i) => (
-          <article class="land" data-i={i} hidden={i !== 0}>
-            <figure class="land-hero">
-              <img src={`/assets/lands/${l.id}/landscape-2000.webp`} srcset={`/assets/lands/${l.id}/landscape-1100.webp 1100w, /assets/lands/${l.id}/landscape-2000.webp 2000w`}
-                sizes="100vw" alt={`${l.name} ${t.lands.dayAlt}`} width="2000" height="920" loading="lazy" decoding="async">
-              <figcaption class="inner"><h3>{l.name}</h3><p class="lead">{l.lead}</p></figcaption>
-            </figure>
-            <div class="pair inner">
-              <figure><img src={`/assets/lands/${l.id}/boss.webp`} alt={l.boss} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.bossKick}</i><b>{l.boss}</b>{l.post}</figcaption></figure>
-              <figure><img src={`/assets/lands/${l.id}/building.webp`} alt={l.buildingAlt} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.buildingKick}</i><b>{l.building}</b>{l.buildingText}</figcaption></figure>
-            </div>
-            <p class="blight inner"><i>{t.lands.blightKick}</i>{l.blight}</p>
-          </article>
-        ))}
-      </div>
-      <div class="land-nav inner"><button type="button" data-step="-1">‹ <span>{t.lands.list[5].name}</span></button><button type="button" data-step="1"><span>{t.lands.list[1].name}</span> ›</button></div>
-      <p class="land-hint inner">{t.lands.hint}</p>
-    </div>
-  </dialog>
+  <Sheet id="sheet-land" label={t.lands.sheetLabel} pathLabel={t.lands.pathLabel} close={t.ui.close} pages={t.lands.list.map((l) => l.name)}>
+    {t.lands.list.map((l) => (
+      <section class="leaf land" aria-label={l.name}>
+        <figure class="page-hero land-hero">
+          <img src={`/assets/lands/${l.id}/landscape-2000.webp`} srcset={`/assets/lands/${l.id}/landscape-1100.webp 1100w, /assets/lands/${l.id}/landscape-2000.webp 2000w`}
+            sizes="(max-width: 1100px) 100vw, 1100px" alt={`${l.name} ${t.lands.dayAlt}`} width="2000" height="920" loading="lazy" decoding="async">
+        </figure>
+        <div class="page-in">
+          <h3 class="sheet-title">{l.name}</h3>
+          <p class="lead">{l.lead}</p>
+          <div class="pair">
+            <figure><img src={`/assets/lands/${l.id}/boss.webp`} alt={l.boss} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.bossKick}</i><b>{l.boss}</b>{l.post}</figcaption></figure>
+            <figure><img src={`/assets/lands/${l.id}/building.webp`} alt={l.buildingAlt} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.buildingKick}</i><b>{l.building}</b>{l.buildingText}</figcaption></figure>
+          </div>
+          <p class="blight"><i>{t.lands.blightKick}</i>{l.blight}</p>
+        </div>
+      </section>
+    ))}
+  </Sheet>
 
   <!-- Screenshots, with a lightbox. -->
   <section class="topic" id="screenshots" aria-labelledby="h-shots">
     <div class="wrap">
       <div class="intro reveal-kids">
-        <span class="num">{t.gallery.num}</span>
         <h2 id="h-shots">{t.gallery.h2}</h2>
         <p>{t.gallery.p}</p>
       </div>
@@ -382,7 +420,6 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
   <!-- The story. -->
   <section class="chapter" id="story" aria-labelledby="h-story">
     <div class="wrap">
-      <span class="num reveal">{t.story.num}</span>
       <h2 id="h-story" class="reveal">{t.story.h2}</h2>
       <div class="talk reveal" data-talk data-who={JSON.stringify(t.story.who)} data-tap={t.story.tap} data-again={t.story.again} data-lang={t.lang}>
         <div class="faces">
@@ -409,7 +446,6 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
 
   <section class="chapter" id="price" aria-labelledby="h-price">
     <div class="wrap">
-      <span class="num reveal">{t.price.num}</span>
       <h2 id="h-price" class="reveal">{t.price.h2}</h2>
       <div class="price reveal-kids">
         {[t.price.free, t.price.full].map((p) => (
@@ -425,7 +461,6 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
 
   <section class="chapter" id="questions" aria-labelledby="h-faq">
     <div class="wrap">
-      <span class="num reveal">{t.faq.num}</span>
       <h2 id="h-faq" class="reveal">{t.faq.h2}</h2>
       <div class="faq reveal-kids">
         {t.faq.items.map((f) => <details><summary>{f.q}</summary><div><p set:html={f.a} /></div></details>)}
@@ -435,7 +470,6 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
 
   <section class="chapter workshop" id="workshop" aria-labelledby="h-workshop">
     <div class="wrap">
-      <span class="num reveal">{t.workshop.num}</span>
       <h2 id="h-workshop" class="reveal">{t.workshop.h2}</h2>
       {t.workshop.note && <p class="lede reveal">{t.workshop.note}</p>}
       {posts.length ? (

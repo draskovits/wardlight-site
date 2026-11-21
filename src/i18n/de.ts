@@ -42,24 +42,22 @@ export const de: HomeText = {
     { b: "Keine Werbung", t: "ein einziger Kauf" },
   ],
   seasons: {
-    num: "Die Regel",
     h2: "Licht ist Land.",
     p: "Bauen kannst du nur, wo dein Licht hinreicht. Ein Durchgang dauert ein Jahr, vier Jahreszeiten mit je drei Nächten.",
     alt: "Dasselbe Dorf in Wardlight im Frühling, Sommer, Herbst und Winter",
     more: "Die vier Jahreszeiten erkunden",
     sheet: {
-      num: "Ein Durchgang ist ein Jahr",
       h3: "Vier Jahreszeiten, zwölf Nächte.",
-      lead: "Jede Jahreszeit hat ihre eigenen Regeln, und die verändern den Kampf. Das Jahr endet in der zwölften Nacht mit dem Boss des Landes.",
+      lead: "Drei Nächte pro Jahreszeit, und jede Jahreszeit ändert die Regeln des Kampfs. In der zwölften Nacht kommt der Boss des Landes.",
+      boonsLabel: "Die Karte",
       rows: [
-        { key: "spring", name: "Frühling", alt: "Das Dorf im Frühling", rules: ["Das Licht reicht weniger weit", "Die Fäule watet durch Schlamm"] },
-        { key: "summer", name: "Sommer", alt: "Das Dorf im Sommer", rules: ["Feuer brennen länger", "Mehr Fäule kommt"] },
-        { key: "autumn", name: "Herbst", alt: "Das Dorf im Herbst", rules: ["Jede Nacht Nebel", "Türme reichen weniger weit"] },
-        { key: "winter", name: "Winter", alt: "Das Dorf im Winter", rules: ["Die Fäule wird langsamer", "Sie trägt mehr Rüstung"] },
+        { key: "spring", name: "Frühling", nights: "Nächte 1–3", alt: "Das Dorf im Frühling", rules: ["Das Licht reicht weniger weit", "Die Fäule watet durch Schlamm"] },
+        { key: "summer", name: "Sommer", nights: "Nächte 4–6", alt: "Das Dorf im Sommer", rules: ["Feuer brennen länger", "Mehr Fäule kommt"] },
+        { key: "autumn", name: "Herbst", nights: "Nächte 7–9", alt: "Das Dorf im Herbst", rules: ["Jede Nacht Nebel", "Türme reichen weniger weit"] },
+        { key: "winter", name: "Winter", nights: "Nächte 10–12", alt: "Das Dorf im Winter", rules: ["Die Fäule wird langsamer", "Sie trägt mehr Rüstung"] },
       ],
       boons: {
         alt: "Die Karte der Jahreszeit in Wardlight: zwei zur Wahl, eins bleibt",
-        kick: "Im ersten Morgengrauen jeder Jahreszeit",
         h4: "Zwei zur Wahl, eins behältst du.",
         p: "Das erste Morgengrauen der Jahreszeit legt dir zwei hin, und eins behältst du, bis die Jahreszeit wechselt. Ein paar davon:",
         list: [
@@ -77,20 +75,21 @@ export const de: HomeText = {
     },
   },
   dayNight: {
-    num: "Jeden Tag, jede Nacht",
     h2: "Bei Tag baust du, bei Nacht hältst du stand.",
     day: { label: "Dorfbewohner bei der Arbeit, bei Tag in Wardlight", b: "Der Tag wartet auf dich.", t: "Bau, lies, woher sie heute kommen, und ruf die Nacht, wenn du so weit bist." },
     night: { label: "Die Fäule an der Mauer, bei Nacht in Wardlight", b: "Die Nacht wartet nicht.", t: "Deine Türme bekämpfen, was das Licht zeigt. Was durchkommt, flickst du mit Mana." },
   },
   growth: {
-    num: "Wachstum",
     h2: "Jedes Gebäude hat seinen eigenen Baum.",
     p: "Die Nacht zahlt in Wissen, und mit Wissen kaufst du Talente. Jeder Baum endet in einem Schlussstein.",
     alt: "Der Talentbaum des Eisturms in Wardlight, das Talent Zerschmettern geöffnet",
     more: "Mehr über die Bäume",
     sheet: {
-      num: "Wachstum",
       h3: "Ein Baum für jedes Gebäude.",
+      treeLabel: "Talentbäume",
+      memoryLabel: "Die Erinnerung",
+      treeCloseAlt: "Der Baum des Hexturms aus der Nähe: der Eisturm gelernt, darüber Zerschmettern, Kaltes Eisen und Glatteis",
+      memoryCloseAlt: "Die Erinnerung aus der Nähe: die Sterne der Einstimmung um den Kristall des Wardlights, Glut, Grün und Morgenrot entzündet",
       treeAlt: "Der Talentbaum des Hexturms in Wardlight: der Eisturm gelernt, Zerschmettern ausgewählt",
       items: [
         { b: "Wissen", t: "Nur die Nacht bringt es. Zwischen den Nächten gibst du es im Baum eines beliebigen Gebäudes aus." },
@@ -102,7 +101,6 @@ export const de: HomeText = {
     },
   },
   elements: {
-    num: "Das Element",
     h2: "Auf Stufe IV nimmt dein Licht eine Farbe an.",
     p: "Einmal im Jahr stimmst du das Wardlight auf ein Element ein, und jeder Treffer im Dorf trägt es.",
     group: "Die drei Elemente",
@@ -113,20 +111,18 @@ export const de: HomeText = {
     ],
     more: "Die Elemente erkunden",
     sheet: {
-      num: "Wardlight IV · die Einstimmung",
       h3: "Ein Element für den Rest des Jahres.",
       alt: "Die Wahl der Einstimmung in Wardlight: Glut, Grün und Morgenrot",
       lead: "Einmal pro Durchgang gewählt, auf der vierten Stufe des Wardlights. Pfeile und Steine aller Türme tragen es und durchschlagen zwei Fünftel der Rüstung, und jeder Zauber und jedes Licht im Dorf nimmt seine Farbe an.",
       spellKick: "Sein Zauber",
       items: [
-        { key: "ember", b: "Glut", i: "Treffer hinterlassen brennenden Boden", spell: "Feuerregen", t: "Unter der Meute brennt der Boden weiter. Für alle umsonst, und dein erstes Element." },
-        { key: "verdant", b: "Grün", i: "Treffer hinterlassen Fäulnis", spell: "Seuchenwind", t: "Die Fäulnis wandert von Fäule zu Fäule durch die ganze Meute. Mit der Vollversion." },
-        { key: "dawn", b: "Morgenrot", i: "Treffer springen weiter und betäuben", spell: "Strafgericht", t: "Blitze springen von Treffer zu Treffer und lassen die Fäule Betäubt zurück. Mit der Vollversion." },
+        { key: "ember", b: "Glut", i: "Treffer hinterlassen brennenden Boden", spell: "Feuerregen", spellText: "Ruft Feuer herab auf eine ganze Seite des Dorfes.", t: "Unter der Meute brennt der Boden weiter. Für alle umsonst, und dein erstes Element." },
+        { key: "verdant", b: "Grün", i: "Treffer hinterlassen Fäulnis", spell: "Seuchenwind", spellText: "Verdoppelt die Fäulnis und trägt sie durch die Meute.", t: "Die Fäulnis wandert von Fäule zu Fäule durch die ganze Meute. Mit der Vollversion." },
+        { key: "dawn", b: "Morgenrot", i: "Treffer springen weiter und betäuben", spell: "Strafgericht", spellText: "Trifft alle Fäule in deinem Licht.", t: "Blitze springen von Treffer zu Treffer und lassen die Fäule Betäubt zurück. Mit der Vollversion." },
       ],
     },
   },
   blight: {
-    num: "Aus dem Nebel",
     h2: "Die Fäule.",
     p: "Jede Art will etwas anderes: dein Licht, dein Tor, deine Türme, dein Mana. Jedes Land schickt seine eigene.",
     mobs: [
@@ -143,12 +139,11 @@ export const de: HomeText = {
     ],
     sub: "Die Herren der Fäule",
     subLead: "Einst gehörten sie zu ihrem Haus. Jedes Land spart sich einen für die zwölfte Nacht auf.",
-    night12: "Nacht 12",
   },
   lands: {
-    num: "Die Länder",
     h2: "Sechs Länder. Wer eins hält, öffnet das nächste.",
-    p: "Jedes hat seinen Boden, seine Fäule, ein Gebäude, das es nur dort gibt, und seine eigene letzte Nacht.",
+    p: "Jedes hat ein Gebäude, das es sonst nirgends gibt, und hebt sich sein Schlimmstes für die zwölfte Nacht auf.",
+    all: "Alle sechs Länder erkunden",
     more: "Durch alle sechs Länder",
     sheetLabel: "Die Länder",
     pathLabel: "Die sechs Länder",
@@ -179,9 +174,8 @@ export const de: HomeText = {
     ],
   },
   gallery: {
-    num: "Screenshots",
     h2: "Bilder aus dem Spiel.",
-    p: "Aufgenommen im Spiel. Tipp ein Bild an, dann wird es groß.",
+    p: "Tipp ein Bild an, dann wird es groß.",
     count: "von",
     prev: "Voriges Bild",
     next: "Nächstes Bild",
@@ -199,7 +193,6 @@ export const de: HomeText = {
     ],
   },
   story: {
-    num: "Die Geschichte",
     h2: "Ein Zwerg, der in den Ruhestand will, und eine Elfe, die das Dunkel will.",
     names: { v: "Lady Vaelith", w: "Der Lampenmacher" },
     who: { v: "Vaelith", w: "Lampenmacher" },
@@ -213,14 +206,12 @@ export const de: HomeText = {
     ],
   },
   price: {
-    num: "Was es kostet",
     h2: "Kostenlos spielbar, mit einem einzigen Kauf.",
     free: { h: "Kostenlos", price: "0 €", items: ["Jeder Durchgang, so oft du willst", "Die Einstimmung Glut", "Die Erinnerung für drei Durchgänge"] },
     full: { h: "Vollversion", price: "4,99 € einmalig", items: ["Grün und Morgenrot", "Die Erinnerung für immer", "Familienfreigabe"] },
     none: "Keine Werbung, keine Energie, keine Wartezeiten, kein Konto.",
   },
   faq: {
-    num: "Fragen",
     h2: "Häufige Fragen",
     items: [
       { q: "Was für ein Spiel ist Wardlight?", a: "Ein Aufbauspiel und Tower Defense mit Roguelite-Durchgängen, für iPhone und iPad. Bei Tag baust du ein Dorf, so weit dein Licht reicht, bei Nacht verteidigst du es gegen bis zu 2.500 Fäule auf einmal. Jedes Gebäude hat seinen eigenen Talentbaum, und auf seiner vierten Stufe nimmt das Wardlight ein Element an, das jeden Turm und jeden Zauber färbt." },
@@ -237,7 +228,6 @@ export const de: HomeText = {
     ],
   },
   workshop: {
-    num: "Aus der Werkstatt",
     h2: "Wie das Spiel entsteht",
     none: "Der erste Beitrag erscheint zum Start.",
     all: "Alle Beiträge",
