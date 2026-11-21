@@ -2,62 +2,361 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wardlight – Support</title>
-<meta name="description" content="Help and contact for Wardlight, a colony defence for iPhone and iPad.">
-<link rel="icon" href="icon.png">
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wardlight: a city builder and tower defence for iPhone and iPad</title>
+<meta name="description" content="Build inside your light by day and hold it through the night. Wardlight is a city builder and tower defence for iPhone and iPad: twelve-night runs of about forty minutes, thousands of Blight on screen, six lands. Free to play, no ads.">
+<link rel="canonical" href="https://playwardlight.com/">
+<meta name="theme-color" content="#07080c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wardlight">
+<meta property="og:title" content="Wardlight: keep the village lit until morning">
+<meta property="og:description" content="A city builder and tower defence for iPhone and iPad. Build inside your light by day; by night thousands of Blight crawl out of the Mist. Free to play, no ads.">
+<meta property="og:url" content="https://playwardlight.com/">
+<meta property="og:image" content="https://playwardlight.com/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6826542922">
+<link rel="icon" href="/assets/icon/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/icon/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icon/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Wardlight: from the workshop" href="/blog/feed.xml">
+<link rel="preload" as="image" href="/assets/img/hero-1600.jpg" imagesrcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" imagesizes="100vw">
+<link rel="stylesheet" href="/assets/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["VideoGame", "MobileApplication"],
+      "@id": "https://playwardlight.com/#game",
+      "name": "Wardlight",
+      "alternateName": "Wardlight: Tower Defense",
+      "url": "https://playwardlight.com/",
+      "sameAs": ["https://apps.apple.com/app/id6826542922"],
+      "description": "A city builder and tower defence for iPhone and iPad. You are the Wardlight, the flame at the heart of a village at the edge of an endless Mist. By day you build only where your light reaches; by night thousands of Blight crawl out of the Mist toward whatever burns brightest. A run is twelve nights and takes about forty minutes.",
+      "image": "https://playwardlight.com/assets/img/hero-2600.jpg",
+      "genre": ["Tower defense", "City builder", "Roguelite", "Strategy"],
+      "gamePlatform": ["iPhone", "iPad"],
+      "operatingSystem": "iOS 26 or later, iPadOS 26 or later",
+      "applicationCategory": "GameApplication",
+      "applicationSubCategory": "Strategy",
+      "playMode": "SinglePlayer",
+      "numberOfPlayers": {"@type": "QuantitativeValue", "value": 1},
+      "datePublished": "2026-12-03",
+      "inLanguage": ["en", "de", "fr", "es", "it", "pt-BR", "ja", "ko", "zh-Hans", "zh-Hant", "ru", "tr", "nl"],
+      "contentRating": "9+",
+      "offers": [
+        {"@type": "Offer", "name": "Download", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://apps.apple.com/app/id6826542922"},
+        {"@type": "Offer", "name": "Full Game (in-app purchase)", "price": "4.99", "priceCurrency": "EUR"}
+      ],
+      "author": {"@id": "https://playwardlight.com/#developer"},
+      "publisher": {"@id": "https://playwardlight.com/#developer"},
+      "countryOfOrigin": {"@type": "Country", "name": "Austria"}
+    },
+    {
+      "@type": "Person",
+      "@id": "https://playwardlight.com/#developer",
+      "name": "Stefan Draskovits",
+      "jobTitle": "Independent game developer",
+      "homeLocation": {"@type": "Place", "name": "Vienna, Austria"},
+      "url": "https://playwardlight.com/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://playwardlight.com/#site",
+      "name": "Wardlight",
+      "url": "https://playwardlight.com/",
+      "inLanguage": "en",
+      "publisher": {"@id": "https://playwardlight.com/#developer"}
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "Is Wardlight free?", "acceptedAnswer": {"@type": "Answer", "text": "The download is free and so is every run with the Ember Attunement, as many as you like. One in-app purchase, Full Game (about €4.99 or $4.99), adds the Verdant and Dawn Attunements and keeps the Memory, the upgrades between runs, open after your third run. There are no ads."}},
+        {"@type": "Question", "name": "Does Wardlight need an internet connection or an account?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a single-player game that plays fully offline and has no account."}},
+        {"@type": "Question", "name": "How long is a run?", "acceptedAnswer": {"@type": "Answer", "text": "Twelve nights, each with an untimed day before it: about forty minutes. The game saves at every dawn, so a run can be split over several sittings."}},
+        {"@type": "Question", "name": "Which devices does Wardlight run on?", "acceptedAnswer": {"@type": "Answer", "text": "iPhone and iPad with iOS or iPadOS 26 or later. It is not on Android, PC or consoles."}},
+        {"@type": "Question", "name": "What kind of game is Wardlight?", "acceptedAnswer": {"@type": "Answer", "text": "A city builder and tower defence with roguelite runs. You grow a village by day inside the reach of your light, and defend it at night against hordes of up to 2,500 creatures at once. Every building has its own talent tree, and at its fourth level the Wardlight takes an element that colours every tower and spell."}},
+        {"@type": "Question", "name": "Who makes Wardlight?", "acceptedAnswer": {"@type": "Answer", "text": "Stefan Draskovits, an independent developer in Vienna, Austria, with a renderer written for the game in Apple's Metal."}}
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<main>
-  <header>
-    <img class="mark" src="icon.png" alt="">
-    <div>
-      <h1>Wardlight</h1>
-      <p>A colony defence for iPhone and iPad</p>
-    </div>
-  </header>
-  <nav>
-    <a href="#contact">Contact</a>
-    <a href="#faq">Questions</a>
-    <a href="datenschutz.html">Privacy</a>
-    <a href="#deutsch" class="lang">Deutsch</a>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar">
+  <a class="home" href="/" aria-label="Wardlight, home"><img src="/assets/brand/wordmark.svg" alt="Wardlight" width="118" height="30"></a>
+  <nav aria-label="Site">
+    <a class="wide" href="#the-game">The game</a>
+    <a class="wide" href="#lands">Lands</a>
+    <a href="/blog/">Blog</a>
+    <a href="/press/">Press</a>
   </nav>
+</header>
 
-  <section id="contact">
-    <h2>Contact &amp; help</h2>
-    <p>Found a bug, have an idea or a question about the game? Open an issue on
-      <a href="https://github.com/draskovits/wardlight-site/issues/new">GitHub</a>
-      and I'll answer as soon as I can.</p>
-    <p>For a bug, it helps to say which device you play on, which night you were on and what happened.</p>
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title" data-light>
+    <div class="plate dark" aria-hidden="true"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="" width="2600" height="1219" fetchpriority="high"></div>
+    <div class="plate lit"><img src="/assets/img/hero-1600.jpg" srcset="/assets/img/hero-1600.jpg 1600w, /assets/img/hero-2600.jpg 2600w" sizes="100vw" alt="A walled village at night in Wardlight, the Blight pouring out of the violet Mist against its palisade" width="2600" height="1219"></div>
+    <div class="copy">
+      <h1 id="hero-title">Keep the village lit <em>until morning.</em></h1>
+      <p class="what">Wardlight is a city builder and tower defence for iPhone and iPad. By day you build inside your light. By night the Blight crawl out of the Mist, thousands of them, toward whatever burns brightest.</p>
+      <div class="act">
+        <a class="badge" href="https://apps.apple.com/app/id6826542922"><img src="/assets/brand/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
+        <span class="when" data-release="2026-12-03" data-after="Out now · free to play">Out 3 December 2026 · pre-order free</span>
+      </div>
+    </div>
+    <p class="hint" aria-hidden="true">Move your light over the village. Only what it reaches can be seen.</p>
   </section>
 
-  <section id="faq">
-    <h2>Questions</h2>
-    <h3>Do I need an account or an internet connection?</h3>
-    <p>No. Wardlight is a single-player game. It plays fully offline and has no account.</p>
-    <h3>Is my run saved?</h3>
-    <p>Yes. The game saves at every dawn, on your device. If you close it during a night, you continue from that night's dawn.</p>
-    <h3>How long is a run?</h3>
-    <p>About forty minutes: twelve nights, each with an untimed day before it. You can stop after any dawn.</p>
-    <h3>Is Wardlight free?</h3>
-    <p>The download is free. The full game is unlocked with an in-app purchase. Purchases go through the App Store
-      and can be restored on any device with the same Apple Account.</p>
+  <div class="wrap">
+    <ul class="facts" aria-label="At a glance">
+      <li><b>12 nights</b>a run, about forty minutes, saved every dawn</li>
+      <li><b>2,500</b>Blight alive at once on the hardest nights</li>
+      <li><b>6 lands</b>each with its own Blight, seasons and boss</li>
+      <li><b>No ads</b>no account, no network, one purchase</li>
+    </ul>
+  </div>
+
+  <section class="chapter" id="the-game" aria-labelledby="c1">
+    <div class="wrap split">
+      <div>
+        <span class="num">I · The rule</span>
+        <h2 id="c1">Light is land.</h2>
+        <p class="lede">You are the Wardlight, the flame at the heart of a village on the edge of an endless Mist. You can only build where your light reaches, and your towers only see lit ground.</p>
+        <p class="lede">A bigger light means a bigger village. A brighter village draws more of the Blight. Where you grow decides where they come.</p>
+      </div>
+      <figure class="bleed-r">
+        <div class="shot"><img src="/assets/img/light-1600.jpg" srcset="/assets/img/light-1000.jpg 1000w, /assets/img/light-1600.jpg 1600w, /assets/img/light-2600.jpg 2600w" sizes="(max-width: 860px) 100vw, 62vw" alt="A village by day inside the ring of its light, the land outside it dim" width="1600" height="564" loading="lazy" decoding="async"></div>
+        <figcaption>The edge of the light is the edge of what you may build on, and of what your towers can see.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap daynight">
+      <span class="num">II · The year</span>
+      <figure class="wide">
+        <div class="shot"><img src="/assets/img/seasons-1600.jpg" srcset="/assets/img/seasons-1000.jpg 1000w, /assets/img/seasons-1600.jpg 1600w, /assets/img/seasons-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="The same village through spring, summer, autumn and winter" width="1600" height="773" loading="lazy" decoding="async"></div>
+        <figcaption>Four seasons of three nights each. Every season has its own rule and two boons to choose from.</figcaption>
+      </figure>
+      <div class="pair">
+        <div class="d">
+          <h3>The day waits for you.</h3>
+          <p>Spend the village's supplies on houses, fields, walls and towers. Read where tonight's Blight will come from. Then call the night when you are ready, not a second before.</p>
+        </div>
+        <div class="n">
+          <h3>The night does not.</h3>
+          <p>The Blight come in surges. Your towers fight what the light shows them, and your light makes mana, which you spend on spells and mage towers wherever the wall is about to break.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section id="deutsch" lang="de">
-    <h2>Deutsch</h2>
-    <p>Wardlight ist ein Einzelspieler-Spiel für iPhone und iPad, ganz ohne Konto und ohne Internetverbindung.
-      Der Spielstand wird bei jeder Morgendämmerung auf deinem Gerät gespeichert.</p>
-    <p>Fehler gefunden oder eine Frage? Schreib über
-      <a href="https://github.com/draskovits/wardlight-site/issues/new">GitHub Issues</a>.</p>
-    <p><a href="datenschutz.html">Datenschutz</a></p>
+  <section class="horde" aria-labelledby="c3">
+    <div class="plate">
+      <img src="/assets/img/horde-1600.jpg" srcset="/assets/img/horde-1000.jpg 1000w, /assets/img/horde-1600.jpg 1600w, /assets/img/horde-2600.jpg 2600w" sizes="100vw" alt="A village at night in firelight, the Blight swarming through its walls" width="2600" height="850" loading="lazy" decoding="async">
+    </div>
+    <div class="wrap over">
+      <p class="big" id="c3">2,500<small>Blight alive at once</small></p>
+      <p>Each one is simulated on your phone, twenty times a second, and drawn by a renderer written for this game in Apple's Metal. Nothing runs on a server. Every crawler you see is walking toward your wall.</p>
+    </div>
   </section>
 
-  <footer>
-    Wardlight is an independent game by Stefan Draskovits, Vienna.
-    · <a href="datenschutz.html">Privacy</a>
-  </footer>
+  <section class="chapter" aria-labelledby="c4">
+    <div class="wrap split flip">
+      <div>
+        <span class="num">III · Growth</span>
+        <h2 id="c4">Every building has its own tree.</h2>
+        <p class="lede">Knowledge from the night buys talents on each building's tree. A house grows into a longhouse, a watchtower into a volley tower, and every tree ends in a keystone that changes how the building plays.</p>
+        <p class="lede">Each run is a new year with new spells to choose, and two trees kindled at half the price.</p>
+      </div>
+      <figure class="bleed-l">
+        <div class="shot"><img src="/assets/img/tree-1600.jpg" srcset="/assets/img/tree-1000.jpg 1000w, /assets/img/tree-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 58vw" alt="The ice tower's talent tree in Wardlight, with the Shatter talent open" width="1600" height="740" loading="lazy" decoding="async"></div>
+        <figcaption>Talents are bought with Knowledge, and only the night pays it out.</figcaption>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <figure class="wide attune-art">
+        <div class="shot"><img src="/assets/img/attune-1600.jpg" srcset="/assets/img/attune-1000.jpg 1000w, /assets/img/attune-1600.jpg 1600w, /assets/img/attune-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="One village in three colours: red fire for Ember, green rot for Verdant, golden lightning for Dawn" width="1600" height="797" loading="lazy" decoding="async"></div>
+      </figure>
+      <div class="attune" aria-label="The three Attunements">
+        <div class="ember">
+          <h3>Ember</h3>
+          <p>Every hit leaves fire behind it. Free for everyone.</p>
+        </div>
+        <div class="verdant">
+          <h3>Verdant</h3>
+          <p>Rot spreads from one Blight to the next, through the whole crowd.</p>
+        </div>
+        <div class="dawn">
+          <h3>Dawn</h3>
+          <p>Lightning leaps from one to the next and stuns where it lands.</p>
+        </div>
+      </div>
+      <p class="lede">At its fourth level the Wardlight takes an element. Every tower, spell and light in the village takes its colour for the rest of the year.</p>
+    </div>
+  </section>
+
+  <section class="chapter" id="lands" aria-labelledby="c5">
+    <div class="wrap">
+      <span class="num">IV · The lands</span>
+      <h2 id="c5">Six lands, one after another.</h2>
+      <p class="lede">Each land has its own ground, its own Blight and its own boss on the twelfth night. You open the next by holding the one before. When a land gets easy, raise the Darkness: every level adds a hardship and pays more Echoes.</p>
+      <figure class="wide bosses">
+        <div class="shot"><img src="/assets/img/bosses-1600.jpg" srcset="/assets/img/bosses-1000.jpg 1000w, /assets/img/bosses-1600.jpg 1600w, /assets/img/bosses-2600.jpg 2600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="Four bosses side by side: the Mother Below, the Drowned King, the Mountain's Fist and the Cinder Stag" width="1600" height="831" loading="lazy" decoding="async"></div>
+        <figcaption>Every land saves the worst for the twelfth night.</figcaption>
+      </figure>
+      <div class="lands">
+        <article class="land">
+          <h3>Witchwood</h3>
+          <p>The old wood and its lake. The water keeps the walkers out until winter turns it to ice.</p>
+          <p class="boss">Night 12: the Mother Below</p>
+        </article>
+        <article class="land">
+          <h3>Fenlands</h3>
+          <p>An island of fen soil in a deep mere, reached by a few fords. The water guards you until it freezes.</p>
+          <p class="boss">Night 12: the Drowned King</p>
+        </article>
+        <article class="land">
+          <h3>Highlands</h3>
+          <p>A shelf of high ground ringed by cliffs. You see them coming through the passes, and you feed the village from stone.</p>
+          <p class="boss">Night 12: the Mountain's Fist</p>
+        </article>
+        <article class="land">
+          <h3>Ashwood</h3>
+          <p>A burnt forest, open on every side and dark from the first night. Ember pits glow like lanterns, and fire is your friend.</p>
+          <p class="boss">Night 12: the Cinder Stag</p>
+        </article>
+        <article class="land">
+          <h3>Stonehold</h3>
+          <p>A court cut into the angle of two cliffs, the rock at your back. Everything comes at one wall, and ground is scarce.</p>
+          <p class="boss">Night 12: the Glass Bearer</p>
+        </article>
+        <article class="land">
+          <h3>Rosegarth</h3>
+          <p>Her garden. The Blight cannot pass a hedge, so the hedges choose the roads and you choose the gates. Seen from above, they draw her face.</p>
+          <p class="boss">Night 12: the Thornless</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" aria-labelledby="c6">
+    <div class="wrap">
+      <span class="num">V · The story</span>
+      <h2 id="c6">A dwarf who wants to retire, and an elf who wants the dark.</h2>
+      <div class="cast">
+        <div class="people">
+          <div class="person">
+            <img src="/assets/img/dwarf.png" alt="Portrait of the old dwarf lampwright" width="192" height="192" loading="lazy" decoding="async">
+            <div><h3>The lampwright</h3><p>An old dwarf who carries your ember from village to village and would much rather be fishing. Forty years of her war, thirty of her halls, and still not one fish.</p></div>
+          </div>
+          <div class="person">
+            <img src="/assets/img/vaelith.jpg" alt="Portrait of Lady Vaelith" width="192" height="192" loading="lazy" decoding="async">
+            <div><h3>Lady Vaelith</h3><p>She spreads the Mist so that no light can ever fall on the tiny scar on her cheek. She has something to say about every night you survive.</p></div>
+          </div>
+        </div>
+        <div>
+          <dl class="script">
+            <div class="v"><dt>Vaelith</dt><dd>Lampwright. There is a light on in my wood.</dd></div>
+            <div class="w"><dt>Lampwright</dt><dd>Evening, my lady. That'll be the Wardlight. It's new.</dd></div>
+            <div class="v"><dt>Vaelith</dt><dd>Put it out. It is on my bad side.</dd></div>
+            <div class="w"><dt>Lampwright</dt><dd>Everything's on your bad side lately, my lady. And I can't. I've retired, I only advise.</dd></div>
+          </dl>
+          <p class="script-note">From the game. The story is told in all thirteen of its languages; the German was written, not translated.</p>
+          <figure class="panel">
+            <div class="shot"><img src="/assets/img/vaelith-panel-1000.jpg" srcset="/assets/img/vaelith-panel-1000.jpg 1000w, /assets/img/vaelith-panel-1600.jpg 1600w" sizes="(max-width: 860px) 100vw, 640px" alt="Vaelith introduces a new Blight, the Spitter, with a remark and the towers that counter it" width="1000" height="463" loading="lazy" decoding="async"></div>
+            <figcaption>She introduces every new Blight herself, with a remark and the towers that answer it.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="price" aria-labelledby="c7">
+    <div class="wrap">
+      <span class="num">VI · What it costs</span>
+      <h2 id="c7">Free to play. One purchase. Nothing else.</h2>
+      <figure class="wide memory">
+        <div class="shot"><img src="/assets/img/memory-1600.jpg" srcset="/assets/img/memory-1000.jpg 1000w, /assets/img/memory-1600.jpg 1600w" sizes="(max-width: 1260px) 100vw, 1216px" alt="The Memory, a sky of stars bought with Echoes between runs" width="1600" height="740" loading="lazy" decoding="async"></div>
+        <figcaption>The Memory: lose the village, keep the lesson. Echoes from every run light stars that stay lit.</figcaption>
+      </figure>
+      <div class="price">
+        <div>
+          <h3>Free <span>€0</span></h3>
+          <ul>
+            <li>Whole runs, as many as you like</li>
+            <li>The Ember Attunement</li>
+            <li>The Memory, the upgrades between runs, for your first three runs</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Full Game <span>€4.99 once</span></h3>
+          <ul>
+            <li>The Verdant and Dawn Attunements</li>
+            <li>The Memory stays open, run after run</li>
+            <li>Shared with your family through Family Sharing</li>
+          </ul>
+          <p class="none">No ads, no energy, no timers, no account. Prices differ a little by country.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="questions" aria-labelledby="c8">
+    <div class="wrap">
+      <span class="num">VII · Questions</span>
+      <h2 id="c8">Asked so far</h2>
+      <div class="faq">
+        <details><summary>Does it need an internet connection or an account?</summary><div><p>No. Wardlight is a single-player game. It plays fully offline and has no account.</p></div></details>
+        <details><summary>How long is a run?</summary><div><p>Twelve nights, each with an untimed day before it: about forty minutes. The game saves at every dawn, so a run fits an evening or a few train rides.</p></div></details>
+        <details><summary>Which devices does it run on?</summary><div><p>iPhone and iPad with iOS or iPadOS 26 or later. It isn't on Android, PC or consoles.</p></div></details>
+        <details><summary>Is my run saved?</summary><div><p>Yes, at every dawn, on your device. If you close the game during a night, you continue from that night's dawn.</p></div></details>
+        <details><summary>Does the game collect data?</summary><div><p>Only anonymous play data: which lands are played, on which night runs end, which talents are picked. Nothing that tells me who you are. You can turn it off in Settings → Apps → Wardlight → Share play data. Details are in the <a href="/datenschutz.html">privacy policy</a>.</p></div></details>
+        <details><summary>I bought the full game on another device.</summary><div><p>Purchases go through the App Store. Open the ••• menu, then Full game, then Restore purchase, with the same Apple Account.</p></div></details>
+        <details><summary>I found a bug, or I have an idea.</summary><div><p>Write to <a href="mailto:hello@playwardlight.com">hello@playwardlight.com</a> or open an issue on <a href="https://github.com/draskovits/wardlight-site/issues/new">GitHub</a>. It helps to say which device you play on, which land and night you were on, and what happened.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter workshop" aria-labelledby="c9">
+    <div class="wrap">
+      <span class="num">VIII · From the workshop</span>
+      <h2 id="c9">How it gets made</h2>
+      <p class="lede">Notes from building Wardlight alone: the renderer, the balance, the words, and the mistakes.</p>
+      <!--LATEST-->
+      <p class="more"><a href="/blog/">All posts</a> · <a href="/blog/feed.xml">RSS</a></p>
+    </div>
+  </section>
+
+  <section class="dawnend" aria-labelledby="c10">
+    <div class="wrap">
+      <div class="closing">
+        <h2 id="c10">Hold until morning.</h2>
+        <p>Twelve nights. The dwarf has already chalked them on the slate.</p>
+        <a class="badge" href="https://apps.apple.com/app/id6826542922"><img src="/assets/brand/app-store-badge.svg" alt="Download on the App Store" width="144" height="48" loading="lazy"></a>
+      </div>
+      <footer class="foot">
+        <span>Wardlight is made by one person in Vienna. © 2026 Stefan Draskovits</span>
+        <nav aria-label="Footer">
+          <a href="/press/">Press kit</a>
+          <a href="/support.html">Support</a>
+          <a href="/datenschutz.html">Privacy</a>
+          <a href="/impressum.html">Impressum</a>
+          <a href="/blog/feed.xml">RSS</a>
+        </nav>
+      </footer>
+    </div>
+  </section>
 </main>
+
+<div class="clock" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="9"/><circle class="arc" cx="12" cy="12" r="9" stroke-dasharray="56.55" stroke-dashoffset="56.55"/></svg><span>Night 1</span></div>
+
+<script src="/assets/site.js" defer></script>
 </body>
 </html>

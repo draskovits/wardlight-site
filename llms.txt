@@ -1,0 +1,33 @@
+# Wardlight
+
+> Wardlight is a city builder and tower defence for iPhone and iPad by Stefan Draskovits, an independent developer in Vienna, Austria. You are the Wardlight, the flame at the heart of a village at the edge of an endless Mist: by day you build only where your light reaches, by night thousands of Blight crawl out of the Mist toward whatever burns brightest. Release date: 3 December 2026 (App Store). Free to play with one in-app purchase (Full Game, €4.99 / $4.99), no ads, no account, fully offline.
+
+## Facts
+
+- Platforms: iPhone and iPad, iOS and iPadOS 26 or later. Not on Android, PC or consoles.
+- Genre: city builder, tower defence, roguelite runs. Single player.
+- A run: twelve in-game nights, each with an untimed day before it, about forty minutes. The game saves at every dawn.
+- Scale: up to 2,500 Blight alive at once, simulated on the device twenty times a second and drawn by a custom Metal renderer.
+- Six lands, unlocked one after another by holding the one before: Witchwood, Fenlands, Highlands, Ashwood, Stonehold, Rosegarth. Each has its own Blight, seasons and a boss on night twelve.
+- Every building has its own talent tree, bought with Knowledge earned at night; each tree ends in a keystone.
+- At its fourth level the Wardlight takes an Attunement: Ember (fire, free), Verdant (spreading rot) or Dawn (chain lightning that stuns). Verdant and Dawn come with the Full Game purchase.
+- Between runs, the Memory keeps upgrades; it stays open after the third run with the Full Game purchase.
+- Difficulty: a Darkness ladder per land adds hardships and pays more Echoes.
+- Story: an old dwarf lampwright who would rather be retired, against Lady Vaelith, who spreads the Mist so no light falls on the scar on her cheek.
+- Languages: English, German, French, Spanish, Italian, Portuguese (Brazil), Japanese, Korean, Chinese (Simplified and Traditional), Russian, Turkish, Dutch.
+- Privacy: anonymous play data only (TelemetryDeck), can be turned off in Settings → Apps → Wardlight.
+- Age rating: 9+.
+
+## Links
+
+- [Website](https://playwardlight.com/): the game, the lands, prices and questions
+- [App Store](https://apps.apple.com/app/id6826542922)
+- [Press kit](https://playwardlight.com/press/): facts, descriptions, screenshots, logos
+- [Support](https://playwardlight.com/support.html)
+- [Privacy policy](https://playwardlight.com/datenschutz.html)
+- [Blog](https://playwardlight.com/blog/): how the game is made
+- [All blog posts as plain text](https://playwardlight.com/llms-full.txt)
+
+## Blog posts
+
+{{posts}}
