@@ -126,17 +126,17 @@ p { margin: 0; text-wrap: pretty; }
 
 figure { margin: 0; }
 figcaption { font: italic .9rem/1.45 var(--serif); color: var(--dim); margin-top: .7rem; max-width: 38rem; }
-.shot { border-radius: 6px; overflow: hidden; background: var(--night-2); box-shadow: 0 1px 0 var(--rule-2) inset, 0 40px 90px -30px rgba(0,0,0,.9); }
+.shot { border-radius: 6px; overflow: hidden; box-shadow: 0 40px 90px -30px rgba(0,0,0,.9); }
 .shot img, .shot video { width: 100%; }
 
 /* light is land: text with an offset plate that runs off the right edge */
 .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 .split.flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
 .split.flip > :first-child { order: 2; }
-.bleed-r { margin-right: calc(-1 * (var(--gutter) + max(0px, (100vw - 76rem) / 2))); }
-.bleed-r .shot { border-radius: 6px 0 0 6px; }
-.bleed-l { margin-left: calc(-1 * (var(--gutter) + max(0px, (100vw - 76rem) / 2))); }
-.bleed-l .shot { border-radius: 0 6px 6px 0; }
+.bleed-r { margin-right: calc(-1 * min(var(--gutter) + max(0px, (100vw - 76rem) / 2), 8rem)); }
+.bleed-r .shot { border-radius: 6px; }
+.bleed-l { margin-left: calc(-1 * min(var(--gutter) + max(0px, (100vw - 76rem) / 2), 8rem)); }
+.bleed-l .shot { border-radius: 6px; }
 @media (max-width: 860px) {
   .split, .split.flip { grid-template-columns: 1fr; }
   .split.flip > :first-child { order: 0; }
@@ -173,15 +173,15 @@ figcaption { font: italic .9rem/1.45 var(--serif); color: var(--dim); margin-top
 /* the horde: a number that means something */
 .horde { position: relative; margin-top: clamp(4.5rem, 11vw, 9rem); }
 .horde .plate { position: relative; }
-.horde .plate img, .horde .plate video { width: 100%; height: min(78svh, 46rem); object-fit: cover; object-position: 40% 50%; }
-.horde .plate::after { content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, var(--night) 0%, rgba(7,8,12,0) 18%, rgba(7,8,12,0) 55%, var(--night) 100%); }
-.horde .over { position: relative; margin-top: -14rem; z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem 3rem; align-items: end; }
+.horde .plate img, .horde .plate video { width: 100%; height: auto; }
+.horde .plate img { -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 62%, transparent 100%); }
+.horde .over { position: relative; margin-top: clamp(-9rem, -9vw, -3rem); z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem 3rem; align-items: end; }
 .horde .big { font: 300 clamp(5rem, 17vw, 13rem)/.82 var(--serif); color: var(--ink); letter-spacing: -.04em;
   font-variant-numeric: lining-nums tabular-nums; }
 .horde .big small { display: block; font: 500 .8rem/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--blight); margin-top: 1.1rem; }
 .horde p { color: var(--ink-2); max-width: 30rem; padding-bottom: .6rem; }
-@media (max-width: 760px) { .horde .over { grid-template-columns: 1fr; margin-top: -7rem; } }
+@media (max-width: 760px) { .horde .over { grid-template-columns: 1fr; margin-top: 1.5rem; } }
 
 /* trees and the attunement */
 .attune { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(2.5rem, 5vw, 3.5rem); border-top: 1px solid var(--rule); }
@@ -237,7 +237,7 @@ figcaption { font: italic .9rem/1.45 var(--serif); color: var(--dim); margin-top
 /* the price */
 .price { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: clamp(2.5rem, 5vw, 3.5rem); border: 1px solid var(--rule-2); border-radius: 6px; overflow: hidden; }
 .price > div { padding: clamp(1.4rem, 3.5vw, 2.4rem); }
-.price > div + div { border-left: 1px solid var(--rule-2); background: radial-gradient(30rem 16rem at 100% 0%, rgba(242, 182, 90, .1), transparent 70%); }
+.price > div + div { border-left: 1px solid var(--rule-2); }
 .price h3 { font-size: 1.5rem; display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
 .price h3 span { font: 500 .95rem/1 var(--mono); color: var(--lantern-hot); }
 .price ul { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: .55rem; color: var(--ink-2); }
@@ -365,5 +365,4 @@ figure.wide .shot { border-radius: 6px; }
 .panel { margin-top: 2rem; }
 .panel .shot { border-radius: 10px; }
 @media (max-width: 620px) { figure.wide { margin-left: calc(var(--gutter) * -1); margin-right: calc(var(--gutter) * -1); } figure.wide .shot { border-radius: 0; } figure.wide figcaption { padding: 0 var(--gutter); } .lands .land { flex-basis: 78%; } }
-.bleed-r .shot img, .bleed-l .shot img { aspect-ratio: 3 / 2; object-fit: cover; object-position: 38% 50%; }
-@media (max-width: 860px) { .bleed-r .shot img, .bleed-l .shot img { aspect-ratio: 16 / 10; } }
+@media (max-width: 760px) { .horde .plate img { height: 68vw; object-fit: cover; object-position: 30% 50%; } }
