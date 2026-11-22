@@ -49,7 +49,7 @@ export const de: HomeText = {
     sheet: {
       h3: "Vier Jahreszeiten, zwölf Nächte.",
       lead: "Drei Nächte pro Jahreszeit, und jede Jahreszeit ändert die Regeln des Kampfs. In der zwölften Nacht kommt der Boss des Landes.",
-      boonsLabel: "Die Karte",
+      boonsLabel: "Die Wahl",
       rows: [
         { key: "spring", name: "Frühling", nights: "Nächte 1–3", alt: "Das Dorf im Frühling", rules: ["Das Licht reicht weniger weit", "Die Fäule watet durch Schlamm"] },
         { key: "summer", name: "Sommer", nights: "Nächte 4–6", alt: "Das Dorf im Sommer", rules: ["Feuer brennen länger", "Mehr Fäule kommt"] },
