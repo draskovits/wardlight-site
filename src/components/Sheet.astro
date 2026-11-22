@@ -9,7 +9,7 @@ const many = pages.length > 1;
 ---
 <dialog class="sheet" id={id} aria-label={label} data-sheet>
   <div class="scrim" data-close aria-hidden="true"></div>
-  <div class="panel">
+  <div class={many ? "panel" : "panel single"}>
     <div class="sheet-top">
       <span class="grip" aria-hidden="true"></span>
       {many ? (

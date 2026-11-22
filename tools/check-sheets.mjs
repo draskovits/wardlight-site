@@ -102,12 +102,30 @@ for (const path of PATHS) for (const [width, height] of SIZES) {
     s = await state();
     if (!s || Math.abs(s.dy) > 1) bad(where, `${label}: a short pull did not spring back (${s ? s.dy.toFixed(1) : "closed"})`);
 
-    if (label === "seasons") {
+    // the bar floats over the content (the hero starts under it), and the last line clears Safari's toolbar
+    const look = await page.evaluate(() => {
+      const d = document.querySelector("dialog[open][data-sheet]"), v = window.__sheets.get(d.id), leaf = v.current();
+      const bar = d.querySelector(".sheet-top").getBoundingClientRect(), first = leaf.firstElementChild.getBoundingClientRect();
+      const blur = getComputedStyle(d.querySelector(".sheet-top")).backdropFilter;
+      leaf.scrollTop = 1e6;
+      const ins = [...leaf.querySelectorAll(".page-in")].pop();
+      const last = ins.lastElementChild.getBoundingClientRect();
+      const out = { under: first.top < bar.bottom - 10, blur, room: innerHeight - last.bottom, pages: v.pages.length, sw: v.pager.scrollWidth - v.pager.clientWidth };
+      leaf.scrollTop = 0;
+      return out;
+    });
+    if (!look.under) bad(where, `${label}: content starts below the bar, not under it`);
+    if (!look.blur || look.blur === "none") bad(where, `${label}: the bar does not blur`);
+    if (look.room < 80) bad(where, `${label}: the last line ends ${Math.round(look.room)} px above the screen's bottom (needs ≥ 80 for Safari's toolbar)`);
+    if ((label === "seasons" || label === "growth") && (look.pages !== 1 || look.sw > 1)) bad(where, `${label}: pages sideways (${look.pages} pages)`);
+    if (label === "lands") {
       // swipe sideways → next page, natively
       await drag(width * 0.85, mid, width * 0.15, mid, 10);
       await wait(900);
       s = await state();
-      if (!s || s.index !== 1 || Math.abs(s.pagerLeft - s.pagerW) > 2) bad(where, `swipe did not land on page 2 (index ${s?.index}, left ${s?.pagerLeft})`);
+      if (!s || s.index !== 2 || Math.abs(s.pagerLeft - 2 * s.pagerW) > 2) bad(where, `swipe did not land on the next land (index ${s?.index}, left ${s?.pagerLeft})`);
+    }
+    if (label === "seasons") {
       // scrolled down, a downward drag scrolls the content back, it does not move the panel
       await page.evaluate(() => { const d = document.querySelector("dialog[open][data-sheet]"); const c = window.__sheets.get(d.id).current(); c.style.paddingBottom = "900px"; c.scrollTop = 300; });
       await drag(width / 2, mid - 100, width / 2, mid + 20, 10, true);

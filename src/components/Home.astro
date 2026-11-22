@@ -25,6 +25,7 @@ const growth = {
   memorySky: "/assets/growth/memory-sky.webp",
   memoryCore: "/assets/growth/memory-core.webp",
   memoryPan: pick("/assets/growth/memory-pan.mp4"),
+  memoryPanPoster: pick("/assets/growth/memory-pan.webp"),
 };
 const attune = (k: string) => ({
   hero: pick(`/assets/attune/${k}-hero.webp`),
@@ -194,30 +195,32 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
     </div>
   </section>
 
-  <Sheet id="sheet-year" label={t.seasons.sheet.h3} close={t.ui.close} pages={[...t.seasons.sheet.rows.map((r) => r.name), t.seasons.sheet.boonsLabel]}>
-    {t.seasons.sheet.rows.map((r, i) => (
-      <section class="leaf" aria-label={r.name}>
-        <figure class="page-hero">
-          <img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
-            sizes="(max-width: 1100px) 100vw, 1100px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async">
-        </figure>
-        <div class="page-in">
-          {i === 0 && <h3 class="sheet-title">{t.seasons.sheet.h3}</h3>}
-          {i === 0 && <p class="lead">{t.seasons.sheet.lead}</p>}
-          <h4 class="page-name">{r.name}</h4>
-          <p class="when">{r.nights}</p>
-          <ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul>
-        </div>
-      </section>
-    ))}
-    <section class="leaf" aria-label={t.seasons.sheet.boonsLabel}>
-      <figure class="page-hero contain">
-        <img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" loading="lazy" decoding="async">
+  <Sheet id="sheet-year" label={t.seasons.sheet.h3} close={t.ui.close}>
+    <section class="leaf">
+      <figure class="page-hero">
+        <img src={shot("season-spring", 1100)} srcset={`${shot("season-spring", 1100)} 1100w, ${shot("season-spring", 2000)} 2000w`}
+          sizes="(max-width: 1100px) 100vw, 1100px" alt={t.seasons.sheet.rows[0].alt} width="1100" height="506" loading="lazy" decoding="async">
       </figure>
       <div class="page-in">
-        <h4 class="page-name">{t.seasons.sheet.boons.h4}</h4>
-        <p class="lead">{t.seasons.sheet.boons.p}</p>
-        <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b><span>{x.t}</span></li>)}</ul>
+        <h3 class="sheet-title">{t.seasons.sheet.h3}</h3>
+        <p class="lead">{t.seasons.sheet.lead}</p>
+        {t.seasons.sheet.rows.map((r, i) => (
+          <div class="season">
+            {i > 0 && <figure class="shot"><img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
+              sizes="(max-width: 1000px) 100vw, 520px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async"></figure>}
+            <div>
+              <h4 class="page-name">{r.name}</h4>
+              <p class="when">{r.nights}</p>
+              <ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul>
+            </div>
+          </div>
+        ))}
+        <div class="boons-block">
+          <h4 class="page-name">{t.seasons.sheet.boons.h4}</h4>
+          <p class="lead">{t.seasons.sheet.boons.p}</p>
+          <figure class="shot"><img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+          <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b><span>{x.t}</span></li>)}</ul>
+        </div>
       </div>
     </section>
   </Sheet>
@@ -232,23 +235,26 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
       <figure class="big deep reveal">
         <img src={growth.treeWide} alt={t.growth.alt} width="1400" height="1110" loading="lazy" decoding="async">
       </figure>
+      {growth.memoryPan && (
+        <figure class="big pan reveal">
+          <video src={growth.memoryPan} data-poster={growth.memoryPanPoster ?? growth.memorySky} width="1600" height="890" muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
+        </figure>
+      )}
       <div class="more-row reveal"><Crystal open="sheet-tree" label={t.growth.more} /></div>
     </div>
   </section>
 
-  <Sheet id="sheet-tree" label={t.growth.sheet.h3} close={t.ui.close} pages={[t.growth.sheet.treeLabel, t.growth.sheet.memoryLabel]}>
-    <section class="leaf" aria-label={t.growth.sheet.treeLabel}>
+  <Sheet id="sheet-tree" label={t.growth.sheet.h3} close={t.ui.close}>
+    <section class="leaf">
       <figure class="page-hero deep tall"><img src={growth.treeWide} alt={t.growth.sheet.treeAlt} width="1400" height="1110" loading="lazy" decoding="async"></figure>
       <div class="page-in">
         <h3 class="sheet-title">{t.growth.sheet.h3}</h3>
         <div class="facts3">{t.growth.sheet.items.map((f) => <div><b>{f.b}</b>{f.t}</div>)}</div>
         <figure class="close-up deep"><img src={growth.treeClose} alt={t.growth.sheet.treeCloseAlt} width="760" height="520" loading="lazy" decoding="async"></figure>
       </div>
-    </section>
-    <section class="leaf" aria-label={t.growth.sheet.memoryLabel}>
-      <figure class="page-hero deep tall">
+      <figure class="page-hero bleed deep tall">
         {growth.memoryPan
-          ? <video src={growth.memoryPan} data-poster={growth.memorySky} muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
+          ? <video src={growth.memoryPan} data-poster={growth.memoryPanPoster ?? growth.memorySky} muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
           : <img src={growth.memorySky} alt={t.growth.sheet.memoryAlt} width="1800" height="1050" loading="lazy" decoding="async">}
       </figure>
       <div class="page-in">
