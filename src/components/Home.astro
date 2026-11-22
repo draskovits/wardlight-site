@@ -358,13 +358,13 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
       <div class="teasers strip-x reveal-kids">
         {t.lands.list.slice(0, 3).map((l, i) => (
           <button class="land-tease" type="button" data-open="sheet-land" data-page={i} aria-haspopup="dialog">
-            <span class="ph"><img src={`/assets/lands/${l.id}/landscape-1100.webp`} alt="" width="1100" height="506" loading="lazy" decoding="async"></span>
+            <span class="ph"><img src={`/assets/lands/${l.id}/tease.webp`} alt="" width="900" height="675" loading="lazy" decoding="async"></span>
             <span class="txt"><b>{l.name}</b><span>{l.tease}</span></span>
           </button>
         ))}
         <button class="land-tease all" type="button" data-open="sheet-land" data-page="0" aria-haspopup="dialog">
           <span class="stack" aria-hidden="true">
-            {t.lands.list.slice(3).map((l) => <img src={`/assets/lands/${l.id}/landscape-1100.webp`} alt="" width="1100" height="506" loading="lazy" decoding="async">)}
+            {t.lands.list.slice(3).map((l) => <img src={`/assets/lands/${l.id}/tease.webp`} alt="" width="900" height="675" loading="lazy" decoding="async">)}
           </span>
           <span class="gem" aria-hidden="true"><img src="/assets/brand/wardlight-crystal.svg" alt="" width="14" height="23"></span>
           <span class="lbl">{t.lands.all}</span>
