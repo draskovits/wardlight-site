@@ -362,29 +362,30 @@ dialog.sheet[open] { display: block; }
 .leaf > :last-child { padding-bottom: calc(4rem + env(safe-area-inset-bottom) + 72px + (100lvh - 100dvh)); }
 .leaf { scroll-padding-top: var(--bar-h); }
 .leaf > :first-child:not(.page-hero) { padding-top: calc(var(--bar-h) + 1rem); }
-.page-hero { position: relative; margin: 0; overflow: hidden; background: #000;
-  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%); mask-image: linear-gradient(180deg, #000 62%, transparent 100%); }
-.page-hero img, .page-hero video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
-.page-hero.tall img, .page-hero.tall video { aspect-ratio: 4 / 3; }
-.page-hero.contain { background: none; -webkit-mask-image: none; mask-image: none; padding: .4rem var(--gutter) 0; }
-.page-hero.contain img { aspect-ratio: auto; object-fit: contain; border-radius: 14px; max-width: 900px; margin: 0 auto; }
-@media (min-width: 760px) { .page-hero img, .page-hero video { aspect-ratio: 21 / 9; } .page-hero.tall img, .page-hero.tall video { aspect-ratio: 2 / 1; } }
-/* short screens (a phone on its side): a lower hero so the title is in view */
-@media (max-height: 500px) { .page-hero img, .page-hero video, .page-hero.tall img, .page-hero.tall video { aspect-ratio: 3 / 1; } }
-.page-hero + .page-in { margin-top: -2.6rem; position: relative; }
-.page-hero.contain + .page-in { margin-top: 0; }
-.page-hero.bleed { margin-top: 3.5rem; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 62%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 62%, transparent 100%); }
-.season { margin-top: 2.4rem; }
-.season .shot { margin-bottom: 1rem; }
-.shot img { border-radius: 14px; aspect-ratio: 16 / 9; object-fit: cover; box-shadow: 0 30px 80px -30px rgba(0,0,0,.95), inset 0 0 0 1px var(--rule); }
-.season:has(.shot) .page-name { margin-top: 0; }
-@media (min-width: 760px) {
-  .season:has(.shot) { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr); gap: 1.6rem; align-items: center; }
-  .season .shot { margin-bottom: 0; }
-}
-.boons-block { margin-top: 3.4rem; padding-top: 2.4rem; border-top: 1px solid rgba(242,182,90,.18); }
+/* pictures in the detail views: edge to edge of the panel, big. The first one (the hero) fills most of a phone's
+   height and runs up under the frosted bar; the others are at least 4:3 on a phone, 16:9 wide; text sits between. */
+.page-hero, .leaf .full { position: relative; margin: 0; overflow: hidden; background: #000; }
+.page-hero img, .page-hero video { display: block; width: 100%; height: clamp(300px, 68svh, 760px); object-fit: cover; }
+.page-hero { -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 70%, transparent 100%); }
+@media (min-width: 760px) { .page-hero img, .page-hero video { height: clamp(360px, 62svh, 640px); } }
+@media (max-height: 500px) { .page-hero img, .page-hero video { height: 56svh; min-height: 0; } }
+.page-hero + .page-in { margin-top: -3rem; position: relative; }
+.leaf .full { margin-top: 2rem; }
+.leaf .full img, .leaf .full video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.leaf .full.tallish img, .leaf .full.tallish video { aspect-ratio: 4 / 5; }
+.leaf .full.native img { aspect-ratio: auto; object-fit: contain; }
+@media (min-width: 760px) { .leaf .full img, .leaf .full video { aspect-ratio: 16 / 9; } .leaf .full.tallish img, .leaf .full.tallish video { aspect-ratio: 4 / 3; } }
+.leaf .full + .full { margin-top: 4px; }
+.leaf .full + .page-in { padding-top: 1.4rem; }
+.leaf .full.portrait { background: none; overflow: visible; }
+.leaf .full.portrait img { aspect-ratio: 4 / 5; }
+.leaf .full.portrait figcaption { padding: 0 var(--gutter); margin-top: 1rem; }
+.duo { display: grid; gap: 1.6rem; margin-top: 2rem; }
+.duo .full { margin-top: 0; }
+@media (min-width: 900px) { .duo { grid-template-columns: 1fr 1fr; gap: 4px; } .duo .full.portrait figcaption { padding-right: 1.2rem; } }
+.boons-block { margin-top: 3rem; border-top: 1px solid rgba(242,182,90,.18); padding-top: 2.2rem !important; }
 .boons-block .page-name { margin-top: 0; }
-.boons-block .shot { margin-top: 1.4rem; }
+.leaf > .full:last-child { background: transparent; }
 
 .sheet-title { font-size: clamp(2.1rem, 6vw, 3.6rem); text-shadow: 0 2px 30px rgba(0,0,0,.9); }
 .page-name { font: 600 clamp(1.7rem, 4.6vw, 2.4rem)/1.1 var(--serif); margin-top: 1.4rem; }
@@ -405,9 +406,6 @@ dialog.sheet[open] { display: block; }
 .boon-list b { display: block; font: 600 1.05rem/1.25 var(--serif); color: var(--ink); }
 .facts3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; margin-top: 1.4rem; color: var(--ink-2); font-size: .98rem; }
 .facts3 b { display: block; font: 600 1.3rem/1.2 var(--serif); color: var(--ink); margin-bottom: .3rem; }
-.close-up, .sheet .clip { margin-top: 1.8rem; border-radius: 16px; overflow: hidden; background: #000; box-shadow: 0 30px 80px -30px rgba(0,0,0,.95), inset 0 0 0 1px var(--rule); }
-.close-up img { aspect-ratio: 3 / 2; object-fit: cover; }
-.sheet .clip img, .sheet .clip video { aspect-ratio: 16 / 9; object-fit: cover; }
 .leaf.el { --el: var(--lantern); } .leaf.el.ember { --el: var(--ember); } .leaf.el.verdant { --el: var(--verdant); } .leaf.el.dawn { --el: var(--dawn); }
 .leaf.el .sheet-title, .leaf.el .when { color: var(--el); }
 .spell { margin-top: 1.8rem; padding: 1rem 1.2rem; border-left: 2px solid var(--el); border-radius: 0 12px 12px 0;
@@ -415,14 +413,10 @@ dialog.sheet[open] { display: block; }
 .spell .spell-kick { color: var(--el); }
 .spell h4 { font: 600 1.6rem/1.15 var(--serif); }
 .spell p { color: var(--ink-2); margin-top: .3rem; }
-.spell + .clip { margin-top: 1rem; }
-.leaf.land .pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(.8rem, 2vw, 1.2rem); margin-top: 1.8rem; }
-.leaf.land .pair img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: 14px; }
 .leaf.land .blight { margin-top: 1.6rem; padding: 1rem 1.2rem; border-radius: 14px; background: rgba(155,123,208,.1); border: 1px solid rgba(155,123,208,.25); color: var(--ink-2); }
 .leaf.land .blight i { display: block; font: 500 .7rem/1.4 var(--mono); font-style: normal; letter-spacing: .1em; text-transform: uppercase; color: var(--blight-soft); margin-bottom: .3rem; }
 @media (max-width: 700px) {
   .facts3 { grid-template-columns: 1fr; }
-  .leaf.land .pair figcaption { font-size: .88rem; } .leaf.land .pair figcaption b { font-size: 1.05rem; }
 }
 
 /* captures of the menus drift slowly, so a still screen reads as a place */

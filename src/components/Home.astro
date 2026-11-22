@@ -197,30 +197,28 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
 
   <Sheet id="sheet-year" label={t.seasons.sheet.h3} close={t.ui.close}>
     <section class="leaf">
-      <figure class="page-hero">
-        <img src={shot("season-spring", 1100)} srcset={`${shot("season-spring", 1100)} 1100w, ${shot("season-spring", 2000)} 2000w`}
-          sizes="(max-width: 1100px) 100vw, 1100px" alt={t.seasons.sheet.rows[0].alt} width="1100" height="506" loading="lazy" decoding="async">
-      </figure>
-      <div class="page-in">
-        <h3 class="sheet-title">{t.seasons.sheet.h3}</h3>
-        <p class="lead">{t.seasons.sheet.lead}</p>
-        {t.seasons.sheet.rows.map((r, i) => (
-          <div class="season">
-            {i > 0 && <figure class="shot"><img src={shot(`season-${r.key}`, 1100)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
-              sizes="(max-width: 1000px) 100vw, 520px" alt={r.alt} width="1100" height="506" loading="lazy" decoding="async"></figure>}
-            <div>
-              <h4 class="page-name">{r.name}</h4>
-              <p class="when">{r.nights}</p>
-              <ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul>
-            </div>
+      {t.seasons.sheet.rows.map((r, i) => (
+        <Fragment>
+          <figure class={i === 0 ? "page-hero" : "full"}>
+            <img src={shot(`season-${r.key}`, 2000)} srcset={`${shot(`season-${r.key}`, 1100)} 1100w, ${shot(`season-${r.key}`, 2000)} 2000w`}
+              sizes="(max-width: 1120px) 100vw, 1120px" alt={r.alt} width="2000" height="920" loading="lazy" decoding="async">
+          </figure>
+          <div class="page-in">
+            {i === 0 && <h3 class="sheet-title">{t.seasons.sheet.h3}</h3>}
+            {i === 0 && <p class="lead">{t.seasons.sheet.lead}</p>}
+            <h4 class="page-name">{r.name}</h4>
+            <p class="when">{r.nights}</p>
+            <ul class="rules">{r.rules.map((x) => <li>{x}</li>)}</ul>
           </div>
-        ))}
-        <div class="boons-block">
-          <h4 class="page-name">{t.seasons.sheet.boons.h4}</h4>
-          <p class="lead">{t.seasons.sheet.boons.p}</p>
-          <figure class="shot"><img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" loading="lazy" decoding="async"></figure>
-          <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b><span>{x.t}</span></li>)}</ul>
-        </div>
+        </Fragment>
+      ))}
+      <div class="page-in boons-block">
+        <h4 class="page-name">{t.seasons.sheet.boons.h4}</h4>
+        <p class="lead">{t.seasons.sheet.boons.p}</p>
+      </div>
+      <figure class="full native"><img src="/assets/ui/season-boons.webp" alt={t.seasons.sheet.boons.alt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+      <div class="page-in">
+        <ul class="boon-list">{t.seasons.sheet.boons.list.map((x) => <li><b>{x.b}</b><span>{x.t}</span></li>)}</ul>
       </div>
     </section>
   </Sheet>
@@ -246,22 +244,22 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
 
   <Sheet id="sheet-tree" label={t.growth.sheet.h3} close={t.ui.close}>
     <section class="leaf">
-      <figure class="page-hero deep tall"><img src={growth.treeWide} alt={t.growth.sheet.treeAlt} width="2400" height="1041" loading="lazy" decoding="async"></figure>
+      <figure class="page-hero deep"><img src={growth.treeWide} alt={t.growth.sheet.treeAlt} width="2400" height="1041" loading="lazy" decoding="async"></figure>
       <div class="page-in">
         <h3 class="sheet-title">{t.growth.sheet.h3}</h3>
         <div class="facts3">{t.growth.sheet.items.map((f) => <div><b>{f.b}</b>{f.t}</div>)}</div>
-        <figure class="close-up deep"><img src={growth.treeClose} alt={t.growth.sheet.treeCloseAlt} width="760" height="520" loading="lazy" decoding="async"></figure>
       </div>
-      <figure class="page-hero bleed deep tall">
+      <figure class="full deep"><img src={growth.treeClose} alt={t.growth.sheet.treeCloseAlt} width="1600" height="737" loading="lazy" decoding="async"></figure>
+      <figure class="full tallish deep">
         {growth.memoryPan
-          ? <video src={growth.memoryPan} data-poster={growth.memoryPanPoster ?? growth.memorySky} muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
-          : <img src={growth.memorySky} alt={t.growth.sheet.memoryAlt} width="1800" height="1050" loading="lazy" decoding="async">}
+          ? <video src={growth.memoryPan} data-poster={growth.memoryPanPoster ?? growth.memorySky} width="1600" height="890" muted loop playsinline preload="none" aria-label={t.growth.sheet.memoryAlt} data-loop></video>
+          : <img src={growth.memorySky} alt={t.growth.sheet.memoryAlt} width="1500" height="1110" loading="lazy" decoding="async">}
       </figure>
       <div class="page-in">
         <h3 class="sheet-title">{t.growth.sheet.memory.b}</h3>
         <p class="lead">{t.growth.sheet.memory.t}</p>
-        <figure class="close-up deep"><img src={growth.memoryCore} alt={t.growth.sheet.memoryCloseAlt} width="1120" height="845" loading="lazy" decoding="async"></figure>
       </div>
+      <figure class="full deep"><img src={growth.memoryCore} alt={t.growth.sheet.memoryCloseAlt} width="1600" height="890" loading="lazy" decoding="async"></figure>
     </section>
   </Sheet>
 
@@ -287,30 +285,36 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
   <Sheet id="sheet-element" label={t.elements.sheet.h3} close={t.ui.close} pages={t.elements.sheet.items.map((x) => x.b)}>
     {t.elements.sheet.items.map((x) => {
       const a = attune(x.key);
+      const label = t.elements.tiles.find((y) => y.key === x.key)?.label;
       return (
         <section class={`leaf el ${x.key}`} aria-label={x.b}>
           <figure class="page-hero">
-            <video src={`/assets/loops/attune-${x.key}.mp4`} data-poster={`/assets/loops/attune-${x.key}.webp`} width="1600" height="736" muted loop playsinline preload="none" aria-label={t.elements.tiles.find((y) => y.key === x.key)?.label} data-loop></video>
+            <video src={`/assets/loops/attune-${x.key}.mp4`} data-poster={`/assets/loops/attune-${x.key}.webp`} width="1600" height="736" muted loop playsinline preload="none" aria-label={label} data-loop></video>
           </figure>
           <div class="page-in">
             <h3 class="sheet-title">{x.b}</h3>
             <p class="when">{x.i}</p>
             <p class="lead">{x.t}</p>
-            {a.hero && <figure class="clip"><img src={a.hero} alt={t.elements.tiles.find((y) => y.key === x.key)?.label} width="2000" height="920" loading="lazy" decoding="async"></figure>}
-            {a.towers && <figure class="clip"><video src={a.towers} data-poster={a.towersPoster} muted loop playsinline preload="none" aria-label={x.i} data-loop></video></figure>}
+          </div>
+          <figure class="full">
+            {a.towers
+              ? <video src={a.towers} data-poster={a.towersPoster} width="1600" height="736" muted loop playsinline preload="none" aria-label={x.i} data-loop></video>
+              : <img src={shot(`attune-${x.key}-fight`, 2000)} srcset={`${shot(`attune-${x.key}-fight`, 1100)} 1100w, ${shot(`attune-${x.key}-fight`, 2000)} 2000w`} sizes="(max-width: 1120px) 100vw, 1120px" alt={label} width="2000" height="920" loading="lazy" decoding="async">}
+          </figure>
+          <div class="page-in">
             <div class="spell">
               <span class="spell-kick">{t.elements.sheet.spellKick}</span>
               <h4>{x.spell}</h4>
               <p>{x.spellText}</p>
             </div>
-            <figure class="clip">
-              {a.spell
-                ? <video src={a.spell} data-poster={a.spellPoster} muted loop playsinline preload="none" aria-label={`${x.spell}: ${x.spellText}`} data-loop></video>
-                : <img src={shot(`attune-${x.key}-wave`, 1100)} srcset={`${shot(`attune-${x.key}-wave`, 1100)} 1100w, ${shot(`attune-${x.key}-wave`, 2000)} 2000w`} sizes="(max-width: 1000px) 100vw, 960px" alt={`${x.spell}: ${x.spellText}`} width="1100" height="506" loading="lazy" decoding="async">}
-            </figure>
-            {!a.towers && <figure class="clip"><img src={shot(`attune-${x.key}-fight`, 1100)} srcset={`${shot(`attune-${x.key}-fight`, 1100)} 1100w, ${shot(`attune-${x.key}-fight`, 2000)} 2000w`} sizes="(max-width: 1000px) 100vw, 960px" alt={t.elements.tiles.find((y) => y.key === x.key)?.label} width="1100" height="506" loading="lazy" decoding="async"></figure>}
-            <p class="note">{t.elements.sheet.lead}</p>
           </div>
+          <figure class="full">
+            {a.spell
+              ? <video src={a.spell} data-poster={a.spellPoster} width="1600" height="736" muted loop playsinline preload="none" aria-label={`${x.spell}: ${x.spellText}`} data-loop></video>
+              : <img src={shot(`attune-${x.key}-wave`, 2000)} srcset={`${shot(`attune-${x.key}-wave`, 1100)} 1100w, ${shot(`attune-${x.key}-wave`, 2000)} 2000w`} sizes="(max-width: 1120px) 100vw, 1120px" alt={`${x.spell}: ${x.spellText}`} width="2000" height="920" loading="lazy" decoding="async">}
+          </figure>
+          {a.hero && <figure class="full"><img src={a.hero} alt={label} width="2000" height="920" loading="lazy" decoding="async"></figure>}
+          <div class="page-in"><p class="note">{t.elements.sheet.lead}</p></div>
         </section>
       );
     })}
@@ -374,19 +378,19 @@ const alternates: [string, string][] = [["en", "/"], ["de", "/de/"], ["x-default
   <Sheet id="sheet-land" label={t.lands.sheetLabel} pathLabel={t.lands.pathLabel} close={t.ui.close} pages={t.lands.list.map((l) => l.name)}>
     {t.lands.list.map((l) => (
       <section class="leaf land" aria-label={l.name}>
-        <figure class="page-hero land-hero">
+        <figure class="page-hero">
           <img src={`/assets/lands/${l.id}/landscape-2000.webp`} srcset={`/assets/lands/${l.id}/landscape-1100.webp 1100w, /assets/lands/${l.id}/landscape-2000.webp 2000w`}
-            sizes="(max-width: 1100px) 100vw, 1100px" alt={`${l.name} ${t.lands.dayAlt}`} width="2000" height="920" loading="lazy" decoding="async">
+            sizes="(max-width: 1120px) 100vw, 1120px" alt={`${l.name} ${t.lands.dayAlt}`} width="2000" height="920" loading="lazy" decoding="async">
         </figure>
         <div class="page-in">
           <h3 class="sheet-title">{l.name}</h3>
           <p class="lead">{l.lead}</p>
-          <div class="pair">
-            <figure><img src={`/assets/lands/${l.id}/boss.webp`} alt={l.boss} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.bossKick}</i><b>{l.boss}</b>{l.post}</figcaption></figure>
-            <figure><img src={`/assets/lands/${l.id}/building.webp`} alt={l.buildingAlt} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.buildingKick}</i><b>{l.building}</b>{l.buildingText}</figcaption></figure>
-          </div>
-          <p class="blight"><i>{t.lands.blightKick}</i>{l.blight}</p>
         </div>
+        <div class="duo">
+          <figure class="full portrait"><img src={`/assets/lands/${l.id}/boss.webp`} alt={l.boss} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.bossKick}</i><b>{l.boss}</b>{l.post}</figcaption></figure>
+          <figure class="full portrait"><img src={`/assets/lands/${l.id}/building.webp`} alt={l.buildingAlt} width="640" height="800" loading="lazy" decoding="async"><figcaption><i>{t.lands.buildingKick}</i><b>{l.building}</b>{l.buildingText}</figcaption></figure>
+        </div>
+        <div class="page-in"><p class="blight"><i>{t.lands.blightKick}</i>{l.blight}</p></div>
       </section>
     ))}
   </Sheet>
