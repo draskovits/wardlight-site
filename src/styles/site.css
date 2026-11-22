@@ -612,3 +612,7 @@ main.post, main.blog, main.page { max-width: 46rem; margin: 0 auto; padding: cla
 .site-foot a { color: var(--ink-2); text-decoration: none; }
 .site-foot a:hover { color: var(--ink); }
 .notfound { min-height: 50svh; display: grid; align-content: center; gap: 1.2rem; }
+
+/* a <button> centres its content vertically when the row stretches it: keep the picture at the top edge */
+.land-tease { display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; }
+.land-tease .ph { flex: none; }
