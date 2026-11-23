@@ -1,6 +1,6 @@
 ---
 title: The ledger, or how Wardlight is balanced
-date: 2026-11-24
+date: 2026-11-23
 description: Bots playing whole runs told me too little, too slowly. Wardlight is now balanced against a target curve, a ledger that prices everything in damage, and a small maths model of a good player.
 image: /assets/blog/ledger/pressure-curve.png
 tags: balance, design, tools
