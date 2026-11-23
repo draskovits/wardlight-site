@@ -1,6 +1,6 @@
 ---
 title: Two faces that talk without a voice
-date: 2026-12-22
+date: 2026-12-04
 description: Wardlight's dwarf and Lady Vaelith are Rive figures whose mouths follow the written line through a small alphabet of 22 sounds. How the files are built, how a line becomes mouth shapes, and how the same files now play on this website.
 image: /assets/blog/rive-lipsync/dwarf-and-vaelith.jpg
 tags: animation, rive, story, website

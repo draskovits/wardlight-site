@@ -1,6 +1,6 @@
 ---
 title: Music for a game, without a composer
-date: 2026-12-08
+date: 2026-11-26
 description: Wardlight's day and night music is written as code and played with free orchestral samples. It isn't perfect and it doesn't replace a musician, but it got a one-person game from silence to something that carries a night.
 image: /assets/img/seasons-1600.jpg
 tags: music, audio, tools

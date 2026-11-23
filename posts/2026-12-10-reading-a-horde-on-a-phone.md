@@ -1,6 +1,6 @@
 ---
 title: Reading a horde on a phone
-date: 2027-01-05
+date: 2026-12-10
 description: Up to 2,500 Blight on a phone screen, in a low-poly world lit by one warm light. How Wardlight keeps the kinds apart at play zoom, what the colours are allowed to mean, and what changed after the playtests.
 image: /assets/blog/silhouettes/blight-silhouettes.jpg
 tags: art, design, rendering

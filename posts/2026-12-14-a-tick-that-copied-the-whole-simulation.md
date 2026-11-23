@@ -1,6 +1,6 @@
 ---
 title: A tick that copied the whole simulation
-date: 2027-01-12
+date: 2026-12-14
 description: Wardlight's simulation is a Swift struct that runs 20 times a second with thousands of creatures. The first time I measured it with 2,500 of them, one tick took 67 ms. Most of that was Swift quietly copying the whole game.
 image: /assets/shots/night-horde-wide-2000.webp
 tags: swift, performance, simulation

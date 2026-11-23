@@ -1,6 +1,6 @@
 ---
 title: The ledger, or how Wardlight is balanced
-date: 2026-12-29
+date: 2026-11-24
 description: Bots playing whole runs told me too little, too slowly. Wardlight is now balanced against a target curve, a ledger that prices everything in damage, and a small maths model of a good player.
 image: /assets/blog/ledger/pressure-curve.png
 tags: balance, design, tools
@@ -87,4 +87,4 @@ From Half Moon up, each level adds one hardship to the year, like Thick Mist or 
 
 If you balance a game alone, write down what each night should feel like as a number first, and put every cost and threat in the same unit. Keep a model you can run in seconds as the reference and let the slow runs calibrate it. Check your bots before you believe them.
 
-Wardlight is out [on the App Store](https://apps.apple.com/app/id6826542922).
+Wardlight comes out on 3 December, [on the App Store](https://apps.apple.com/app/id6826542922).

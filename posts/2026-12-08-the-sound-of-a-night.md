@@ -1,6 +1,6 @@
 ---
 title: The sound of a night
-date: 2026-12-15
+date: 2026-12-08
 description: Most of Wardlight's sound effects are generated in code when the game starts, and the rest are recordings of a few kilobytes each. How the effects, the ambience and the horde fit into a small app, and what I had to fix along the way.
 image: /assets/shots/night-horde-at-wall-2000.webp
 tags: audio, sound, tools
