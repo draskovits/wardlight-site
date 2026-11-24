@@ -1,0 +1,53 @@
+---
+// One page of the game guide (guide/*.md), with the guide's contents beside it.
+import Page from "../layouts/Page.astro";
+import { getGuide, type GuidePage } from "../lib/guide";
+import { SITE, SITE_NAME, AUTHOR, APP_STORE } from "../lib/site";
+
+interface Props { page: GuidePage }
+const { page: p } = Astro.props;
+const all = getGuide();
+const rest = all.filter((g) => g.slug !== "index");
+const front = p.slug === "index";
+const ld = [
+  {
+    "@context": "https://schema.org", "@type": "TechArticle", headline: p.title, description: p.description,
+    url: SITE + p.url, mainEntityOfPage: SITE + p.url, inLanguage: "en", ...(p.updated ? { dateModified: p.updated } : {}),
+    author: { "@type": "Person", name: AUTHOR, url: SITE + "/#developer" },
+    about: { "@type": "VideoGame", name: SITE_NAME, url: SITE + "/", gamePlatform: ["iPhone", "iPad"] },
+    isPartOf: { "@type": "CreativeWork", name: "Wardlight game guide", url: SITE + "/guide/" },
+  },
+  {
+    "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Wardlight", item: SITE + "/" },
+      { "@type": "ListItem", position: 2, name: "Game guide", item: SITE + "/guide/" },
+      ...(front ? [] : [{ "@type": "ListItem", position: 3, name: p.title, item: SITE + p.url }]),
+    ],
+  },
+];
+---
+<Page title={front ? "Game guide · Wardlight" : `${p.title} · Wardlight game guide`} description={p.description} path={p.url}
+  jsonld={ld} current="guide">
+<main class="post guide" id="main">
+  <article>
+    <header class="post-head">
+      <p class="kicker"><a href="/guide/">Game guide</a></p>
+      <h1>{p.title}</h1>
+      {p.updated && <p class="byline">Numbers from the game's data as of <time datetime={p.updated}>{p.updated}</time></p>}
+    </header>
+    {p.heads.length >= 3 && (
+      <nav class="toc" aria-label="On this page"><p>On this page</p><ol>
+        {p.heads.map((h) => <li><a href={`#${h.id}`} set:html={h.title} /></li>)}
+      </ol></nav>
+    )}
+    <div class="prose" set:html={p.html} />
+    <footer class="post-foot">
+      <p>The guide's pages:</p>
+      <ol class="guide-pages">
+        {rest.map((g) => <li><a href={g.url} aria-current={g.slug === p.slug ? "page" : undefined}>{g.title}</a></li>)}
+      </ol>
+      <p><a class="btn" href={APP_STORE}>Wardlight on the App Store</a> <a href="/llms-full.txt">The whole guide as plain text</a></p>
+    </footer>
+  </article>
+</main>
+</Page>

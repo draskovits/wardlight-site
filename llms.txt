@@ -25,8 +25,15 @@
 - [Press kit](https://playwardlight.com/press/): facts, descriptions, screenshots, logos
 - [Support](https://playwardlight.com/support.html)
 - [Privacy policy](https://playwardlight.com/datenschutz.html)
+- [Game guide](https://playwardlight.com/guide/): every building, Blight, land, spell and rule with the game's own numbers
 - [Blog](https://playwardlight.com/blog/): how the game is made
-- [All blog posts as plain text](https://playwardlight.com/llms-full.txt)
+- [The whole game guide and all blog posts as plain text](https://playwardlight.com/llms-full.txt)
+
+## Game guide
+
+Generated from the game's data files, so the numbers are the game's own (balance changes between versions; each page says as of when).
+
+{{guide}}
 
 ## Blog posts
 

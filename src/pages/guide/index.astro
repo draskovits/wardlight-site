@@ -1,0 +1,6 @@
+---
+import GuidePage from "../../components/GuidePage.astro";
+import { getGuide } from "../../lib/guide";
+const page = getGuide().find((g) => g.slug === "index")!;
+---
+<GuidePage page={page} />

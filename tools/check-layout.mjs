@@ -13,7 +13,7 @@ const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? proces
 const BASE = arg("--base", "http://127.0.0.1:8660");
 const SHOTS = arg("--shots", "");
 const WIDTHS = [375, 390, 430, 768, 1024, 1440];
-const PAGES = ["/", "/de/", "/blog/", "/blog/wardlight-comes-out-on-3-december/", "/press/", "/support.html", "/datenschutz.html", "/impressum.html"];
+const PAGES = ["/", "/de/", "/blog/", "/blog/wardlight-comes-out-on-3-december/", "/press/", "/support.html", "/datenschutz.html", "/impressum.html", "/guide/", "/guide/village-buildings/", "/guide/the-blight/", "/guide/states-and-synergies/"];
 
 const browser = await chromium.launch({ channel: "chrome", headless: true });
 let problems = 0;

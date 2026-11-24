@@ -239,7 +239,7 @@ export const en = {
   footer: {
     made: "Wardlight is made by one person in Vienna. © 2026 Stefan Draskovits",
     label: "Footer",
-    press: "Press kit", support: "Support", privacy: "Privacy", impressum: "Impressum", rss: "RSS",
+    guide: "Game guide", press: "Press kit", support: "Support", privacy: "Privacy", impressum: "Impressum", rss: "RSS",
   },
 };
 

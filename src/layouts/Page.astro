@@ -6,7 +6,7 @@ import { APP_STORE } from "../lib/site";
 type BaseProps = Parameters<typeof Base>[0];
 interface Props extends BaseProps {
   /** Which nav link is the current page. */
-  current?: "blog" | "press" | "support";
+  current?: "blog" | "press" | "support" | "guide";
 }
 const { current, lang = "en", ...rest } = Astro.props;
 const de = lang === "de";
@@ -37,6 +37,7 @@ const de = lang === "de";
   <footer class="site-foot">
     <span>{de ? "Gemacht von einem Entwickler in Wien." : "Wardlight is made by one person in Vienna."}</span>
     <nav aria-label={de ? "Fußzeile" : "Footer"}>
+      <a href="/guide/" aria-current={current === "guide" ? "page" : undefined}>{de ? "Spielführer (EN)" : "Game guide"}</a>
       <a href="/press/">{de ? "Pressemappe" : "Press kit"}</a>
       <a href="/support.html">Support</a>
       <a href="/datenschutz.html">{de ? "Datenschutz" : "Privacy"}</a>

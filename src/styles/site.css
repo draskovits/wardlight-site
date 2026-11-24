@@ -616,3 +616,8 @@ main.post, main.blog, main.page { max-width: 46rem; margin: 0 auto; padding: cla
 /* a <button> centres its content vertically when the row stretches it: keep the picture at the top edge */
 .land-tease { display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; }
 .land-tease .ph { flex: none; }
+/* The game guide (guide/*.md): long tables scroll sideways on a phone, the page list at the foot */
+.guide .prose table { font-size: .9rem; white-space: nowrap; }
+.guide .prose td, .guide .prose th { white-space: normal; min-width: 4.5rem; }
+.guide-pages { margin: 0; padding-left: 1.2rem; display: grid; gap: .3rem; }
+.guide-pages a[aria-current] { color: var(--ink); text-decoration: none; }

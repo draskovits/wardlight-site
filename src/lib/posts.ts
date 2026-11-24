@@ -96,7 +96,7 @@ function markdown() {
   return md;
 }
 
-function render(src: string) {
+export function render(src: string) {
   let html = markdown().render(src);
   // a picture on its own line is a figure; its title is the caption
   html = html.replace(/<p>(<img [^>]*?)(?: data-caption="([^"]*)")?([^>]*>)<\/p>/g, (_m, a, cap, b) =>
@@ -151,6 +151,7 @@ export function plainText(h: string) {
   const unescape = (s: string) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
   h = h.replace(/<pre><code[^>]*>([\s\S]*?)<\/code><\/pre>/g, (_m, c) => "\n" + unescape(c) + "\n");
   h = h.replace(/<h(\d)[^>]*>(.*?)<\/h\1>/g, (_m, n, t) => "\n" + "#".repeat(+n) + " " + t + "\n");
+  h = h.replace(/<\/t[dh]>\s*<t[dh][^>]*>/g, " | ");
   h = h.replace(/<li>/g, "- ");
   h = h.replace(/<\/(p|li|blockquote|figure|tr)>/g, "\n");
   return unescape(h.replace(/<[^>]+>/g, "")).replace(/\n{3,}/g, "\n\n").trim();

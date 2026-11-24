@@ -240,6 +240,6 @@ export const de: HomeText = {
   footer: {
     made: "Gemacht von einem Entwickler in Wien. © 2026 Stefan Draskovits",
     label: "Fußzeile",
-    press: "Pressemappe", support: "Support", privacy: "Datenschutz", impressum: "Impressum", rss: "RSS",
+    guide: "Spielführer (EN)", press: "Pressemappe", support: "Support", privacy: "Datenschutz", impressum: "Impressum", rss: "RSS",
   },
 };
